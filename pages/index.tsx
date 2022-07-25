@@ -20,7 +20,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        THe name is `{JSON.stringify(user?.displayName)}`
+        THe name is `{JSON.stringify(user?.email)}`
         <button
           onClick={() => {
             console.log("touched!");
