@@ -6,17 +6,23 @@ import {
   getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 import { Auth, IdTokenResult, User, UserCredential } from "firebase/auth";
-import { auth, provider } from "../../../firebase";
+import { auth, createUserProfileDocument, provider } from "../../../firebase";
 import {
   signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { onSnapshot } from "firebase/firestore";
+import {
+  DocumentReference,
+  DocumentSnapshot,
+  onSnapshot,
+  QuerySnapshot,
+} from "firebase/firestore";
 import { getAuth, updateProfile } from "firebase/auth";
 
 import type { RootState } from "../..";
+import { useEffect } from "react";
 
 export interface UserState<T> {
   user?: T | null;
@@ -83,6 +89,8 @@ export const UserSlice = createSlice({
     signInEmailAndPassword: () => {},
   },
 });
+
+
 
 export const { signinWithEmail, logout } = UserSlice.actions;
 
