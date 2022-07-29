@@ -7,10 +7,11 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { authWithGoogle, selectUser } from "../redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Home: NextPage = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const user = useAppSelector(selectUser);
+  const router = useRouter();
   return (
     <div className={styles.container}>
       <Head>
@@ -19,19 +20,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        THe name is `{JSON.stringify(user?.email)}`
-        <button
-          onClick={() => {
-            console.log("touched!");
-            //  dispatch(signInGoogle()).payload
-            console.log(dispatch(authWithGoogle()));
-          }}
-        >
-          Authenticate!!
-        </button>
-      </main>
-
+      <h1>HOMEPAGE</h1>
+      <button onClick={() => router.push("/auth/login")}>Button</button>
+      <Link href={"auth/login"}> AUTHH</Link>
       <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
