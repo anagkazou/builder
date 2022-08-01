@@ -14,3 +14,16 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.slide-pane__close{
+  width: 10px;
+  height: 10px;
+}
+
+.slide-pane_from_bottom{
+  width: 100vw !important;
+  transform: unset;
+  height: fit-content !important;
+  position: absolute;
+  bottom: 0;
+}
