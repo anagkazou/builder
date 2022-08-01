@@ -23,7 +23,6 @@ import { getAuth, updateProfile } from "firebase/auth";
 
 import type { RootState } from "../..";
 import { useEffect } from "react";
-
 export interface UserState<T> {
   user?: T | null;
   status: "LOADING" | "FINISHED" | "ERROR";
@@ -89,8 +88,6 @@ export const UserSlice = createSlice({
     signInEmailAndPassword: () => {},
   },
 });
-
-
 
 export const { signinWithEmail, logout } = UserSlice.actions;
 
