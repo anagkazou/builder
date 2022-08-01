@@ -22,7 +22,7 @@ a {
 
 .slide-pane_from_bottom{
   width: 100vw !important;
-  transform: unset;
+  transform: unset !important;
   height: fit-content !important;
   position: absolute;
   bottom: 0;
