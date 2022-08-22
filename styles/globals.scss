@@ -1,9 +1,13 @@
+
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: white;
+  height: 100vh;
 }
 
 a {
@@ -15,15 +19,11 @@ a {
   box-sizing: border-box;
 }
 
-.slide-pane__close{
-  width: 10px;
-  height: 10px;
+
+p{
+  margin: unset
 }
 
-.slide-pane_from_bottom{
-  width: 100vw !important;
-  transform: unset !important;
-  height: fit-content !important;
-  position: absolute;
-  bottom: 0;
+#__next{
+  height: 100vh;
 }
