@@ -5,7 +5,8 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { auth, createUserProfileDocument } from "../firebase";
 import { persistor, store } from "../redux";
-import "../styles/globals.css";
+import "../styles/globals.scss";
+import "../styles/dashboard.scss";
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
