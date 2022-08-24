@@ -1,3 +1,7 @@
+@tailwind 'base';
+@tailwind components;
+@tailwind utilities;
+
 
 
 html,
@@ -20,10 +24,10 @@ a {
 }
 
 
-p{
+p {
   margin: unset
 }
 
-#__next{
+#__next {
   height: 100vh;
 }
