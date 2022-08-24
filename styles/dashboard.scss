@@ -9,7 +9,6 @@
     padding-right: 20px;
     padding-top: 30px;
   }
-
 }
 
 /* .panel::before {
@@ -33,12 +32,11 @@
   .dashboard__actions {
     position: fixed;
     bottom: 0px;
-    height: 100px;
+    height: 80px;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     padding: 0 20px;
-    background-color: brown;
   }
 
   .dashboard__actions div {
@@ -47,7 +45,6 @@
     align-items: center;
   }
 }
-
 
 .panel {
   overflow-x: hidden !important;
@@ -71,7 +68,7 @@
   height: 35px;
   width: 100%;
   transform: translateY(-25px);
-  border-bottom: .2px #9c9c9c solid;
+  border-bottom: 0.2px #9c9c9c solid;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -80,7 +77,6 @@
     width: 18px;
     height: 18px;
   }
-
 }
 
 .style-panel__view--option {
@@ -97,18 +93,12 @@
   }
 }
 
-
-
-
 .button {
   background-color: black;
   border: none;
   color: white;
   border: grey 1px solid;
-
 }
-
-
 
 /*
 STYLE PANEL STYLES
@@ -122,10 +112,9 @@ STYLE PANEL STYLES
   opacity: 0;
 }
 
-
 .style-panel__wrapper {
   display: flex;
-  transition: transform .1s ease-in;
+  transition: transform 0.1s ease-in;
 
   .style-panel__default {
     max-width: 100%;
@@ -140,10 +129,8 @@ STYLE PANEL STYLES
     p {
       width: calc(100vw - 40px);
       background-color: red;
-
     }
   }
-
 }
 
 .in-templates .style-panel__wrapper {
@@ -168,8 +155,8 @@ STYLE PANEL STYLES
   }
 }
 
-.style-panel__container {}
-
+.style-panel__container {
+}
 
 // BACKGROUND
 .background {
@@ -186,13 +173,21 @@ STYLE PANEL STYLES
   &-option__wrapper {
     border-radius: 50%;
     width: 100%;
-    height: calc(((100vw - 40px) /7) - 9px);
+    height: calc(((100vw - 40px) / 7) - 9px);
     padding: 7% 8%;
   }
 
   &-option {
     height: 100%;
     border-radius: 50%;
+  }
+}
+
+.style-tab {
+  width: 50%;
+  background-color: transparent;
+
+  &__wrapper {
   }
 }
 

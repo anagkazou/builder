@@ -5,8 +5,9 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { auth, createUserProfileDocument } from "../firebase";
 import { persistor, store } from "../redux";
-import "../styles/globals.scss";
+import "../styles/globals.css";
 import "../styles/dashboard.scss";
+import { DashboardContextProvider } from "./dashboard/context/dashboard-context";
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -14,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     const unsubscribe = onAuthStateChanged(auth, async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
-        
+
       }
     });
 
@@ -25,7 +26,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Component {...pageProps} />
+        <DashboardContextProvider>
+          <Component {...pageProps} />
+
+        </DashboardContextProvider>
       </PersistGate>
     </Provider>
   );
