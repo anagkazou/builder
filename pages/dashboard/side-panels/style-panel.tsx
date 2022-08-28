@@ -10,11 +10,11 @@ type StyleViewType = "" | "BACKGROUND" | "TEMPLATES";
 const tabsData = [
   {
     label: "Background",
-    content: <BackgroundTabs/>,
+    content: <BackgroundTabs />,
   },
   {
     label: "Template",
-    content: <TemplatesTab/>,
+    content: <TemplatesTab />,
   },
 ];
 export const StylePanel = () => {
@@ -32,7 +32,6 @@ export const StylePanel = () => {
   const tabsRef = useRef<any[]>([]);
 
   useEffect(() => {
-
     // Todo: refactor this and remove needless code code
     function setTabPosition() {
       const currentTab: any = tabsRef.current[activeTabIndex]; //TOdo: type this properly
@@ -46,6 +45,22 @@ export const StylePanel = () => {
 
     return () => window.removeEventListener("resize", setTabPosition);
   }, [activeTabIndex]);
+
+  // NEW IMPLENTATION
+  const [selectedTab, setSelectedTab] = useState("Tab 1");
+
+  /**
+   * TabChange handler,
+   * updates state with the current selected tab value.
+   *
+   * api calls for updation of data,
+   * if required, can be done here
+   */
+  const changeTab: (selectedTab: { label: string; key: string | number }) => void = (
+    updatedTab
+  ) => {
+    setSelectedTab(updatedTab.label);
+  };
 
   return (
     <SlidingPanel
@@ -74,7 +89,7 @@ export const StylePanel = () => {
             </div>
             <span
               className="absolute bottom-0 block h-px transition-all duration-200 bg-white"
-              style={{ left: tabUnderlineLeft, width: '50%' }}
+              style={{ left: tabUnderlineLeft, width: "50%" }}
             />
           </div>
           <div className="py-4">
