@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useDashboardContextValue } from "./context/dashboard-context";
+import { PanelEnums, useDashboardContextValue } from "./context/dashboard-context";
+import { ProfilePanel } from "./side-panels/profile-panel";
 import { SectionPanel } from "./side-panels/sections-panel";
 import { StylePanel } from "./side-panels/style-panel";
 type PanelsProps = {
@@ -20,7 +21,8 @@ export const DashboardPanels: React.FC = () => {
   return (
     <div className="dashboard-panels">
       <SectionPanel setOpenPanel={false} openPanel={"openPanel"} />
-      <StylePanel/>
+      <StylePanel />
+      <ProfilePanel />
     </div>
   );
 };
