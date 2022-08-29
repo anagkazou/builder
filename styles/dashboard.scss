@@ -5,9 +5,9 @@
     background-color: #171717;
     bottom: 0px;
     height: 100%;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 30px;
+    // padding-left: 20px;
+    // padding-right: 20px;
+    // padding-top: 30px;
   }
 }
 
@@ -201,13 +201,19 @@ STYLE PANEL STYLES
 
 .reactEasyCrop_Container {
   background-color: grey;
+  height: 100%;
 }
-.cropper__header{
-  height: 5vh;
+.cropper__header {
+  height: 45px;
   background: white;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
 }
 .cropper__wrapper {
-  height: 400px;
+  height: 60%;
   position: relative;
 }
 .controls {
@@ -215,6 +221,7 @@ STYLE PANEL STYLES
   padding: 16px;
   flex-direction: column;
   padding: 0;
+  height: 20%;
 }
 
 // ANIMATIONS
@@ -225,16 +232,22 @@ STYLE PANEL STYLES
   }
 }
 
-.toggle-slider{
+.toggle-slider {
   width: 100%;
-  height: 50px;
   display: flex;
 
-  &__option{
+  &__option {
     background-color: white;
     border: none;
     width: 50%;
     cursor: pointer;
+    height: 50px;
   }
+}
 
+.slider {
+  &__wrapper {
+    padding: 0 20px;
+    margin-bottom: 10px;
+  }
 }
