@@ -10,6 +10,10 @@ import { ImageCropper } from "../../image-cropper";
 import { PanelHeader } from "../../panel-header";
 import { getCroppedImg, getRotatedImage } from "../../utils/canvas-utils";
 import { FileUploader } from "./file-uploader";
+import saveIcon from "../../../../assets/check.svg";
+import cancelIcon from "../../../../assets/cancel-black.svg";
+import Image from "next/image";
+
 const ORIENTATION_TO_ANGLE: any = {
   "3": 180,
   "6": 90,
@@ -82,7 +86,17 @@ export const ProfilePanel = () => {
       <>
         {imageSrc ? (
           <React.Fragment>
-            <div className="cropper__header">Cropper</div>
+            <div className="cropper__header">
+              <button onClick={()=>setImageSrc(null)}>
+                <Image src={cancelIcon} />
+              </button>
+
+              <p>Cropper</p>
+
+              <button>
+                <Image src={saveIcon} />
+              </button>
+            </div>
             <div className="cropper__wrapper">
               <Cropper
                 image={imageSrc}
@@ -99,38 +113,51 @@ export const ProfilePanel = () => {
               />
             </div>
             <div className="controls">
-              {sliderState === "SCALE" ? (
-                <div>
-                  <Typography variant="overline">Zoom</Typography>
-                  <Slider
-                    value={zoom}
-                    min={1}
-                    max={3}
-                    step={0.1}
-                    aria-labelledby="Zoom"
-                    onChange={(e, zoom) => setZoom(zoom)}
-                  />
-                </div>
-              ) : (
-                <div>
-                  <Typography variant="overline">Rotation</Typography>
-                  <Slider
-                    value={rotation}
-                    min={0}
-                    max={360}
-                    step={1}
-                    aria-labelledby="Rotation"
-                    onChange={(e, rotation) => setRotation(rotation)}
-                  />
-                </div>
-              )}
-              <div className="toggle-slider">
-                <button className="toggle-slider__option">Rotate</button>
-                <button className="toggle-slider__option">Scale</button>
+              <div className="slider__wrapper">
+                {sliderState === "SCALE" ? (
+                  <>
+                    <Typography variant="overline">Zoom</Typography>
+                    <Slider
+                      value={zoom}
+                      min={1}
+                      max={3}
+                      step={0.1}
+                      aria-labelledby="Zoom"
+                      onChange={(e, zoom) => setZoom(zoom)}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Typography variant="overline">Rotation</Typography>
+                    <Slider
+                      value={rotation}
+                      min={0}
+                      max={360}
+                      step={1}
+                      aria-labelledby="Rotation"
+                      onChange={(e, rotation) => setRotation(rotation)}
+                    />
+                  </>
+                )}
               </div>
-              <Button onClick={showCroppedImage} variant="contained" color="primary">
+
+              <div className="toggle-slider">
+                <button
+                  className="toggle-slider__option"
+                  onClick={() => setSliderState("ROTATE")}
+                >
+                  Rotate
+                </button>
+                <button
+                  onClick={() => setSliderState("SCALE")}
+                  className="toggle-slider__option"
+                >
+                  Scale
+                </button>
+              </div>
+              {/* <Button onClick={showCroppedImage} variant="contained" color="primary">
                 Show Result
-              </Button>
+              </Button> */}
             </div>
           </React.Fragment>
         ) : (
