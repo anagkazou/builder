@@ -27,10 +27,12 @@ export interface UserState<T> {
   user?: T | null;
   status: "LOADING" | "FINISHED" | "ERROR";
   error?: string;
+  pageId: string | null;
 }
 const initialState: UserState<User> = {
   user: null,
   status: "FINISHED",
+  pageId: null,
 };
 export const loginWithEmail = createAsyncThunk(
   "auth/loginWithEmail",

@@ -2,19 +2,20 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { Auth, getAuth, GoogleAuthProvider, User } from "firebase/auth";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-
+import { getStorage } from "firebase/storage";
 const firebaseConfig = {
- apiKey: "AIzaSyCkdSXgFTlLqob-D2xV-2Taz5oxJ9OrkT4",
+  apiKey: "AIzaSyCkdSXgFTlLqob-D2xV-2Taz5oxJ9OrkT4",
   authDomain: "builder-d308b.firebaseapp.com",
   projectId: "builder-d308b",
   storageBucket: "builder-d308b.appspot.com",
   messagingSenderId: "416962586828",
   appId: "1:416962586828:web:a8da2cd076ff06f38cba69",
-  measurementId: "G-YW0PM1V7JW"
+  measurementId: "G-YW0PM1V7JW",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+export const storage = getStorage(app);
 const analytics = typeof window !== "undefined" ? getAnalytics(app) : null;
 
 export const provider = new GoogleAuthProvider();

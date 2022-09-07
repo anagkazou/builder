@@ -1,0 +1,14 @@
+.claim {
+  background-color: gray;
+  height: 100vh;
+  width: 100vw;
+  form {
+    width: fit-content;
+  }
+
+  .status-color{
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+  }
+}

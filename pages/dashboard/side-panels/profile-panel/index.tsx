@@ -1,18 +1,18 @@
-import { Button, Slider, Typography } from "@mui/material";
-import { readFile } from "fs";
-import { getOrientation } from "get-orientation";
-import React from "react";
-import { useCallback, useEffect, useState } from "react";
+import {
+  Button, Slider, Typography
+} from "@mui/material";
+import { ref } from "firebase/storage";
+import Image from "next/image";
+import React, { useCallback, useEffect, useState } from "react";
 import Cropper from "react-easy-crop";
 import SlidingPanel from "react-sliding-side-panel";
-import { useDashboardContextValue, PanelEnums } from "../../context/dashboard-context";
-import { ImageCropper } from "../../image-cropper";
+import cancelIcon from "../../../../assets/cancel.svg";
+import { storage } from "../../../../firebase";
+import { PanelEnums, useDashboardContextValue } from "../../context/dashboard-context";
 import { PanelHeader } from "../../panel-header";
 import { getCroppedImg, getRotatedImage } from "../../utils/canvas-utils";
 import { FileUploader } from "./file-uploader";
-import saveIcon from "../../../../assets/check.svg";
-import cancelIcon from "../../../../assets/cancel-black.svg";
-import Image from "next/image";
+
 
 const ORIENTATION_TO_ANGLE: any = {
   "3": 180,
@@ -31,6 +31,18 @@ export const ProfilePanel = () => {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
   const [croppedImage, setCroppedImage] = useState(null);
   const [sliderState, setSliderState] = useState<string>("SCALE");
+
+  const [imageUpload, setImageUpload] = useState<any>(null);
+  const [imageUrls, setImageUrls] = useState([]);
+
+  const imagesListRef = ref(storage, "images/");
+  
+//const dispatch = useDispatch
+
+  const uploadFile = () => {
+    
+  };
+
   const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: any) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
@@ -82,20 +94,24 @@ export const ProfilePanel = () => {
   }, [fileUploaded]);
 
   return (
-    <SlidingPanel type="right" isOpen={panelState === PanelEnums.PROFILE} size={100}>
+    <SlidingPanel
+      // panelClassName="dashboard-panel"
+      type="right"
+      isOpen={panelState === PanelEnums.PROFILE}
+      size={100}
+    >
       <>
         {imageSrc ? (
           <React.Fragment>
             <div className="cropper__header">
-              <button onClick={()=>setImageSrc(null)}>
-                <Image src={cancelIcon} />
-              </button>
+              <div className="flex items-center cropper__header--right ">
+                <button className="mr-4" onClick={() => setImageSrc(null)}>
+                  <Image width={28} height={28} src={cancelIcon} />
+                </button>
+                <Typography>Crop Photo</Typography>
+              </div>
 
-              <p>Cropper</p>
-
-              <button>
-                <Image src={saveIcon} />
-              </button>
+              <Button>Save</Button>
             </div>
             <div className="cropper__wrapper">
               <Cropper
@@ -109,14 +125,13 @@ export const ProfilePanel = () => {
                 onCropComplete={onCropComplete}
                 onZoomChange={setZoom}
                 cropShape="round"
-                showGrid={false}
               />
             </div>
             <div className="controls">
               <div className="slider__wrapper">
                 {sliderState === "SCALE" ? (
                   <>
-                    <Typography variant="overline">Zoom</Typography>
+                    <Typography>Zoom</Typography>
                     <Slider
                       value={zoom}
                       min={1}
@@ -162,11 +177,37 @@ export const ProfilePanel = () => {
           </React.Fragment>
         ) : (
           <>
-            <div className="profile-panel">
+            <div className="profile-panel ">
               <PanelHeader title="Profile" />
-
-              <form action="" className="profile-form">
-                <FileUploader onChange={onFileChange} setFileUploaded={setFileUploaded} />
+              <form action="" className="p-5 profile-form">
+                <FileUploader setFileUploaded={setFileUploaded} onChange={onFileChange} />
+                <div className="my-8">
+                  <label className="block mb-2 text-sm text-gray-200" htmlFor="name">
+                    Name
+                  </label>
+                  <input
+                    autoComplete="off"
+                    className="w-full px-4 py-3 text-base leading-tight text-white bg-transparent border border-gray-500 border-solid shadow appearance-none focus:outline-none focus:shadow-outline"
+                    id="name"
+                    type="text"
+                    placeholder="Your name"
+                  />
+                </div>
+                <div className="my-4">
+                  <label
+                    className="block mb-2 text-sm text-gray-200"
+                    htmlFor="bioDescription"
+                  >
+                    Bio Description
+                  </label>
+                  <input
+                    autoComplete="off"
+                    className="w-full px-4 py-3 text-base leading-tight text-white bg-transparent border border-gray-500 border-solid shadow appearance-none focus:outline-none focus:shadow-outline"
+                    id="bioDescription"
+                    type="text"
+                    placeholder="Bio Description"
+                  />
+                </div>
               </form>
             </div>
           </>
