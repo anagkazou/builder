@@ -63,9 +63,23 @@ export const FileUploader: React.FC<FIleUploaderType> = ({
 
   return (
     <>
-      <div className="image-upload" onClick={handleClick}>
-        Upload a file
+      <div className="image-upload flex align-center place-content-between space-x-2 h-40 ">
+        <div
+          className="image-upload__profile bg-zinc-800 flex place-content-center items-center w-40 "
+          role={"button"}
+          onClick={handleClick}
+        >
+          <p>Profile Photo</p>
+        </div>
+        <div
+          className="image-upload__cover bg-zinc-800 flex place-content-center items-center w-60"
+          role={"button"}
+          onClick={handleClick}
+        >
+          <p>Cover Photo</p>
+        </div>
       </div>
+
       <input
         type="file"
         ref={hiddenFileInput}

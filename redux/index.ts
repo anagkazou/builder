@@ -14,6 +14,7 @@ import { PersistGate } from "redux-persist/integration/react";
 
 const rootReducer = combineReducers({
   user: userReducer,
+  //pageData:
 });
 const persistConfig = {
   key: "root",
