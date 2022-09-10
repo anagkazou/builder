@@ -1,4 +1,4 @@
-@import './claim.scss';
+@import "./claim.scss";
 
 .panel {
   position: fixed;
@@ -29,8 +29,7 @@
   width: 100%;
   height: 100vh;
   background-color: black;
-  position: absolute;
-
+  position: absolute; 
   &-panel {
     padding: 20px;
   }
@@ -199,8 +198,6 @@ STYLE PANEL STYLES
 // PROFILE PANEL
 
 .profile-panel .image-upload {
-  
-  
 }
 
 .reactEasyCrop_Container {
@@ -264,4 +261,12 @@ STYLE PANEL STYLES
     padding: 0 20px;
     margin-bottom: 10px;
   }
+}
+
+/*    DASHBOARD PREVIEW */
+
+.dashboard-preview {
+  height: 80%;
+  width: 80%;
+  z-index: 99;
 }
