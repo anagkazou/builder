@@ -21,6 +21,7 @@ export class Page {
   coverImage?: string;
   sections?: Array<socialsType | EmbedsType>;
   status?: string;
+  createdAt?: Date;
   constructor(
     handle: string | undefined,
     pageId: string,
@@ -28,7 +29,8 @@ export class Page {
     profileImage?: string,
     coverImage?: any,
     sections?: Array<socialsType | EmbedsType>,
-    status?: string
+    status?: string,
+    createdAt?: Date
   ) {
     this.handle = handle;
     this.pageId = pageId;
@@ -37,6 +39,7 @@ export class Page {
     this.coverImage = coverImage;
     this.sections = sections;
     this.status = status;
+    this.createdAt = createdAt;
   }
 }
 export type socialsType = {
@@ -102,7 +105,15 @@ export const PageSlice = createSlice({
     setPageDescription: (state, action) => {
       state.description = action.payload;
     },
+    setPageFromFirestore: (state, {payload}) => {
+      state.handle = payload.handle;
+      state.pageId = payload.pageId
+      state.createdAt = payload.createdAt
+
+      console.log("SETPAGE", state);
+    },
   },
 });
 export const selectpage = (state: RootState) => state.page;
+export const { setPageFromFirestore } = PageSlice.actions;
 export default PageSlice.reducer;
