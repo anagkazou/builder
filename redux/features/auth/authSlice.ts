@@ -1,38 +1,22 @@
 import {
-  AsyncThunkAction,
   createAsyncThunk,
-  createSlice,
-  PayloadAction,
-  getDefaultMiddleware,
+  createSlice
 } from "@reduxjs/toolkit";
-import { Auth, IdTokenResult, User, UserCredential } from "firebase/auth";
-import { auth, createUserProfileDocument, provider } from "../../../firebase";
-import {
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
-import {
-  DocumentReference,
-  DocumentSnapshot,
-  onSnapshot,
-  QuerySnapshot,
-} from "firebase/firestore";
-import { getAuth, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut, User, UserCredential } from "firebase/auth";
+import { auth, provider } from "../../../firebase";
 
 import type { RootState } from "../..";
-import { useEffect } from "react";
-export interface UserState<T> {
-  user?: T | null;
+export interface UserState {
+  user?: User | null;
   status: "LOADING" | "FINISHED" | "ERROR";
   error?: string;
   pageId: string | null;
 }
-const initialState: UserState<User> = {
+const initialState: UserState = {
   user: null,
   status: "FINISHED",
   pageId: null,
+  
 };
 export const loginWithEmail = createAsyncThunk(
   "auth/loginWithEmail",
@@ -81,6 +65,7 @@ export const UserSlice = createSlice({
     });
     builder.addCase(authWithGoogle.fulfilled, (state, action) => {
       state.user = action.payload;
+      state.status = "FINISHED";
     });
   },
   reducers: {
@@ -88,10 +73,13 @@ export const UserSlice = createSlice({
     signUpWithEmail: () => {},
     logout: () => {},
     signInEmailAndPassword: () => {},
+    setUserPageId: ( state, action) => {
+      state.pageId= action.payload
+    }
   },
 });
 
-export const { signinWithEmail, logout } = UserSlice.actions;
+export const { signinWithEmail, logout, setUserPageId } = UserSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;
 

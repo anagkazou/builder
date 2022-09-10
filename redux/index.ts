@@ -1,20 +1,17 @@
 import {
   Action,
   combineReducers,
-  configureStore,
-  Store,
-  ThunkAction,
+  configureStore, ThunkAction
 } from "@reduxjs/toolkit";
-import { type } from "os";
 
-import userReducer from "./features/auth/authSlice";
-import { persistStore, persistReducer } from "redux-persist";
+import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { PersistGate } from "redux-persist/integration/react";
+import userReducer from "./features/auth/authSlice";
+import pageReducer from "./features/page-data/page-data.slice";
 
 const rootReducer = combineReducers({
   user: userReducer,
-  //pageData:
+  page: pageReducer,
 });
 const persistConfig = {
   key: "root",
