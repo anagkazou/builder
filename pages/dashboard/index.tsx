@@ -18,7 +18,7 @@ const Dashboard: NextPage = () => {
   const getPageInfo = async () => {
     const pageRef = query(
       collection(db, "pages"),
-      where("pageId", "==", userState.pageId)
+      where("handle", "==", userState.handle)
     );
     const pageSnap = await getDocs(pageRef);
     pageSnap.forEach((doc) => {
@@ -35,7 +35,7 @@ const Dashboard: NextPage = () => {
   return (
     <>
       <div className="flex items-center justify-center dashboard">
-        <DashboardPreview/>
+        <DashboardPreview />
         <DashboardPanels />
         <DashboardActions />
       </div>

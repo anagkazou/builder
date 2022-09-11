@@ -8,10 +8,12 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userReducer from "./features/auth/authSlice";
 import pageReducer from "./features/page-data/page-data.slice";
+import sectionsReducer from './features/sections/sections.slice';
 
 const rootReducer = combineReducers({
   user: userReducer,
   page: pageReducer,
+  sections: sectionsReducer
 });
 const persistConfig = {
   key: "root",

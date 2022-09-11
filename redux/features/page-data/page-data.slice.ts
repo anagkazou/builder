@@ -4,7 +4,7 @@ import { getAuth } from "firebase/auth";
 import { collection, doc, writeBatch } from "firebase/firestore";
 import { RootState } from "../..";
 import { db } from "../../../firebase";
-import { setUserPageId } from "../auth/authSlice";
+import { setUserHandle as setUserHandle } from "../auth/authSlice";
 // export interface IPage {
 //   handle: string | null;
 //   description: string | null;
@@ -61,19 +61,19 @@ export const createNewPageFOrNewUser = createAsyncThunk(
   "page/create-new-page",
   async (handle: string, { getState, dispatch }) => {
     const state: any = getState();
-    const newPageId = uuidv4();
+    // const newPageId = uuidv4();
 
     //TOdo: improve this batch write, try to use a class or object
     let batch = writeBatch(db);
     const newPageRef = doc(collection(db, "pages"));
-    batch.set(newPageRef, { handle: handle, pageId: newPageId, createdAt: new Date() });
+    batch.set(newPageRef, { handle: handle, createdAt: new Date() });
     batch.set(doc(db, "users", `${state?.user?.user?.uid}`), {
       ...state?.user.user,
       handle: handle,
-      pageId: newPageId,
+      //pageId: newPageId,
       createdAt: new Date(),
     });
-    const promise = batch.commit().then(() => dispatch(setUserPageId(newPageId)));
+    const promise = batch.commit().then(() => dispatch(setUserHandle(handle)));
     console.log("PROMISE", promise);
     //Todo: sadd page Id to user not page... use page Id to get page details and store in page store
     return promise;
@@ -99,17 +99,17 @@ export const PageSlice = createSlice({
   reducers: {
     setPageHandle: (state, action) => {
       console.log("AAAAA", state, action);
-      state.pageId = action.payload.pageId;
+      // state.pageId = action.payload.pageId;
       state.handle = action.payload.handle;
     },
     setPageDescription: (state, action) => {
       state.description = action.payload;
     },
-    setPageFromFirestore: (state, {payload}) => {
+    setPageFromFirestore: (state, { payload }) => {
       state.handle = payload.handle;
-      state.pageId = payload.pageId
-      state.createdAt = payload.createdAt
-
+     // state.pageId = payload.pageId;
+      state.createdAt = payload.createdAt;
+      
       console.log("SETPAGE", state);
     },
   },
