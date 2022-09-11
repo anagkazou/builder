@@ -1,8 +1,13 @@
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-  createAsyncThunk,
-  createSlice
-} from "@reduxjs/toolkit";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut, User, UserCredential } from "firebase/auth";
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  User,
+  UserCredential,
+} from "firebase/auth";
 import { auth, provider } from "../../../firebase";
 
 import type { RootState } from "../..";
@@ -10,13 +15,12 @@ export interface UserState {
   user?: User | null;
   status: "LOADING" | "FINISHED" | "ERROR";
   error?: string;
-  pageId: string | null;
+  handle: string | null;
 }
 const initialState: UserState = {
   user: null,
   status: "FINISHED",
-  pageId: null,
-  
+  handle: null,
 };
 export const loginWithEmail = createAsyncThunk(
   "auth/loginWithEmail",
@@ -73,13 +77,13 @@ export const UserSlice = createSlice({
     signUpWithEmail: () => {},
     logout: () => {},
     signInEmailAndPassword: () => {},
-    setUserPageId: ( state, action) => {
-      state.pageId= action.payload
-    }
+    setUserHandle: (state, action) => {
+      state.handle = action.payload;
+    },
   },
 });
 
-export const { signinWithEmail, logout, setUserPageId } = UserSlice.actions;
+export const { signinWithEmail, logout, setUserHandle } = UserSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
 
