@@ -1,0 +1,50 @@
+.section-panel{
+
+
+  .text-box-editor, .sections-body__main{
+    -webkit-animation-duration: .2s;
+    animation-duration: .3s;
+    animation-delay: .3s;
+    -webkit-animation-delay: .2s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+}
+
+.more-sections, .my-sections{
+    &__section:not(:last-child){
+      margin:  0.75rem 0;
+    }
+
+}
+@-webkit-keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(200px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fadeInLeft {
+  -webkit-animation-name: fadeInLeft;
+  animation-name: fadeInLeft;
+}
+
+.sections-body{
+    height: 80%;
+
+}

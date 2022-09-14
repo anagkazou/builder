@@ -1,5 +1,5 @@
 @import "./claim.scss";
-
+@import './styles/sections-panel/sections';
 .panel {
   position: fixed;
 
@@ -29,7 +29,7 @@
   width: 100%;
   height: 100vh;
   background-color: black;
-  position: absolute; 
+  position: relative; 
   &-panel {
     padding: 20px;
   }
@@ -71,7 +71,6 @@
   color: white;
   font-size: 10px;
   height: 35px;
-  width: 100%;
   // transform: translateY(-25px);
   border-bottom: 0.2px #9c9c9c solid;
   display: flex;
@@ -267,6 +266,6 @@ STYLE PANEL STYLES
 /*    DASHBOARD PREVIEW */
 
 .dashboard-preview {
-  height: 80%;
+  height: 40rem;
   width: 80%;
 }
