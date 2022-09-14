@@ -1,6 +1,4 @@
-import {
-  Button, Slider, Typography
-} from "@mui/material";
+import { Button, Slider, Typography } from "@mui/material";
 import { ref } from "firebase/storage";
 import Image from "next/image";
 import React, { useCallback, useEffect, useState } from "react";
@@ -12,7 +10,6 @@ import { PanelEnums, useDashboardContextValue } from "../../context/dashboard-co
 import { PanelHeader } from "../../panel-header";
 import { getCroppedImg, getRotatedImage } from "../../utils/canvas-utils";
 import { FileUploader } from "./file-uploader";
-
 
 const ORIENTATION_TO_ANGLE: any = {
   "3": 180,
@@ -36,12 +33,10 @@ export const ProfilePanel = () => {
   const [imageUrls, setImageUrls] = useState([]);
 
   const imagesListRef = ref(storage, "images/");
-  
-//const dispatch = useDispatch
 
-  const uploadFile = () => {
-    
-  };
+  //const dispatch = useDispatch
+
+  const uploadFile = () => {};
 
   const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: any) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -94,125 +89,135 @@ export const ProfilePanel = () => {
   }, [fileUploaded]);
 
   return (
-    <SlidingPanel
-      // panelClassName="dashboard-panel"
-      type="right"
-      isOpen={panelState === PanelEnums.PROFILE}
-      size={100}
-    >
-      <>
-        {imageSrc ? (
-          <React.Fragment>
-            <div className="cropper__header">
-              <div className="flex items-center cropper__header--right ">
-                <button className="mr-4" onClick={() => setImageSrc(null)}>
-                  <Image width={28} height={28} src={cancelIcon} />
-                </button>
-                <Typography>Crop Photo</Typography>
-              </div>
+    <div className="fixed z-50">
 
-              <Button>Save</Button>
-            </div>
-            <div className="cropper__wrapper">
-              <Cropper
-                image={imageSrc}
-                crop={crop}
-                rotation={rotation}
-                zoom={zoom}
-                aspect={1}
-                onCropChange={setCrop}
-                onRotationChange={setRotation}
-                onCropComplete={onCropComplete}
-                onZoomChange={setZoom}
-                cropShape="round"
-              />
-            </div>
-            <div className="controls">
-              <div className="slider__wrapper">
-                {sliderState === "SCALE" ? (
-                  <>
-                    <Typography>Zoom</Typography>
-                    <Slider
-                      value={zoom}
-                      min={1}
-                      max={3}
-                      step={0.1}
-                      aria-labelledby="Zoom"
-                      onChange={(e, zoom) => setZoom(zoom)}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Typography variant="overline">Rotation</Typography>
-                    <Slider
-                      value={rotation}
-                      min={0}
-                      max={360}
-                      step={1}
-                      aria-labelledby="Rotation"
-                      onChange={(e, rotation) => setRotation(rotation)}
-                    />
-                  </>
-                )}
-              </div>
+    <div className="relative z-50">
+      <div className="fixed bottom-0 ">
+        <SlidingPanel
+          // panelClassName="dashboard-panel"
+          type="bottom"
+          isOpen={panelState === PanelEnums.PROFILE}
+          size={60}
+        >
+          <>
+            {imageSrc ? (
+              <React.Fragment>
+                <div className="cropper__header">
+                  <div className="flex items-center cropper__header--right ">
+                    <button className="mr-4" onClick={() => setImageSrc(null)}>
+                      <Image width={28} height={28} src={cancelIcon} />
+                    </button>
+                    <Typography>Crop Photo</Typography>
+                  </div>
 
-              <div className="toggle-slider">
-                <button
-                  className="toggle-slider__option"
-                  onClick={() => setSliderState("ROTATE")}
-                >
-                  Rotate
-                </button>
-                <button
-                  onClick={() => setSliderState("SCALE")}
-                  className="toggle-slider__option"
-                >
-                  Scale
-                </button>
-              </div>
-              {/* <Button onClick={showCroppedImage} variant="contained" color="primary">
+                  <Button>Save</Button>
+                </div>
+                <div className="cropper__wrapper">
+                  <Cropper
+                    image={imageSrc}
+                    crop={crop}
+                    rotation={rotation}
+                    zoom={zoom}
+                    aspect={1}
+                    onCropChange={setCrop}
+                    onRotationChange={setRotation}
+                    onCropComplete={onCropComplete}
+                    onZoomChange={setZoom}
+                    cropShape="round"
+                  />
+                </div>
+                <div className="controls">
+                  <div className="slider__wrapper">
+                    {sliderState === "SCALE" ? (
+                      <>
+                        <Typography>Zoom</Typography>
+                        <Slider
+                          value={zoom}
+                          min={1}
+                          max={3}
+                          step={0.1}
+                          aria-labelledby="Zoom"
+                          onChange={(e, zoom) => setZoom(zoom)}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Typography variant="overline">Rotation</Typography>
+                        <Slider
+                          value={rotation}
+                          min={0}
+                          max={360}
+                          step={1}
+                          aria-labelledby="Rotation"
+                          onChange={(e, rotation) => setRotation(rotation)}
+                        />
+                      </>
+                    )}
+                  </div>
+
+                  <div className="toggle-slider">
+                    <button
+                      className="toggle-slider__option"
+                      onClick={() => setSliderState("ROTATE")}
+                    >
+                      Rotate
+                    </button>
+                    <button
+                      onClick={() => setSliderState("SCALE")}
+                      className="toggle-slider__option"
+                    >
+                      Scale
+                    </button>
+                  </div>
+                  {/* <Button onClick={showCroppedImage} variant="contained" color="primary">
                 Show Result
               </Button> */}
-            </div>
-          </React.Fragment>
-        ) : (
-          <>
-            <div className="profile-panel ">
-              <PanelHeader title="Profile" />
-              <form action="" className="p-5 profile-form">
-                <FileUploader setFileUploaded={setFileUploaded} onChange={onFileChange} />
-                <div className="my-8">
-                  <label className="block mb-2 text-sm text-gray-200" htmlFor="name">
-                    Name
-                  </label>
-                  <input
-                    autoComplete="off"
-                    className="w-full px-4 py-3 text-base leading-tight text-white bg-transparent border border-gray-500 border-solid shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="name"
-                    type="text"
-                    placeholder="Your name"
-                  />
                 </div>
-                <div className="my-4">
-                  <label
-                    className="block mb-2 text-sm text-gray-200"
-                    htmlFor="bioDescription"
-                  >
-                    Bio Description
-                  </label>
-                  <input
-                    autoComplete="off"
-                    className="w-full px-4 py-3 text-base leading-tight text-white bg-transparent border border-gray-500 border-solid shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="bioDescription"
-                    type="text"
-                    placeholder="Bio Description"
-                  />
+              </React.Fragment>
+            ) : (
+              <>
+                <div className="profile-panel ">
+                  <PanelHeader  title="Profile" />
+                  <form action="" className="p-5 profile-form">
+                    <FileUploader
+                      setFileUploaded={setFileUploaded}
+                      onChange={onFileChange}
+                    />
+                    <div className="my-8">
+                      <label className="block mb-2 text-sm text-gray-200" htmlFor="name">
+                        Name
+                      </label>
+                      <input
+                        autoComplete="off"
+                        className="w-full px-4 py-3 text-base leading-tight text-white bg-transparent border border-gray-500 border-solid shadow appearance-none focus:outline-none focus:shadow-outline"
+                        id="name"
+                        type="text"
+                        placeholder="Your name"
+                      />
+                    </div>
+                    <div className="my-4">
+                      <label
+                        className="block mb-2 text-sm text-gray-200"
+                        htmlFor="bioDescription"
+                      >
+                        Bio Description
+                      </label>
+                      <input
+                        autoComplete="off"
+                        className="w-full px-4 py-3 text-base leading-tight text-white bg-transparent border border-gray-500 border-solid shadow appearance-none focus:outline-none focus:shadow-outline"
+                        id="bioDescription"
+                        type="text"
+                        placeholder="Bio Description"
+                      />
+                    </div>
+                  </form>
                 </div>
-              </form>
-            </div>
+              </>
+            )}
           </>
-        )}
-      </>
-    </SlidingPanel>
+        </SlidingPanel>
+      </div>
+    </div>
+    </div>
   );
 };

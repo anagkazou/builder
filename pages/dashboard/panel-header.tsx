@@ -2,15 +2,21 @@ import Image from "next/image";
 import arrowLeft from "../../assets/left-arrow.svg";
 import cancelIcon from "../../assets/cancel.svg";
 import { useDashboardContextValue, PanelEnums } from "./context/dashboard-context";
+import { Views } from "./side-panels/section-panels";
+
 type PanelHeaderType = {
   title: string;
+  setViewState?: any;
+  viewState?: any;
 };
-export const PanelHeader: React.FC<PanelHeaderType> = ({ title }) => {
+export const PanelHeader: React.FC<PanelHeaderType> = ({ title, setViewState, viewState }) => {
   const { setPanelState, panelState } = useDashboardContextValue();
 
   return (
-    <div className="style-panel__header px-5 ">
-      <div className="style-panel__header--icon"></div>
+    <div className="style-panel__header px-5 w-screen">
+      <div className="style-panel__header--icon" onClick={() => setViewState(Views.MAIN)}><Image alt={"cancel icon"}
+                                                                                                 src={cancelIcon} />
+      </div>
       <p className="style-panel__header--text">{title} </p>
 
       <div
@@ -20,7 +26,7 @@ export const PanelHeader: React.FC<PanelHeaderType> = ({ title }) => {
           setPanelState(PanelEnums.CLOSE);
         }}
       >
-        <Image src={cancelIcon} />
+        <Image alt={"cancel icon"} src={cancelIcon} />
       </div>
     </div>
   );

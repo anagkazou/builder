@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PanelEnums, useDashboardContextValue } from "./context/dashboard-context";
 import { ProfilePanel } from "./side-panels/profile-panel";
-import { SectionPanel } from "./side-panels/sections-panel";
+import { SectionPanel } from "./side-panels/section-panels";
 import { StylePanel } from "./side-panels/style-panel";
 type PanelsProps = {
   setOpenPanel: any; // Todo: Type this properly
