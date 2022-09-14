@@ -4,6 +4,7 @@ import { RootState } from "../..";
 export type TextBox = {
   title: string;
   content: string;
+  type:string;
 };
 export type Sections = {
   items: Array<TextBox>;
