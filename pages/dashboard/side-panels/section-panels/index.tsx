@@ -1,64 +1,49 @@
-import { width } from "@mui/system";
-import React, { useEffect, useId, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import SlidingPanel from "react-sliding-side-panel";
-import { addNewSectionItem, selectSections } from "../../../../redux/features/sections/sections.slice";
+import { selectSections } from "../../../../redux/features/sections/sections.slice";
 import { PanelEnums, useDashboardContextValue } from "../../context/dashboard-context";
 import { PanelHeader } from "../../panel-header";
 import TextBoxEditor from "./text-box-editor";
-import { number } from "prop-types";
+import { Links } from "./links";
+
 export enum Views {
   MAIN = "MAIN",
   TEXT_BOX = "TEXT_BOX",
+  LINKS = "LINKS"
 }
+
 type SectionPanelPropType = {
   openPanel: string;
   setOpenPanel: any;
 };
 
-export const SectionPanel: React.FC<SectionPanelPropType> = ({
-                                                               openPanel,
-                                                               setOpenPanel
-                                                             }) => {
+export const SectionPanel: React.FC<SectionPanelPropType> = ({}) => {
   const { setPanelState, panelState } = useDashboardContextValue();
-  const dispatch = useDispatch();
   const sectionState = useSelector((selectSections));
-  const uid = useId();
-  const [state, setState] = useState({
-    type: "TEXTBOX",
-    title: "",
-    content: ""
-  });
-  const handleChange = (event: any) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.value
-    });
-  };
+
   const [viewState, setViewState] = useState<Views>(Views.MAIN);
 
   useEffect(() => {
-      if(viewState === Views.TEXT_BOX) setPanelHeight(55);
-    if(viewState === Views.MAIN) setPanelHeight(70)
+    if (viewState === Views.TEXT_BOX) setPanelHeight(55);
+    if (viewState === Views.MAIN) setPanelHeight(70);
 
   }, [viewState]);
 
-  const resetViews = ()=> {
+  const resetViews = () => {
     setViewState(Views.MAIN);
     setPanelHeight(70);
-  }
+  };
 
   const [panelHeight, setPanelHeight] = useState<number>(70);
-  useEffect(() => {
-    console.log("IIIII::", state);
-  }, [state]);
+
   return (
     <SlidingPanel
       type={"bottom"}
       isOpen={panelState === PanelEnums.SECTIONS}
       size={panelHeight}
       backdropClicked={() => setPanelState(PanelEnums.CLOSE)}
-       onClosed={resetViews}
+      onClosed={resetViews}
     >
       <div className="section-panel">
         <PanelHeader title={"Sections"} setViewState={setViewState} viewState={viewState} />
@@ -99,18 +84,21 @@ export const SectionPanel: React.FC<SectionPanelPropType> = ({
                 <div role="button" className="more-sections__section bg-slate-400 py-3">
                   Socials
                 </div>
-                <div role="button" className="more-sections__section bg-slate-400 py-3" onClick={()=>setViewState(Views.TEXT_BOX)}>
+                <div role="button" className="more-sections__section bg-slate-400 py-3"
+                     onClick={() => setViewState(Views.TEXT_BOX)}>
                   Text Box
                 </div>
-                <div role="button" className="more-sections__section bg-slate-400 py-3">
+                <div role="button" className="more-sections__section bg-slate-400 py-3"
+                     onClick={() => setViewState(Views.LINKS)}>
+
                   Links
                 </div>
               </div>
             </div>
           </div>
           }
-          {viewState == Views.TEXT_BOX && <TextBoxEditor  />}
-
+          {viewState == Views.TEXT_BOX && <TextBoxEditor />}
+          {viewState == Views.LINKS && <Links />}
         </div>
       </div>
 
