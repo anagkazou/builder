@@ -1,14 +1,16 @@
 .section-panel{
 
 
-  .text-box-editor, .sections-body__main{
-    -webkit-animation-duration: .2s;
-    animation-duration: .3s;
-    animation-delay: .3s;
+  .text-box-editor, .sections-body__main, .section_links{
+    -webkit-animation-duration: .1s;
+    animation-duration: .1s;
+    animation-delay: .2s;
     -webkit-animation-delay: .2s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
   }
+
+
 }
 
 .more-sections, .my-sections{
