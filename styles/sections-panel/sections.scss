@@ -1,7 +1,7 @@
-.section-panel{
+.section-panel {
 
 
-  .text-box-editor, .sections-body__main, .section_links{
+  .text-box-editor, .sections-body__main, .section_links, .socials-view {
     -webkit-animation-duration: .1s;
     animation-duration: .1s;
     animation-delay: .2s;
@@ -13,12 +13,13 @@
 
 }
 
-.more-sections, .my-sections{
-    &__section:not(:last-child){
-      margin:  0.75rem 0;
-    }
+.more-sections, .my-sections {
+  &__section:not(:last-child) {
+    margin: 0.75rem 0;
+  }
 
 }
+
 @-webkit-keyframes fadeInLeft {
   0% {
     opacity: 0;
@@ -46,7 +47,22 @@
   animation-name: fadeInLeft;
 }
 
-.sections-body{
-    height: 80%;
+.sections-body {
+  height: 80%;
 
+}
+
+.socials-view {
+  &__grid {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, auto);
+    width: 100%;
+    grid-column-gap: 0px;
+    gap: .4rem;
+
+    &--item {
+      border: 1px solid lightslategray;
+      padding: 12px 6px;
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../..";
+import { Views } from "../../../pages/dashboard/side-panels/section-panels";
 
 export type TextBox = {
   title: string;
@@ -32,16 +33,31 @@ export const SectionSLice = createSlice({
       state.items.slice(action.payload, 1);
     },
     addNewLinkItem: (state, action) => {
-      const i = state.items.findIndex((item, index) => item.type == "LINKS");
+      const i = state.items.findIndex((item, index) => item.type == Views.LINKS);
       //  links.push(action.payload);
-      console.log("LINKS::", i)
+      console.log("LINKS::", i);
       if (i !== -1) {
         let linksObj = state.items[i];
         // @ts-ignore
-        linksObj.links= [...linksObj.links, action.payload];
+        linksObj.links = [...linksObj.links, action.payload];
       } else {
         state.items.push({
-          type: "LINKS",
+          type: Views.LINKS,
+          links: [action.payload]
+        });
+      }
+    },
+    addNewSocialLink: (state, action) => {
+      const i = state.items.findIndex((item, index) => item.type == Views.SOCIALS);
+      //  links.push(action.payload);
+      console.log("LINKS::", i);
+      if (i !== -1) {
+        let linksObj = state.items[i];
+        // @ts-ignore
+        linksObj.links = [...linksObj.links, action.payload];
+      } else {
+        state.items.push({
+          type: Views.SOCIALS,
           links: [action.payload]
         });
       }
@@ -49,7 +65,7 @@ export const SectionSLice = createSlice({
   }
 });
 
-export const { addNewSectionItem,addNewLinkItem } = SectionSLice.actions;
+export const { addNewSectionItem, addNewLinkItem } = SectionSLice.actions;
 
 export default SectionSLice.reducer;
 
