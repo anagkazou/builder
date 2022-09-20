@@ -6,11 +6,13 @@ import { PanelEnums, useDashboardContextValue } from "../../context/dashboard-co
 import { PanelHeader } from "../../panel-header";
 import TextBoxEditor from "./text-box-editor";
 import { Links } from "./links";
+import { SocialsView } from "./socials-view";
 
 export enum Views {
   MAIN = "MAIN",
   TEXT_BOX = "TEXT_BOX",
-  LINKS = "LINKS"
+  LINKS = "LINKS",
+  SOCIALS = "SOCIALS"
 }
 
 type SectionPanelPropType = {
@@ -46,7 +48,8 @@ export const SectionPanel: React.FC<SectionPanelPropType> = ({}) => {
       onClosed={resetViews}
     >
       <div className="section-panel">
-        <PanelHeader title={"Sections"} setViewState={setViewState} viewState={viewState} />
+        <PanelHeader title={"Sections"} setViewState={setViewState}
+                     viewState={viewState} />
 
         {/*<div className="test-form">
           <input onChange={handleChange} name="title" type="text" />
@@ -63,42 +66,48 @@ export const SectionPanel: React.FC<SectionPanelPropType> = ({}) => {
         </div>*/}
 
         <div className="flex flex-row sections-body">
-          {viewState == Views.MAIN && <div className="w-screen px-4 sections-body__main fadeInLeft">
+          {viewState == Views.MAIN &&
+            <div className="w-screen px-4 sections-body__main fadeInLeft">
 
-            <h3> My sections</h3>
-            <div className="my-sections">
-              {
-                sectionState.items.length ?
-                  sectionState.items.map((el, i) => <div className="my-sections__section bg-slate-400 py-3"
-                                                         key={i}> {el.type}</div>)
-                  : <div className="my-sections__empty-state border-2 border-amber-500 p-3"
-                  > Add new sections</div>
-              }
-            </div>
+              <h3> My sections</h3>
+              <div className="my-sections">
+                {
+                  sectionState.items.length ?
+                    sectionState.items.map((el, i) => <div
+                      className="my-sections__section bg-slate-400 py-3"
+                      key={i}> {el.type}</div>)
+                    : <div
+                      className="my-sections__empty-state border-2 border-amber-500 p-3"
+                    > Add new sections</div>
+                }
+              </div>
 
-            <div className="more-sections__wrapper">
-              <h3> Add More sections</h3>
+              <div className="more-sections__wrapper">
+                <h3> Add More sections</h3>
 
-              <div className="more-sections">
+                <div className="more-sections">
 
-                <div role="button" className="more-sections__section bg-slate-400 py-3">
-                  Socials
-                </div>
-                <div role="button" className="more-sections__section bg-slate-400 py-3"
-                     onClick={() => setViewState(Views.TEXT_BOX)}>
-                  Text Box
-                </div>
-                <div role="button" className="more-sections__section bg-slate-400 py-3"
-                     onClick={() => setViewState(Views.LINKS)}>
+                  <div role="button" className="more-sections__section bg-slate-400 py-3"
+                       onClick={() => setViewState(Views.SOCIALS)}>
+                    Socials
+                  </div>
+                  <div role="button" className="more-sections__section bg-slate-400 py-3"
+                       onClick={() => setViewState(Views.TEXT_BOX)}>
+                    Text Box
+                  </div>
+                  <div role="button" className="more-sections__section bg-slate-400 py-3"
+                       onClick={() => setViewState(Views.LINKS)}>
 
-                  Links
+                    Links
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           }
           {viewState == Views.TEXT_BOX && <TextBoxEditor />}
           {viewState == Views.LINKS && <Links />}
+          {viewState == Views.SOCIALS &&
+            <SocialsView setPanelHeight={setPanelHeight} />}
         </div>
       </div>
 
