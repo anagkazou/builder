@@ -16,7 +16,7 @@ export const DashboardPreview: React.FC = () => {
       <div className=" bg-slate-300 dashboard-preview text-black">
         <div className=" text-xs w-96 text-red-600 "
              style={{ width: "100px" }}>
-          {JSON.stringify(sectionState)}
+          {/*{JSON.stringify(sectionState)}*/}
         </div>
       </div>
     </>

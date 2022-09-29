@@ -17,6 +17,7 @@ export class Page {
   handle;
   pageId: string | undefined;
   description?: string | undefined;
+  title?: string | undefined;
   profileImage?: string;
   coverImage?: string;
   sections?: Array<socialsType | EmbedsType>;
@@ -26,6 +27,7 @@ export class Page {
     handle: string | undefined,
     pageId: string,
     description?: string | undefined,
+    title?: string | undefined,
     profileImage?: string,
     coverImage?: any,
     sections?: Array<socialsType | EmbedsType>,
@@ -105,6 +107,9 @@ export const PageSlice = createSlice({
     setPageDescription: (state, action) => {
       state.description = action.payload;
     },
+    setPageTitle: (state, { payload }) => {
+      state.title = payload.title;
+    },
     setPageFromFirestore: (state, { payload }) => {
       state.handle = payload.handle;
      // state.pageId = payload.pageId;
@@ -112,8 +117,15 @@ export const PageSlice = createSlice({
       
       console.log("SETPAGE", state);
     },
+    setPageImage: (state, { payload }) => {
+      state.profileImage = payload;
+
+    },
+    setPageCoverImage: (state, { payload }) => {
+      state.coverImage = payload;
+    },
   },
 });
 export const selectpage = (state: RootState) => state.page;
-export const { setPageFromFirestore } = PageSlice.actions;
+export const { setPageFromFirestore, setPageDescription, setPageTitle, setPageCoverImage, setPageImage } = PageSlice.actions;
 export default PageSlice.reducer;
