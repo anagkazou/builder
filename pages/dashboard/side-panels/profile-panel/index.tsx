@@ -6,60 +6,53 @@ import Cropper from "react-easy-crop";
 import SlidingPanel from "react-sliding-side-panel";
 import cancelIcon from "../../../../assets/cancel.svg";
 import { storage } from "../../../../firebase";
-import { PanelEnums, useDashboardContextValue } from "../../context/dashboard-context";
+import {
+  PanelEnums, useDashboardContextValue
+} from "../../context/dashboard-context";
 import { PanelHeader } from "../../panel-header";
 import { getCroppedImg, getRotatedImage } from "../../utils/canvas-utils";
 import { FileUploader } from "./file-uploader";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectpage, setPageCoverImage, setPageImage
+} from "../../../../redux/features/page-data/page-data.slice";
+import { ProfileImage } from "./profile-image";
+import { CoverImage } from "./cover-image";
+import { ImageCropper } from "./image-cropper";
 
 const ORIENTATION_TO_ANGLE: any = {
-  "3": 180,
-  "6": 90,
-  "8": -90,
+  "3": 180, "6": 90, "8": -90
 };
+
+export const enum ActiveUpload {
+  PROFILE_IMAGE = "PROFILE-IMAGE", COVER_IMAGE = "COVER-IMAGE"
+}
 
 export const ProfilePanel = () => {
   const { panelState } = useDashboardContextValue();
   const [fileUploaded, setFileUploaded] = useState<any>();
 
-  const [imageSrc, setImageSrc] = React.useState(null);
+  const [imageSrc, setImageSrc] = useState(null);
+  const [activeUpload, setActiveUpload] = useState<string | null>(null);
+  const [profileImageSrc, setProfileImageSrc] = useState(null);
+  const [coverImageSrc, setCoverImageSrc] = useState(null);
+
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState<any>(0);
   const [zoom, setZoom] = useState<any>(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
-  const [croppedImage, setCroppedImage] = useState(null);
+  const [croppedImage, setCroppedImage] = useState<any>();
   const [sliderState, setSliderState] = useState<string>("SCALE");
 
-  const [imageUpload, setImageUpload] = useState<any>(null);
-  const [imageUrls, setImageUrls] = useState([]);
-
-  const imagesListRef = ref(storage, "images/");
-
-  //const dispatch = useDispatch
-
-  const uploadFile = () => {};
 
   const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: any) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
-
-  const showCroppedImage = useCallback(async () => {
-    try {
-      const croppedImage: any = await getCroppedImg(
-        imageSrc,
-        croppedAreaPixels,
-        rotation
-      );
-      console.log("donee", { croppedImage });
-      setCroppedImage(croppedImage);
-    } catch (e) {
-      console.error(e);
-    }
-  }, [imageSrc, croppedAreaPixels, rotation]);
-
-  const onClose = useCallback(() => {
-    setCroppedImage(null);
-  }, []);
-
+  const dispatch = useDispatch();
+  const pageState = useSelector(selectpage);
+  const initialHeight = 60;
+  const activeCropHeight = 100;
+  const [panelHeight, setPanelHeight] = useState<number>(initialHeight)
   function readFile(file: any) {
     return new Promise((resolve) => {
       const reader = new FileReader();
@@ -72,24 +65,56 @@ export const ProfilePanel = () => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       let imageDataUrl: any = await readFile(file);
-
+      console.log("FILE:::", imageDataUrl);
       // apply rotation if needed
       // const orientation = await getOrientation(file);
       // const rotation = ORIENTATION_TO_ANGLE[orientation];
       if (rotation) {
         imageDataUrl = await getRotatedImage(imageDataUrl, rotation);
       }
-
-      setImageSrc(imageDataUrl);
+      console.log("EVENT::", e.target.name);
+      if (e.target.name == ActiveUpload.COVER_IMAGE) {
+        setActiveUpload(ActiveUpload.COVER_IMAGE);
+        setPanelHeight(activeCropHeight)
+        setCoverImageSrc(imageDataUrl);
+      } else {
+        setActiveUpload(ActiveUpload.PROFILE_IMAGE);
+        setProfileImageSrc(imageDataUrl);
+      }
     }
   };
 
+
+  const saveImage = async (event: any) => {
+    event.preventDefault();
+    const img = activeUpload === ActiveUpload.PROFILE_IMAGE ? profileImageSrc : coverImageSrc
+    try {
+      const croppedImage = await getCroppedImg(img, croppedAreaPixels, rotation);
+      console.log("SAVEEEE", croppedImage);
+      dispatch( activeUpload === ActiveUpload.PROFILE_IMAGE ?  setPageImage(croppedImage): setPageCoverImage(croppedImage));
+      reset();
+    } catch (e) {
+      console.log(e);
+    }
+    //console.log("SAVEEEE", croppedImage);
+
+  };
+
+  const reset = () => {
+    setActiveUpload(null);
+    setImageSrc(null);
+    setCroppedImage(null);
+    setProfileImageSrc(null);
+    setCoverImageSrc(null);
+    setRotation(0)
+    setPanelHeight(initialHeight)
+  };
   useEffect(() => {
     console.log(fileUploaded, "seeeeeeeeeeeeeeeenn");
   }, [fileUploaded]);
 
-  return (
-    <div className="fixed z-50">
+
+  return (<div className="fixed z-50">
 
     <div className="relative z-50">
       <div className="fixed bottom-0 ">
@@ -97,94 +122,35 @@ export const ProfilePanel = () => {
           // panelClassName="dashboard-panel"
           type="bottom"
           isOpen={panelState === PanelEnums.PROFILE}
-          size={60}
+          size={panelHeight}
         >
           <>
-            {imageSrc ? (
-              <React.Fragment>
-                <div className="cropper__header">
-                  <div className="flex items-center cropper__header--right ">
-                    <button className="mr-4" onClick={() => setImageSrc(null)}>
-                      <Image width={28} height={28} src={cancelIcon} />
-                    </button>
-                    <Typography>Crop Photo</Typography>
-                  </div>
-
-                  <Button>Save</Button>
-                </div>
-                <div className="cropper__wrapper">
-                  <Cropper
-                    image={imageSrc}
-                    crop={crop}
-                    rotation={rotation}
-                    zoom={zoom}
-                    aspect={1}
-                    onCropChange={setCrop}
-                    onRotationChange={setRotation}
-                    onCropComplete={onCropComplete}
-                    onZoomChange={setZoom}
-                    cropShape="round"
-                  />
-                </div>
-                <div className="controls">
-                  <div className="slider__wrapper">
-                    {sliderState === "SCALE" ? (
-                      <>
-                        <Typography>Zoom</Typography>
-                        <Slider
-                          value={zoom}
-                          min={1}
-                          max={3}
-                          step={0.1}
-                          aria-labelledby="Zoom"
-                          onChange={(e, zoom) => setZoom(zoom)}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <Typography variant="overline">Rotation</Typography>
-                        <Slider
-                          value={rotation}
-                          min={0}
-                          max={360}
-                          step={1}
-                          aria-labelledby="Rotation"
-                          onChange={(e, rotation) => setRotation(rotation)}
-                        />
-                      </>
-                    )}
-                  </div>
-
-                  <div className="toggle-slider">
-                    <button
-                      className="toggle-slider__option"
-                      onClick={() => setSliderState("ROTATE")}
-                    >
-                      Rotate
-                    </button>
-                    <button
-                      onClick={() => setSliderState("SCALE")}
-                      className="toggle-slider__option"
-                    >
-                      Scale
-                    </button>
-                  </div>
-                  {/* <Button onClick={showCroppedImage} variant="contained" color="primary">
-                Show Result
-              </Button> */}
-                </div>
-              </React.Fragment>
-            ) : (
-              <>
+            <>
+              {activeUpload ? (
+                <ImageCropper reset={reset} saveImage={saveImage} crop={crop}
+                              setCrop={setCrop}
+                              image={activeUpload === ActiveUpload.PROFILE_IMAGE ? profileImageSrc : coverImageSrc}
+                              activeUpload={activeUpload}
+                              onCropComplete={onCropComplete}
+                              rotation={rotation}
+                              zoom={zoom}
+                              onChange={onFileChange}
+                              setRotation={setRotation}
+                              setZoom={setZoom}
+                />) : (<>
                 <div className="profile-panel ">
-                  <PanelHeader  title="Profile" />
+                  <PanelHeader title="Profile" />
                   <form action="" className="p-5 profile-form">
-                    <FileUploader
-                      setFileUploaded={setFileUploaded}
-                      onChange={onFileChange}
-                    />
+                    <div
+                      className="image-upload flex align-center place-content-between space-x-2 h-24 ">
+                      <ProfileImage image={pageState.profileImage}
+                                    onChange={onFileChange} />
+                      <CoverImage image={pageState.coverImage}
+                                  onChange={onFileChange} />
+                    </div>
                     <div className="my-8">
-                      <label className="block mb-2 text-sm text-gray-200" htmlFor="name">
+                      <label className="block mb-2 text-sm text-gray-200"
+                             htmlFor="name">
                         Name
                       </label>
                       <input
@@ -212,12 +178,12 @@ export const ProfilePanel = () => {
                     </div>
                   </form>
                 </div>
-              </>
-            )}
+              </>)}
+            </>
+
           </>
         </SlidingPanel>
       </div>
     </div>
-    </div>
-  );
+  </div>);
 };
