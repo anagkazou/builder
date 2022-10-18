@@ -3,13 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type InputComponentProps = {
-  refProp?: string, title?: string,label:string, handleOnBlur: Function, clearInputField: any, handleChange: ChangeEventHandler, name: string, submitHandler: Function, inputFieldInFocus?: string, setRef: Function, handleFocus: (refProp: string) => void, placeHolderText?: string, inputValue: any
+  saved?: boolean, refProp?: string, title?: string, label: string, handleOnBlur: Function, clearInputField: any, handleChange: ChangeEventHandler, name: string, submitHandler: Function, inputFieldInFocus?: string, setRef: Function, handleFocus: (refProp: string) => void, placeHolderText?: string, inputValue: any
 }
 export const InputComponent = ({
                                  refProp,
                                  title,
                                  setRef,
                                  name,
+                                 saved,
                                  submitHandler,
                                  inputFieldInFocus,
                                  handleFocus,
@@ -17,11 +18,12 @@ export const InputComponent = ({
                                  inputValue,
                                  handleChange,
                                  clearInputField,
-                                 placeHolderText,label
+                                 placeHolderText,
+                                 label
                                }: InputComponentProps) => {
 
   useEffect(() => {
-    console.log("INPUTCOMP",inputValue);
+    console.log("INPUTCOMP", inputValue);
   }, []);
   return (< div className="flex items-center ">
     <div
@@ -29,7 +31,7 @@ export const InputComponent = ({
     >
       <label className="block mb-2 text-sm "
              htmlFor="name">
-        {label&&label}
+        {label && label}
       </label>
       <form onSubmit={(event) => {
         event.preventDefault();
@@ -50,26 +52,28 @@ export const InputComponent = ({
           onBlur={() => handleOnBlur(name)}
           onChange={handleChange}
         />
-        <button onMouseDown={event=> clearInputField(event)}
-                className={`border-0 bg-transparent  ${inputFieldInFocus == name ? "block" : "hidden"}`}>
-          <FontAwesomeIcon
-            icon={faXmark} width={20} size={"2x"}
-            color={"#000"} /></button>
+        {/*<button onMouseDown={() => clearInputField()}*/}
+        {/*        className={`border-0 bg-transparent  ${inputFieldInFocus == name ? "block" : "hidden"}`}>*/}
+        {/*  <FontAwesomeIcon*/}
+        {/*    icon={faXmark} width={20} size={"2x"}*/}
+        {/*    color={"#000"} /></button>*/}
+
+        <button
+          className={`text-sm flex place-items-center hover:cursor-pointer bg-transparent px-2 h-fit border-none ${inputFieldInFocus == name ? "block" : "hidden"}`}
+          onMouseDown={(event) => {
+            event.preventDefault();
+            submitHandler();
+          }}
+        ><FontAwesomeIcon icon={faCheck}
+                          size={"2x"}
+                          color={"#000"} />
+        </button>
       </form>
       <span>
 
                       </span>
     </div>
-    <button
-      className={`text-sm flex place-items-center hover:cursor-pointer bg-transparent px-2 h-fit border-none ${inputFieldInFocus == name ? "block" : "hidden"}`}
-      onMouseDown={(event) => {
-        event.preventDefault();
-        submitHandler();
-      }}
-    ><FontAwesomeIcon icon={faCheck}
-                      size={"2x"}
-                      color={"#000"} />
-    </button>
+  {/*  Button was here*/}
   </div>);
 };
 
