@@ -61,6 +61,7 @@ export const SocialsView: React.FC<SocialView> = ({ setPanelHeight }) => {
 
   }
 
+  //Todo: make this a custom hook
   const isKeyboardOpen = useDetectKeyboardOpen();
 
   useEffect(() => {
@@ -74,7 +75,7 @@ export const SocialsView: React.FC<SocialView> = ({ setPanelHeight }) => {
       inputRefs.forEach((inputRef: any) => inputRef?.blur());
     }
   }, [isKeyboardOpen]);
-  const [saved, setSavedState] = useState<boolean>(false);
+  const [saved, setSaved] = useState<boolean>(false);
 
   useEffect(() => {
     if (saved) {
@@ -131,7 +132,7 @@ export const SocialsView: React.FC<SocialView> = ({ setPanelHeight }) => {
     setSocialLinks(prev => prev.map((el, i) => i === index ? {
       ...el, enabled: !!value.length
     } : el));
-    setSavedState(true);
+    setSaved(true);
 
     setInputFieldInFocus(null);
     setPanelHeight(70);
@@ -147,18 +148,19 @@ export const SocialsView: React.FC<SocialView> = ({ setPanelHeight }) => {
     } : el));
 
 
-    setSavedState(false);
+    setSaved(false);
     //  setTempState()
     console.log("NEW STATE:::", socialLinks[index]);
   };
-  return (<div className="w-screen px-4 pt-4 socials-view fadeInLeft">
-    <div className="pb-4 socials-view__links">
+
+  return (<div className="w-screen px-4 pt-4 pb-14 socials-view fadeInLeft">
+    <div className="socials-view__links">
       {socialLinks.map((item, index) => (<form key={index}
                                                className={`flex flex-row mb-2 
                                                ${!item?.enabled && inputFieldInFocus !== index ? "absolute -left-full" : ""}
                                                `}>
         <div
-          className={`input-wrapper flex w-96 dark:bg-gray-700 rounded-lg border-b-neutral-300 ${inputFieldInFocus !== index && inputFieldInFocus !== null ? "hidden" : ""}`}>
+          className={`input-wrapper flex w-96  rounded-lg border-b-neutral-300 ${inputFieldInFocus !== index && inputFieldInFocus ? "hidden" : ""}`}>
 
           <div className={`social flex items-center  `}>
             <FontAwesomeIcon icon={getSocialIcon(item.network)} size={"1x"}
@@ -174,20 +176,26 @@ export const SocialsView: React.FC<SocialView> = ({ setPanelHeight }) => {
                  name={item?.network}
                  autoFocus={true}
                  ref={setRef}
-                 className={`  p-2.5 w-full text-sm text-gray-900 dark:text-gray-50  border-none bg-transparent`}
-                 placeholder={item?.network} />
+                 className={`  p-2.5 w-full text-sm text-gray-900   border-none bg-transparent`}
+                 placeholder={item?.network}
+
+                 type="text" />
 
           <button
-            className={`text-sm text-gray-900 bg-transparent  border-none ${inputFieldInFocus == index ? "block" : "hidden"} `}
-          ><FontAwesomeIcon icon={faXmark} size={"2x"} color={"#fff"} />
+            className={`text-sm  bg-transparent  border-none ${inputFieldInFocus == index ? "block" : "hidden"} `}
+            onClick={(event) => event.preventDefault()}
+          ><FontAwesomeIcon icon={faXmark} size={"2x"} color={"#000"} />
           </button>
         </div>
 
         <button
-          className={`text-sm text-gray-900 bg-transparent  border-none ${inputFieldInFocus == index ? "block" : "hidden"} `}
-          onClick={(event) => saveUrl(index, event)}
+          className={`text-sm  bg-transparent  border-none ${inputFieldInFocus == index ? "block" : "hidden"} `}
+          onClick={(event) => {
+            event.preventDefault();
+            saveUrl(index, event);
+          }}
         >
-          <FontAwesomeIcon icon={faCheck} color={"#fff"} /></button>
+          <FontAwesomeIcon icon={faCheck} color={"#000"} /></button>
       </form>))}
     </div>
 

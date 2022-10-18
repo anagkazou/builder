@@ -22,14 +22,12 @@ export const CoverImage:React.FC<CoverImageType> = ({image, onChange}) => {
     });
   };
 
-  useEffect(()=> {
-    console.log(image)
-  }, [image])
+
   return(
     <>
       {image ?
-        <img src={image} className={"w-2/3 h-auto"} /> : <div
-          className="image-upload__profile bg-zinc-800 flex place-content-center items-center w-2/3 "
+        <img src={image} className={"w-2/3 h-auto"} onClick={handleClick} /> : <div
+          className="image-upload__profile border-orange-500 flex place-content-center items-center w-2/3 "
           role={"button"}
           onClick={handleClick}
         >
