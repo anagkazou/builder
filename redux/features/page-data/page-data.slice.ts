@@ -13,21 +13,20 @@ import { setUserHandle as setUserHandle } from "../auth/authSlice";
 //   sections: Array<socialsType | EmbedsType>;
 // }
 
+//Todo: Fix this thing
 export class Page {
-  handle;
-  pageId: string | undefined;
-  description?: string | undefined;
-  title?: string | undefined;
+  handle:string|null;
+  // pageId: string | undefined;
+  pageMeta?:PageMeta;
   profileImage?: string;
   coverImage?: string;
   sections?: Array<socialsType | EmbedsType>;
   status?: string;
   createdAt?: Date;
   constructor(
-    handle: string | undefined,
+    handle: string | null,
     pageId: string,
-    description?: string | undefined,
-    title?: string | undefined,
+    pageMeta?:PageMeta,
     profileImage?: string,
     coverImage?: any,
     sections?: Array<socialsType | EmbedsType>,
@@ -35,8 +34,7 @@ export class Page {
     createdAt?: Date
   ) {
     this.handle = handle;
-    this.pageId = pageId;
-    this.description = description;
+    this.pageMeta= pageMeta;
     this.profileImage = profileImage;
     this.coverImage = coverImage;
     this.sections = sections;
@@ -52,11 +50,16 @@ export type EmbedsType = {
   name: string;
   url: string;
 };
-
+export type PageMeta= {
+  title:undefined|string,
+  description:undefined|string,
+}
 const initialState: Page = {
-  pageId: undefined,
-  handle: undefined,
-  description: undefined,
+  handle: null,
+  pageMeta:{
+    title:'undefined',
+    description:'undefined'
+  }
 };
 
 export const createNewPageFOrNewUser = createAsyncThunk(
@@ -104,17 +107,15 @@ export const PageSlice = createSlice({
       // state.pageId = action.payload.pageId;
       state.handle = action.payload.handle;
     },
-    setPageDescription: (state, action) => {
-      state.description = action.payload;
+    setPageMeta: (state, action) => {
+      state.pageMeta = action.payload;
     },
-    setPageTitle: (state, { payload }) => {
-      state.title = payload.title;
-    },
+
     setPageFromFirestore: (state, { payload }) => {
       state.handle = payload.handle;
      // state.pageId = payload.pageId;
       state.createdAt = payload.createdAt;
-      
+
       console.log("SETPAGE", state);
     },
     setPageImage: (state, { payload }) => {
@@ -127,5 +128,5 @@ export const PageSlice = createSlice({
   },
 });
 export const selectpage = (state: RootState) => state.page;
-export const { setPageFromFirestore, setPageDescription, setPageTitle, setPageCoverImage, setPageImage } = PageSlice.actions;
+export const { setPageFromFirestore, setPageMeta, setPageCoverImage, setPageImage } = PageSlice.actions;
 export default PageSlice.reducer;

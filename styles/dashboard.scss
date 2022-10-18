@@ -58,7 +58,6 @@
 /* style Panel content */
 
 .style-panel__default {
-  color: white;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 5px;
@@ -68,7 +67,6 @@
 }
 
 .style-panel__header {
-  color: white;
   font-size: 10px;
   height: 35px;
   // transform: translateY(-25px);
@@ -76,7 +74,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  position: fixed;
+  bottom: 0;
   &--icon {
     width: 18px;
     height: 18px;
@@ -170,7 +169,6 @@ STYLE PANEL STYLES
     width: calc(100vw - 40px);
     height: auto;
     column-gap: 8px;
-    column-gap: 9px;
     row-gap: 0px;
   }
 
@@ -207,7 +205,6 @@ STYLE PANEL STYLES
 }
 .cropper__header {
   background: transparent;
-  color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -216,12 +213,11 @@ STYLE PANEL STYLES
   button {
     background: transparent;
     border: none;
-    color: white;
     height: 60px;
   }
 }
 .cropper__wrapper {
-  height: 60%;
+  height: 100vh;
   position: relative;
 }
 .controls {
@@ -232,7 +228,6 @@ STYLE PANEL STYLES
   height: 20%;
 
   button {
-    color: white;
   }
 }
 

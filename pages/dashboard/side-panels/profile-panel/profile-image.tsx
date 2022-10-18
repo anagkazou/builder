@@ -25,8 +25,8 @@ export const ProfileImage:React.FC<ProfileImageType> = ({image, onChange}) => {
   return(
       <>
         {image ?
-          <img src={image} className={"w-1/3 h-auto"}/> : <div
-            className="image-upload__profile bg-zinc-800 flex place-content-center items-center w-1/3 "
+          <img src={image} className={"w-1/3 h-auto"} onClick={handleClick}/> : <div
+            className="image-upload__profile  flex place-content-center items-center w-1/3 "
             role={"button"}
             onClick={handleClick}
           >

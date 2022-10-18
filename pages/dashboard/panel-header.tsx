@@ -22,7 +22,6 @@ export const PanelHeader: React.FC<PanelHeaderType> = ({ title, setViewState, vi
       <div
         className="style-panel__header--icon"
         onClick={() => {
-          console.log("TOUCHEDD");
           setPanelState(PanelEnums.CLOSE);
         }}
       >
