@@ -136,7 +136,7 @@ export const ProfilePanel = () => {
     if (saved) {
       console.log("touched");
       dispatch(setPageMeta(pageInfoState));
-      //inputRefs[inputFieldInFocus].blur();
+      Object.values(inputRefs).forEach((el:any)=> el.blur())
 
     }
   }, [saved]);
@@ -150,8 +150,6 @@ export const ProfilePanel = () => {
       });
     }
     document.addEventListener("keydown", (event) => {
-      console.log("User pressed: ", event.key);
-
       if (event.key === "Enter") {
         event.preventDefault();
         savePageMeta();
@@ -179,9 +177,9 @@ export const ProfilePanel = () => {
     }));
     console.log(value);
   };
-  const clearInputField = (event: any) => {
-    event.preventDefault();
-    console.log(event, "touched!!!!! Clear");
+  const clearInputField = () => {
+   // event.preventDefault();
+    console.log(inputFieldInFocus, "touched!!!!! Clear");
     setPageInfoState((prevState: any) => ({
       ...prevState, [inputFieldInFocus]: ""
     }));
@@ -194,14 +192,19 @@ export const ProfilePanel = () => {
       setPageInfoState((prev: any) => ({
         ...prev, [inputFieldInFocus]: temp
       }));
+      setInputFieldInFocus(null);
+
     }
-    setInputFieldInFocus(null);
 
   };
 
   const savePageMeta = () => {
     setSaved(true);
+
     setInputFieldInFocus(null);
+
+   if(saved) Object.values(inputRefs).forEach((el:any)=> el.blur())
+
   };
   const setRef = (ref: any, property: string) => {
     inputRefs[property] = ref;
@@ -257,7 +260,9 @@ export const ProfilePanel = () => {
                                     clearInputField={clearInputField}
                                     submitHandler={savePageMeta}
                                     placeHolderText={"Title"}
-                                    label={"Page title"} />
+                                    label={"Page title"}
+                                    saved={saved}
+                    />
                     <InputComponent setRef={setRef}
                                     inputValue={pageInfoState?.description}
                                     name={"description"}
@@ -268,7 +273,10 @@ export const ProfilePanel = () => {
                                     inputFieldInFocus={inputFieldInFocus}
                                     submitHandler={savePageMeta}
                                     placeHolderText={"Page description"}
-                                    label={"Enter page description"} />
+                                    label={"Enter page description"}
+                                    saved={saved}
+
+                    />
 
                     {/*<div className="flex items-center">*/}
                     {/*  <div*/}
