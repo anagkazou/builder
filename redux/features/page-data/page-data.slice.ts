@@ -1,6 +1,4 @@
-import { uuidv4 } from "@firebase/util";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAuth } from "firebase/auth";
 import { collection, doc, writeBatch } from "firebase/firestore";
 import { RootState } from "../..";
 import { db } from "../../../firebase";
@@ -57,8 +55,8 @@ export type PageMeta= {
 const initialState: Page = {
   handle: null,
   pageMeta:{
-    title:'undefined',
-    description:'undefined'
+    title:'default title',
+    description:'default description'
   }
 };
 

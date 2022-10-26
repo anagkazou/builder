@@ -1,72 +1,137 @@
 import React, { useEffect, useId, useState } from "react";
-import { Views } from "./index";
 import { useDashboardContextValue } from "../../context/dashboard-context";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewSectionItem, selectSections } from "../../../../redux/features/sections/sections.slice";
+import {
+   Links, SectionEnums, selectSections, TextArea
+} from "../../../../redux/features/sections/sections.slice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { Page } from "../../../../redux/features/page-data/page-data.slice";
+import useDetectKeyboardOpen from "use-detect-keyboard-open";
 
 export const TextBoxEditor = () => {
-  const { setPanelState, panelState } = useDashboardContextValue();
   const dispatch = useDispatch();
   const sectionState = useSelector((selectSections));
-  const uid = useId();
-  const [state, setState] = useState({
-    type: "TEXTBOX",
-    title: "",
-    content: ""
-  });
+
+  // const [state, setState] = useState({
+  //   type: "TEXTBOX", title: "", content: ""
+  // });
+  const [temp, setTemp] = useState<Page>();
+  //Todo: Explore using refs to store this value
+  const [inputFieldInFocus, setInputFieldInFocus] = useState<any>(null);
+  //Todo: fix the typing here.. llinks shouldnt need to be here but it errors out without it
+  const [textAreaState, setTextAreaState] = useState<TextArea | Links>();
+  const [saved, setSaved] = useState<boolean>(false);
+  const isKeyboardOpen = useDetectKeyboardOpen();
+  const inputRefs: any = {};
+
+
+  useEffect(() => {
+    const lastSectionItem = sectionState.items[sectionState.items.length - 1];
+
+    if (lastSectionItem.type == SectionEnums.TEXT_BOX) {
+      //  console.log(lastSectionItem.type, SectionEnums.TEXT_BOX)
+      setTextAreaState(lastSectionItem);
+    }
+
+    console.log(textAreaState, "TEXTAREASTATE");
+  }, []);
+
+  const setRef = (ref: any, property: string) => {
+    inputRefs[property] = ref;
+  };
   const handleChange = (event: any) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.value
-    });
+    // setTextAreaState({
+    //   ...textAreaState, [event.target.name]: event.target.value
+    // });
   };
 
-  return (
-    <div className="w-screen px-4 fadeInLeft text-box-editor">
-      <form className="mt-6">
-        <div className="mb-2">
-          <label
-            htmlFor="email"
-            className="block text-sm font-semibold text-white-800"
-          >
-            Title
-          </label>
+
+  const handleFocus = (inputInFocus: any) => {
+    console.log(textAreaState, "TEXTAREASTATE");
+    setTemp(inputRefs[inputInFocus].value);
+    setInputFieldInFocus(inputInFocus);
+    console.log("TEMP", temp);
+  };
+
+  return (<div className={`w-screen px-4 fadeInLeft text-box-editor `}>
+    <div className={`my-4 ${inputFieldInFocus && inputFieldInFocus !== 'title' ? "hidden" : ""}`} ref={ref => setRef(ref, "title")}
+    >
+
+      <label
+        htmlFor="email"
+        className="block text-sm font-semibold text-white-800"
+      >
+        Title
+      </label>
+      <div className="flex">
+
+        <div
+          className="input-container w-full flex place-items-center border-gray-500 border-solid shadow  ">
           <input
-            onChange={handleChange}
+            onChange={() => handleChange("title")}
             type="text"
             name="title"
-            className="block p-2.5 w-full text-sm text-white-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="text-base text-zinc-900 text-gr border-0  w-full leading-tight text-white border-none py-3 px-3 w-
+                         appearance-none"
             placeholder="Title"
+            onFocus={() => handleFocus("title")}
           />
-        </div>
-        <div className="my-8">
-          <label
-            htmlFor="password"
-            className="block text-sm font-semibold text-white-800"
-          >
-            Description
-          </label>
-          <textarea id="message" rows={4}
-                    name="description"
-                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Write a detailed description"></textarea>
 
         </div>
-
-        <div className="mt-6">
-          <button
-            onClick={(event) => {
-              event.preventDefault();
-              dispatch(addNewSectionItem(state));
-            }}
-            className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
-            Login
-          </button>
-        </div>
-      </form>
+        <button
+          className={`text-sm flex place-items-center hover:cursor-pointer bg-transparent px-2 h-fit border-none `}
+          onMouseDown={(event) => {
+            event.preventDefault();
+            // submitHandler();
+          }}
+        ><FontAwesomeIcon icon={faCheck}
+                          size={"2x"}
+                          color={"#000"} />
+        </button>
+      </div>
 
     </div>
-  );
+
+    <div className={`my-4 ${inputFieldInFocus && inputFieldInFocus !== 'description' ? "hidden" : ""}`} ref={ref => setRef(ref, "description")}>
+      <label
+        htmlFor="password"
+        className="block text-sm font-semibold text-white-800"
+      >
+        Description
+      </label>
+      <div className="flex ">
+
+        <div
+          className="text-area w-full flex place-items-center border-gray-500 border-solid shadow ">
+             <textarea id="message" rows={4}
+                       name="description"
+                       onChange={() => handleChange("description")}
+                       className="text-base text-zinc-900 text-gr border-0  w-full leading-tight text-white border-none py-3 px-3 w-
+                         appearance-none"
+                       placeholder="Write a detailed description"
+                       onFocus={() => handleFocus("description")}
+
+             ></textarea>
+
+        </div>
+        <button
+          className={`text-sm flex place-items-center hover:cursor-pointer bg-transparent px-2 h-fit border-none `}
+          onMouseDown={(event) => {
+            event.preventDefault();
+            // submitHandler();
+          }}
+        ><FontAwesomeIcon icon={faCheck}
+                          size={"2x"}
+                          color={"#000"} />
+        </button>
+      </div>
+
+    </div>
+
+
+  </div>);
 };
+//dispatch(addNewSectionItem(state));
 
 export default TextBoxEditor;

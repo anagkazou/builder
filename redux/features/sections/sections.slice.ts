@@ -2,7 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../..";
 import { Views } from "../../../pages/dashboard/side-panels/section-panels";
 
-export type TextBox = {
+
+export const enum SectionEnums{
+  TEXT_BOX="TEXTBOX",
+  LINK = "LINK",
+  EMBED="EMBED",
+
+}
+export type TextArea = {
   title: string; content: string; type: string;
 };
 export type Links = {
@@ -12,9 +19,10 @@ export type LinkItem = {
   description: string; url: string;
 }
 export type Sections = {
-  items: Array<TextBox | Links>;
+  items: Array<TextArea | Links>;
 };
 const initialState: Sections = { items: [] };
+
 export const DEFAULT_SOCIAL_LINKS = [{
   network: "Spotify", enabled: false, value: "", prefix: "", isUrl: true
 }, {
@@ -33,6 +41,12 @@ export const DEFAULT_SOCIAL_LINKS = [{
   network: "Envelope", enabled: false, isUrl: true, value: "", prefix: ""
 }];
 
+export const DEFAULT_TEXT_AREA_PAYLOAD: TextArea ={
+  type:SectionEnums.TEXT_BOX,
+  title:'',
+  content:''
+
+}
 /**todo:
  *
  * Get sections from firestore in page bucket
@@ -44,6 +58,8 @@ export const SectionSLice = createSlice({
       state.items = action.payload;
     }, addNewSectionItem: (state, action) => {
       state.items.push(action.payload);
+    }, addNewTextAreaItem: (state, { payload}) => {
+      state.items.push(payload);
     }, deleteSectionItem: (state, action) => {
       state.items.slice(action.payload, 1);
     },
@@ -52,7 +68,6 @@ export const SectionSLice = createSlice({
     addNewLinkItem: (state, action) => {
       const i = state.items.findIndex((item, index) => item.type == Views.LINKS);
       //  links.push(action.payload);
-      console.log("LINKS::", i);
       if (i !== -1) {
         let linksObj = state.items[i];
         // @ts-ignore
@@ -84,7 +99,7 @@ export const SectionSLice = createSlice({
 });
 
 export const {
-  addNewSectionItem, addNewLinkItem, saveSocialLinks
+  addNewSectionItem, addNewLinkItem, saveSocialLinks,addNewTextAreaItem
 } = SectionSLice.actions;
 
 export const selectSocialLinks = (state: RootState) => state.sections.items.findIndex((item, index) => item.type == Views.SOCIALS);

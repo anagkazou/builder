@@ -1,9 +1,9 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 type PanelsProps = {
   openPanel: string | "";
   setOpenPanel: any; // Todo: Type this properly
 };
-export const enum PanelEnums {
+export const enum DrawerEnums {
   CLOSE = "",
   SECTIONS = "SECTIONS",
   PROFILE = "PROFILE",
@@ -13,7 +13,7 @@ export const enum PanelEnums {
   CROP_COVER_PHOTO = "CROP_COVER_PHOTO",
 }
 //type DashboardContextProps = PanelsProps | null
-type PanelStateType =
+type DrawerStateType =
   | ""
   | "SECTIONS"
   | "STYLE"
@@ -35,8 +35,8 @@ export const DashboardContextProvider: React.FC<any> = ({ children }) => {
 };
 
 type DashboardContextValueType = () => {
-  panelState: PanelStateType;
-  setPanelState: (a: PanelEnums) => void;
+  panelState: DrawerStateType;
+  setPanelState: (a: DrawerEnums) => void;
 }; // Todo: review this!
 export const useDashboardContextValue: DashboardContextValueType = () =>
   useContext(DashboardContext);
