@@ -1,20 +1,22 @@
-import { useDashboardContextValue, PanelEnums } from "./context/dashboard-context";
+import { useDashboardContextValue, DrawerEnums } from "./context/dashboard-context";
+import { useDispatch } from "react-redux";
+import { setActiveDrawer } from "../../redux/features/ui-state/ui-state.slice";
 
 export const DashboardActions = () => {
-  const { setPanelState } = useDashboardContextValue();
+  const dispatch = useDispatch();
   return (
     <div className="dashboard__actions">
-      <div onClick={() => setPanelState(PanelEnums.PROFILE)}>Profile</div>
-      <div onClick={() => setPanelState(PanelEnums.SECTIONS)}>Sections</div>
+      <div onClick={() => dispatch(setActiveDrawer(DrawerEnums.PROFILE))}>Profile</div>
+      <div onClick={() => dispatch(setActiveDrawer(DrawerEnums.SECTIONS))}>Sections</div>
       <div
         onClick={() => {
           window.scrollTo(0, 1);
-          setPanelState(PanelEnums.STYLE);
+          dispatch(setActiveDrawer(DrawerEnums.STYLE))
         }}
       >
         Style
       </div>
-      <div onClick={() => setPanelState(PanelEnums.PREVIEW)}>Preview</div>
+      <div onClick={() => dispatch(setActiveDrawer(DrawerEnums.PREVIEW))}>Preview</div>
     </div>
   );
 };
