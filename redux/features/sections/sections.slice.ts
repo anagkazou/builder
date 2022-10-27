@@ -4,7 +4,7 @@ import { Views } from "../../../pages/dashboard/side-panels/section-panels";
 
 
 export const enum SectionEnums{
-  TEXT_BOX="TEXTBOX",
+  TEXT_AREA="TEXT_AREA",
   LINK = "LINK",
   EMBED="EMBED",
 
@@ -44,7 +44,7 @@ export const DEFAULT_SOCIAL_LINKS = [{
 }];
 
 export const DEFAULT_TEXT_AREA_PAYLOAD: TextArea ={
-  type:SectionEnums.TEXT_BOX,
+  type:SectionEnums.TEXT_AREA,
   title:'a title',
   content:'some content'
 
@@ -68,13 +68,11 @@ export const SectionSLice = createSlice({
 
     setPageItembyIndex:(state, { payload })=>{
       console.log(payload)
-      debugger;
       if(payload.index == -1){
         state.items[state.items.length -1] = payload.data;
       }else{
         state.items[payload.index] = payload.data;
       }
-        debugger;
     },
     addNewLinkItem: (state, action) => {
       const i = state.items.findIndex((item, index) => item.type == Views.LINKS);

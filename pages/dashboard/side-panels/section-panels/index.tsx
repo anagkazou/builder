@@ -59,6 +59,12 @@ export const SectionPanel: React.FC<SectionPanelPropType> = ({}) => {
                 {sectionState.items.length ? sectionState.items.map((el, i) =>
                   <div
                     className="my-sections__section bg-slate-400 py-3"
+                    onClick={()=> {
+                      dispatch(setActiveSectionIndex(i));
+                      dispatch(setActiveSectionView(el.type));
+
+                      console.log(el)
+                    }}
                     key={i}> {el.type}</div>) : <div
                   className="my-sections__empty-state border-2 border-amber-500 p-3"
                 > Add new sections</div>}
