@@ -64,7 +64,6 @@ export const TextBoxEditor = () => {
     else if(activeSectionIndex && activeSectionIndex > 0){
       sectionItem = sectionState.items[activeSectionIndex];
         //  console.log(sectionItem.type, SectionEnums.TEXT_BOX)
-          debugger;
         // @ts-ignore
         setTextAreaState(sectionItem);
 
