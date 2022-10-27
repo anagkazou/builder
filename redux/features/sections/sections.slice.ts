@@ -18,8 +18,10 @@ export type Links = {
 export type LinkItem = {
   description: string; url: string;
 }
+
+//Todo: something is wrong here
 export type Sections = {
-  items: Array<TextArea | Links>;
+  items: (TextArea| Links)[];
 };
 const initialState: Sections = { items: [] };
 
@@ -43,8 +45,8 @@ export const DEFAULT_SOCIAL_LINKS = [{
 
 export const DEFAULT_TEXT_AREA_PAYLOAD: TextArea ={
   type:SectionEnums.TEXT_BOX,
-  title:'',
-  content:''
+  title:'a title',
+  content:'some content'
 
 }
 /**todo:
@@ -64,7 +66,16 @@ export const SectionSLice = createSlice({
       state.items.slice(action.payload, 1);
     },
 
-
+    setPageItembyIndex:(state, { payload })=>{
+      console.log(payload)
+      debugger;
+      if(payload.index == -1){
+        state.items[state.items.length -1] = payload.data;
+      }else{
+        state.items[payload.index] = payload.data;
+      }
+        debugger;
+    },
     addNewLinkItem: (state, action) => {
       const i = state.items.findIndex((item, index) => item.type == Views.LINKS);
       //  links.push(action.payload);
@@ -99,7 +110,7 @@ export const SectionSLice = createSlice({
 });
 
 export const {
-  addNewSectionItem, addNewLinkItem, saveSocialLinks,addNewTextAreaItem
+  addNewSectionItem, addNewLinkItem, saveSocialLinks,addNewTextAreaItem,setPageItembyIndex
 } = SectionSLice.actions;
 
 export const selectSocialLinks = (state: RootState) => state.sections.items.findIndex((item, index) => item.type == Views.SOCIALS);

@@ -12,7 +12,7 @@ import { Links } from "./links";
 import { SocialsView } from "./socials-view";
 import { SwipeableDrawer } from "@mui/material";
 import {
-  selectUiState, setActiveDrawer, setActiveSectionView
+  selectUiState, setActiveDrawer, setActiveSectionIndex, setActiveSectionView
 } from "../../../../redux/features/ui-state/ui-state.slice";
 
 export enum Views {
@@ -38,7 +38,7 @@ export const SectionPanel: React.FC<SectionPanelPropType> = ({}) => {
       onOpen={()=> null }
       onClose={() => {
        // setPanelState(DrawerEnums.CLOSE);
-        dispatch(setActiveDrawer(Views.MAIN));
+        dispatch(setActiveDrawer(null));
         setTimeout(()=> dispatch(setActiveSectionView(Views.MAIN)),800);
       }}
       onBackdropClick={()=> {
@@ -79,6 +79,7 @@ export const SectionPanel: React.FC<SectionPanelPropType> = ({}) => {
                        className="more-sections__section bg-slate-400 py-3"
                        onClick={() => {
                          dispatch(addNewTextAreaItem(DEFAULT_TEXT_AREA_PAYLOAD))
+                         dispatch(setActiveSectionIndex(-1))
                       //   setViewState(Views.TEXT_AREA);
                          dispatch(setActiveSectionView(Views.TEXT_AREA))
                        }}>
