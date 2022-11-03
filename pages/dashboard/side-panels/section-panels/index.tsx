@@ -8,7 +8,7 @@ import {
 } from "../../context/dashboard-context";
 import { PanelHeader } from "../../panel-header";
 import TextBoxEditor from "./text-box-editor";
-import { Links } from "./links";
+import { CustomLinks } from "./customLinks";
 import { SocialsView } from "./socials-view";
 import { SwipeableDrawer } from "@mui/material";
 import {
@@ -102,7 +102,7 @@ export const SectionPanel: React.FC<SectionPanelPropType> = ({}) => {
               </div>
             </div>}
           {sectionsView.activeSectionView == Views.TEXT_AREA && <TextBoxEditor />}
-          {sectionsView.activeSectionView  == Views.LINKS && <Links />}
+          {sectionsView.activeSectionView  == Views.LINKS && <CustomLinks />}
           {sectionsView.activeSectionView  == Views.SOCIALS && <SocialsView  />}
         </div>
       </div>
