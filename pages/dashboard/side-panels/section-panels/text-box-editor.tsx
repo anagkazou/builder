@@ -2,7 +2,7 @@ import React, { useEffect, useId, useState } from "react";
 import { useDashboardContextValue } from "../../context/dashboard-context";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  SectionEnums, selectSections, setPageItembyIndex, TextArea
+  SectionEnums, selectSections, setPageItemByIndex, TextArea
 } from "../../../../redux/features/sections/sections.slice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -75,7 +75,7 @@ export const TextBoxEditor = () => {
   useEffect(() => {
     if (saved) {
       console.log("touched");
-      dispatch(setPageItembyIndex({
+      dispatch(setPageItemByIndex({
         data:textAreaState,
        index: sectionsView.activeSectionIndex
       }));
