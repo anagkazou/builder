@@ -193,7 +193,7 @@ const LinkEditor: React.FC<LinkEditorType> = ({
             ref={ref => setRef(ref, "description")}
             type="text"
             name="description"
-            className="text-base text-zinc-900 text-gr border-0  w-full leading-tight text-white border-none py-3 px-3 w-
+            className="text-base text-zinc-900 text-gr border-0  w-full leading-tight grey border-none py-3 px-3 w-
                          appearance-none"
             placeholder="Enter description"
             autoComplete="off"
@@ -204,7 +204,7 @@ const LinkEditor: React.FC<LinkEditorType> = ({
           <input
             ref={ref => setRef(ref, "url")}
             name="url"
-            className="text-base text-zinc-900 text-gr border-gray-500   w-full leading-tight text-white border-none py-3 px-3 w-
+            className="text-base text-zinc-900 text-gr border-gray-500   w-full leading-tight grey border-none py-3 px-3 w-
                          appearance-none"
             value={linkItemState?.url}
             placeholder="Write a detailed url"
