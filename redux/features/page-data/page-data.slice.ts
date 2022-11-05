@@ -1,6 +1,4 @@
-import { uuidv4 } from "@firebase/util";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAuth } from "firebase/auth";
 import { collection, doc, writeBatch } from "firebase/firestore";
 import { RootState } from "../..";
 import { db } from "../../../firebase";
@@ -56,10 +54,6 @@ export type PageMeta= {
 }
 const initialState: Page = {
   handle: null,
-  pageMeta:{
-    title:'undefined',
-    description:'undefined'
-  }
 };
 
 export const createNewPageFOrNewUser = createAsyncThunk(
@@ -77,6 +71,7 @@ export const createNewPageFOrNewUser = createAsyncThunk(
       handle: handle,
       //pageId: newPageId,
       createdAt: new Date(),
+      published:false
     });
     const promise = batch.commit().then(() => dispatch(setUserHandle(handle)));
     console.log("PROMISE", promise);
@@ -107,9 +102,6 @@ export const PageSlice = createSlice({
       // state.pageId = action.payload.pageId;
       state.handle = action.payload.handle;
     },
-    setPageMeta: (state, action) => {
-      state.pageMeta = action.payload;
-    },
 
     setPageFromFirestore: (state, { payload }) => {
       state.handle = payload.handle;
@@ -128,5 +120,5 @@ export const PageSlice = createSlice({
   },
 });
 export const selectpage = (state: RootState) => state.page;
-export const { setPageFromFirestore, setPageMeta, setPageCoverImage, setPageImage } = PageSlice.actions;
+export const { setPageFromFirestore,  setPageCoverImage, setPageImage } = PageSlice.actions;
 export default PageSlice.reducer;

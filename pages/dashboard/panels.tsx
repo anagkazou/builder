@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
-  PanelEnums,
   useDashboardContextValue
 } from "./context/dashboard-context";
 import { ProfilePanel } from "./side-panels/profile-panel";

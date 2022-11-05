@@ -9,11 +9,13 @@ import storage from "redux-persist/lib/storage";
 import userReducer from "./features/auth/authSlice";
 import pageReducer from "./features/page-data/page-data.slice";
 import sectionsReducer from './features/sections/sections.slice';
+import UiStateReducer from "./features/ui-state/ui-state.slice";
 
 const rootReducer = combineReducers({
   user: userReducer,
   page: pageReducer,
-  sections: sectionsReducer
+  sections: sectionsReducer,
+  uiState: UiStateReducer
 });
 const persistConfig = {
   key: "root",
