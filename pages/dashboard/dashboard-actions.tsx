@@ -5,7 +5,7 @@ import { setActiveDrawer } from "../../redux/features/ui-state/ui-state.slice";
 export const DashboardActions = () => {
   const dispatch = useDispatch();
   return (
-    <div className="dashboard__actions">
+    <div className="dashboard__actions fixed bottom-0 grid">
       <div onClick={() => dispatch(setActiveDrawer(DrawerEnums.PROFILE))}>Profile</div>
       <div onClick={() => dispatch(setActiveDrawer(DrawerEnums.SECTIONS))}>Sections</div>
       <div

@@ -10,6 +10,7 @@ import { setPageFromFirestore } from "../../redux/features/page-data/page-data.s
 import { DashboardActions } from "./dashboard-actions";
 import { DashboardPreview } from "./dashboard-preview";
 import { DashboardPanels } from "./panels";
+import { DashboardHeader } from "./dashboard-header";
 
 const Dashboard: NextPage = () => {
   const userState: any = useSelector(selectUser); //Todo: Type this properly
@@ -34,7 +35,8 @@ const Dashboard: NextPage = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center dashboard">
+      <div className="flex items-center justify-center dashboard ">
+        <DashboardHeader/>
         <DashboardPreview />
         <DashboardPanels />
         <DashboardActions />

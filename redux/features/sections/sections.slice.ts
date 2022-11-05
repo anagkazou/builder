@@ -20,9 +20,15 @@ export type LinkItem = {
 
 //Todo: something is wrong here
 export type Sections = {
-  items: Array<any>;
+  items: Array<any>; pageMeta: {
+    title: string, description: string
+  }
 };
-const initialState: Sections = { items: [] };
+const initialState: Sections = {
+  items: [], pageMeta: {
+    title: "default title", description: "default description"
+  }
+};
 
 export const DEFAULT_SOCIAL_LINKS = [{
   network: "Spotify", enabled: false, value: "", prefix: "", isUrl: true
@@ -114,7 +120,11 @@ export const SectionSLice = createSlice({
           type: Views.SOCIALS, links: action.payload
         });
       }
-    }
+    },
+    setPageMeta: (state, action) => {
+      state.pageMeta = action.payload;
+    },
+
   }
 });
 
@@ -124,7 +134,8 @@ export const {
   saveSocialLinks,
   addNewTextAreaItem,
   setPageItemByIndex,
-  saveCustomLinks
+  saveCustomLinks,
+  setPageMeta,
 } = SectionSLice.actions;
 
 export const selectSocialLinks = (state: RootState) => state.sections.items.findIndex((item, index) => item.type == Views.SOCIALS);

@@ -9,8 +9,9 @@ import { PanelHeader } from "../../panel-header";
 import { getCroppedImg, getRotatedImage } from "../../utils/canvas-utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Page, selectpage, setPageCoverImage, setPageImage, setPageMeta
+  Page, selectpage, setPageCoverImage, setPageImage,
 } from "../../../../redux/features/page-data/page-data.slice";
+import {setPageMeta} from '../../../../redux/features/sections/sections.slice';
 import { ProfileImage } from "./profile-image";
 import { CoverImage } from "./cover-image";
 import { ImageCropper } from "./image-cropper";
