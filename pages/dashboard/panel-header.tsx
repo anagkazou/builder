@@ -1,7 +1,6 @@
 import Image from "next/image";
-import arrowLeft from "../../assets/left-arrow.svg";
 import cancelIcon from "../../assets/cancel.svg";
-import { useDashboardContextValue, PanelEnums } from "./context/dashboard-context";
+import { useDashboardContextValue, DrawerEnums } from "./context/dashboard-context";
 import { Views } from "./side-panels/section-panels";
 
 type PanelHeaderType = {
@@ -22,7 +21,7 @@ export const PanelHeader: React.FC<PanelHeaderType> = ({ title, setViewState, vi
       <div
         className="style-panel__header--icon"
         onClick={() => {
-          setPanelState(PanelEnums.CLOSE);
+          setPanelState(DrawerEnums.CLOSE);
         }}
       >
         <Image alt={"cancel icon"} src={cancelIcon} />

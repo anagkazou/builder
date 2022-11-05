@@ -1,28 +1,25 @@
 import { SwipeableDrawer } from "@mui/material";
 import React, {
-  EventHandler, useCallback, useEffect, useRef, useState
+   useCallback, useEffect, useState
 } from "react";
 import {
-  PanelEnums, useDashboardContextValue
+  DrawerEnums, useDashboardContextValue
 } from "../../context/dashboard-context";
 import { PanelHeader } from "../../panel-header";
 import { getCroppedImg, getRotatedImage } from "../../utils/canvas-utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Page, PageMeta, selectpage, setPageCoverImage, setPageImage, setPageMeta
+  Page, selectpage, setPageCoverImage, setPageImage,
 } from "../../../../redux/features/page-data/page-data.slice";
+import {setPageMeta} from '../../../../redux/features/sections/sections.slice';
 import { ProfileImage } from "./profile-image";
 import { CoverImage } from "./cover-image";
 import { ImageCropper } from "./image-cropper";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
 import InputComponent from "../../../../components/input.component";
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { PageInfo } from "next/dist/build/utils";
 import {
-  saveSocialLinks
-} from "../../../../redux/features/sections/sections.slice";
-import { log } from "util";
+  selectUiState, setActiveDrawer
+} from "../../../../redux/features/ui-state/ui-state.slice";
 
 const ORIENTATION_TO_ANGLE: any = {
   "3": 180, "6": 90, "8": -90
@@ -46,9 +43,6 @@ export const ProfilePanel = () => {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
   const [croppedImage, setCroppedImage] = useState<any>();
 
-  const DEFAULT_VIEW_REF_STATE = {
-    "Title": undefined, "Description": undefined, "Images": undefined
-  };
 
   function readFile(file: any) {
     return new Promise((resolve) => {
@@ -127,6 +121,7 @@ export const ProfilePanel = () => {
   const [saved, setSaved] = useState<boolean>(false);
   const isKeyboardOpen = useDetectKeyboardOpen();
   const inputRefs: any = {};
+  const {drawerState} = useSelector(selectUiState);
 
   useEffect(() => {
     console.log("INPUTINFOCUS CHANGES OHH", inputFieldInFocus);
@@ -217,13 +212,16 @@ export const ProfilePanel = () => {
         <SwipeableDrawer
           // panelClassName="dashboard-panel"
           anchor="bottom"
-          open={panelState === PanelEnums.PROFILE}
+          open={drawerState.activeDrawer === DrawerEnums.PROFILE}
           onClose={() => {
-            setPanelState(PanelEnums.CLOSE);
-            setTimeout(reset, 900);
+            setPanelState(DrawerEnums.CLOSE);
+            setTimeout(()=> setInputFieldInFocus(null), 800);
+          }}
+          onBackdropClick={()=> {
+            dispatch(setActiveDrawer(null));
           }}
           onAbort={reset}
-          onOpen={() => setPanelState(PanelEnums.PROFILE)}
+          onOpen={() => setPanelState(DrawerEnums.PROFILE)}
         >
           <>
             <>
@@ -277,52 +275,6 @@ export const ProfilePanel = () => {
                                     saved={saved}
 
                     />
-
-                    {/*<div className="flex items-center">*/}
-                    {/*  <div*/}
-                    {/*    className={`mb-4 w-full  ${inputFieldInFocus && inputFieldInFocus !== "description" ? "hidden" : ""}`}*/}
-                    {/*  >*/}
-                    {/*    <label className="block mb-2 text-sm "*/}
-                    {/*           htmlFor="name">*/}
-                    {/*      Bio Description*/}
-                    {/*    </label>*/}
-                    {/*    <div*/}
-                    {/*      className="input-container flex place-items-center border-gray-500 border-solid shadow  ">*/}
-                    {/*      <input*/}
-                    {/*        autoComplete="off"*/}
-                    {/*        className={`text-base text-zinc-900 text-gr border-0  w-full leading-tight text-white border-none py-3 px-3 w-*/}
-                    {/*     appearance-none`}*/}
-                    {/*        id="name"*/}
-                    {/*        name="description"*/}
-                    {/*        type="text"*/}
-                    {/*        ref={ref => setRef(ref, "description")}*/}
-                    {/*        value={pageInfoState?.description}*/}
-                    {/*        placeholder="Enter Description"*/}
-                    {/*        onFocus={() => handleFocus("description")}*/}
-                    {/*        onBlur={() => handleOnBlur("description")}*/}
-                    {/*        onChange={handleChange}*/}
-                    {/*      />*/}
-                    {/*      <button*/}
-                    {/*        className={`border-0 bg-transparent ${inputFieldInFocus == "description" ? "block" : "hidden"}`}>*/}
-                    {/*        <FontAwesomeIcon*/}
-                    {/*          icon={faXmark} width={20} size={"2x"}*/}
-                    {/*          color={"#000"} /></button>*/}
-                    {/*    </div>*/}
-                    {/*    <span>*/}
-
-                    {/*</span>*/}
-                    {/*  </div>*/}
-                    {/*  <button*/}
-                    {/*    className={`text-sm flex place-items-center bg-transparent px-2 h-fit border-none ${inputFieldInFocus == "description" ? "block" : "hidden"} `}*/}
-                    {/*    onMouseDown={(event) => {*/}
-                    {/*      event.preventDefault();*/}
-                    {/*      savePageMeta();*/}
-                    {/*    }}><FontAwesomeIcon icon={faCheck}*/}
-                    {/*                        size={"2x"}*/}
-                    {/*                        color={"#000"} />*/}
-                    {/*  </button>*/}
-                    {/*</div>*/}
-
 
                   </div>
                 </div>

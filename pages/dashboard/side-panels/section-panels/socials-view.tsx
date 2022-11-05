@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 // @ts-ignore
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
@@ -33,13 +33,10 @@ type SocialItem = {
 }
 
 
-const addSocialLink = () => {
 
-};
 type SocialView = {
-  setPanelHeight: any
 }
-export const SocialsView: React.FC<SocialView> = ({ setPanelHeight }) => {
+export const SocialsView: React.FC<SocialView> = ( ) => {
   const sectionState = useSelector(selectSections);
   const dispatch = useDispatch();
   const socialLinksIndexInStore = useSelector(selectSocialLinks);
@@ -91,7 +88,6 @@ export const SocialsView: React.FC<SocialView> = ({ setPanelHeight }) => {
   const [temp, setTemp] = useState<string>(); //Todo: try to reduce state declarations... refs can hold some of these values
   const handleFocus = (i: number) => {
     setTemp(socialLinks[i].value);
-    setPanelHeight(35);
     setInputFieldInFocus(i);
     // tempState();
   };
@@ -105,7 +101,6 @@ export const SocialsView: React.FC<SocialView> = ({ setPanelHeight }) => {
       ...el, value: temp
     } : el));
 
-    setPanelHeight(90);
     setInputFieldInFocus(null);
 
 
@@ -135,7 +130,6 @@ export const SocialsView: React.FC<SocialView> = ({ setPanelHeight }) => {
     setSaved(true);
 
     setInputFieldInFocus(null);
-    setPanelHeight(70);
 
   };
 
