@@ -1,15 +1,14 @@
 import Image from "next/image";
 import cancelIcon from "../../assets/cancel.svg";
-import { useDashboardContextValue, DrawerEnums } from "./context/dashboard-context";
 import { Views } from "./side-panels/section-panels";
+import React from "react";
 
 type PanelHeaderType = {
   title: string;
   setViewState?: any;
   viewState?: any;
 };
-export const PanelHeader: React.FC<PanelHeaderType> = ({ title, setViewState, viewState }) => {
-  const { setPanelState, panelState } = useDashboardContextValue();
+export const DrawerHeader: React.FC<PanelHeaderType> = ({ title, setViewState, viewState }) => {
 
   return (
     <div className="style-panel__header px-5 w-screen">
@@ -21,7 +20,7 @@ export const PanelHeader: React.FC<PanelHeaderType> = ({ title, setViewState, vi
       <div
         className="style-panel__header--icon"
         onClick={() => {
-          setPanelState(DrawerEnums.CLOSE);
+          setViewState("CLOSE");
         }}
       >
         <Image alt={"cancel icon"} src={cancelIcon} />

@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import SlidingPanel from "react-sliding-side-panel";
 import { BackgroundTabs } from "../background-tab";
-import { useDashboardContextValue } from "../context/dashboard-context";
-import { PanelHeader } from "../panel-header";
+import { DrawerHeader } from "../drawer-header";
 import { TemplatesTab } from "../templates-tab";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUiState } from "../../../redux/features/ui-state/ui-state.slice";
+import { DrawerEnums } from "../../../enums";
 
 type StyleViewType = "" | "BACKGROUND" | "TEMPLATES";
 
@@ -18,8 +20,8 @@ const tabsData = [
   },
 ];
 export const StylePanel = () => {
-  const { setPanelState, panelState } = useDashboardContextValue();
   const [styleView, setStyleView] = useState<StyleViewType>("");
+  const activeDrawer = useSelector(selectUiState)?.drawerState?.activeDrawer;
 
   const resetViews = () => {
     setStyleView("");
@@ -65,12 +67,12 @@ export const StylePanel = () => {
   return (
     <SlidingPanel
       type={"right"}
-      isOpen={panelState === "STYLE"}
+      isOpen={activeDrawer === DrawerEnums.STYLE}
       size={100}
       onClosed={resetViews}
     >
       <>
-        <PanelHeader title={"EDIT"} />
+        <DrawerHeader title={"EDIT"} />
         <div>
           <div className="relative">
             <div className="flex border-b style-tab__wrapper">

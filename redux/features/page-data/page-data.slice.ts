@@ -15,7 +15,6 @@ import { setUserHandle as setUserHandle } from "../auth/authSlice";
 export class Page {
   handle:string|null;
   // pageId: string | undefined;
-  pageMeta?:PageMeta;
   profileImage?: string;
   coverImage?: string;
   sections?: Array<socialsType | EmbedsType>;
@@ -24,7 +23,6 @@ export class Page {
   constructor(
     handle: string | null,
     pageId: string,
-    pageMeta?:PageMeta,
     profileImage?: string,
     coverImage?: any,
     sections?: Array<socialsType | EmbedsType>,
@@ -32,7 +30,6 @@ export class Page {
     createdAt?: Date
   ) {
     this.handle = handle;
-    this.pageMeta= pageMeta;
     this.profileImage = profileImage;
     this.coverImage = coverImage;
     this.sections = sections;
@@ -48,10 +45,7 @@ export type EmbedsType = {
   name: string;
   url: string;
 };
-export type PageMeta= {
-  title:undefined|string,
-  description:undefined|string,
-}
+
 const initialState: Page = {
   handle: null,
 };
@@ -71,11 +65,9 @@ export const createNewPageFOrNewUser = createAsyncThunk(
       handle: handle,
       //pageId: newPageId,
       createdAt: new Date(),
-      published:false
     });
     const promise = batch.commit().then(() => dispatch(setUserHandle(handle)));
     console.log("PROMISE", promise);
-    //Todo: sadd page Id to user not page... use page Id to get page details and store in page store
     return promise;
   }
 );
@@ -100,7 +92,7 @@ export const PageSlice = createSlice({
     setPageHandle: (state, action) => {
       console.log("AAAAA", state, action);
       // state.pageId = action.payload.pageId;
-      state.handle = action.payload.handle;
+      state.handle = action.payload?.handle;
     },
 
     setPageFromFirestore: (state, { payload }) => {
@@ -120,5 +112,5 @@ export const PageSlice = createSlice({
   },
 });
 export const selectpage = (state: RootState) => state.page;
-export const { setPageFromFirestore,  setPageCoverImage, setPageImage } = PageSlice.actions;
+export const { setPageFromFirestore,  setPageCoverImage, setPageImage,setPageHandle } = PageSlice.actions;
 export default PageSlice.reducer;

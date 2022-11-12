@@ -6,10 +6,16 @@ import {
 
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import userReducer from "./features/auth/authSlice";
-import pageReducer from "./features/page-data/page-data.slice";
+import userReducer, { setUser } from "./features/auth/authSlice";
+import pageReducer, {
+  setPageHandle
+} from "./features/page-data/page-data.slice";
 import sectionsReducer from './features/sections/sections.slice';
 import UiStateReducer from "./features/ui-state/ui-state.slice";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, createUserProfileDocument } from "../firebase";
+import { onSnapshot } from "@firebase/firestore";
+import { DocumentSnapshot } from "@firebase/firestore-types";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -33,6 +39,20 @@ export const store = configureStore({
     });
   },
 });
+
+  onAuthStateChanged(auth, async (userAuth) => {
+    if (userAuth) {
+      const userHandle:string|null = store.getState().user?.handle;
+      const userRef = await createUserProfileDocument(userAuth,userHandle);
+      // @ts-ignore
+      onSnapshot(userRef, (snapshot: DocumentSnapshot) => {
+        console.log(snapshot.data(), "SNAPSHOT");
+        store.dispatch(setUser({ ...snapshot.data() }));
+        store.dispatch(setPageHandle(snapshot.data()?.handle ));
+      });
+    }
+  });
+
 
 export const persistor = persistStore(store);
 

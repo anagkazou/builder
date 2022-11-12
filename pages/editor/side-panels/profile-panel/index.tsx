@@ -2,16 +2,17 @@ import { SwipeableDrawer } from "@mui/material";
 import React, {
    useCallback, useEffect, useState
 } from "react";
-import {
-  DrawerEnums, useDashboardContextValue
-} from "../../context/dashboard-context";
-import { PanelHeader } from "../../panel-header";
+
+import { DrawerHeader } from "../../drawer-header";
 import { getCroppedImg, getRotatedImage } from "../../utils/canvas-utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Page, selectpage, setPageCoverImage, setPageImage,
 } from "../../../../redux/features/page-data/page-data.slice";
-import {setPageMeta} from '../../../../redux/features/sections/sections.slice';
+import {
+  selectSections,
+  setPageMeta
+} from "../../../../redux/features/sections/sections.slice";
 import { ProfileImage } from "./profile-image";
 import { CoverImage } from "./cover-image";
 import { ImageCropper } from "./image-cropper";
@@ -20,6 +21,7 @@ import InputComponent from "../../../../components/input.component";
 import {
   selectUiState, setActiveDrawer
 } from "../../../../redux/features/ui-state/ui-state.slice";
+import { DrawerEnums } from "../../../../enums";
 
 const ORIENTATION_TO_ANGLE: any = {
   "3": 180, "6": 90, "8": -90
@@ -30,8 +32,6 @@ export const enum ActiveUpload {
 }
 
 export const ProfilePanel = () => {
-  const { panelState, setPanelState } = useDashboardContextValue();
-
   const [imageSrc, setImageSrc] = useState(null);
   const [activeUpload, setActiveUpload] = useState<string | null>(null);
   const [profileImageSrc, setProfileImageSrc] = useState(null);
@@ -113,19 +113,16 @@ export const ProfilePanel = () => {
 
   const [inputFieldInFocus, setInputFieldInFocus] = useState<any>(null);
   const pageInfo = useSelector(selectpage);
+  const sections = useSelector(selectSections);
 
 
   const [temp, setTemp] = useState<Page>();
   //Todo: Explore using refs to store this value
-  const [pageInfoState, setPageInfoState] = useState<typeof pageInfo.pageMeta>(pageInfo.pageMeta);
+  const [pageInfoState, setPageInfoState] = useState<typeof sections.pageMeta>(sections.pageMeta);
   const [saved, setSaved] = useState<boolean>(false);
   const isKeyboardOpen = useDetectKeyboardOpen();
   const inputRefs: any = {};
   const {drawerState} = useSelector(selectUiState);
-
-  useEffect(() => {
-    console.log("INPUTINFOCUS CHANGES OHH", inputFieldInFocus);
-  }, [inputFieldInFocus]);
 
   useEffect(() => {
     if (saved) {
@@ -140,7 +137,6 @@ export const ProfilePanel = () => {
 
     if (!isKeyboardOpen) { // @ts-ignore
       Object.values(inputRefs).forEach((el: any) => {
-        console.log("EL", el);
         el?.blur();
       });
     }
@@ -214,14 +210,14 @@ export const ProfilePanel = () => {
           anchor="bottom"
           open={drawerState.activeDrawer === DrawerEnums.PROFILE}
           onClose={() => {
-            setPanelState(DrawerEnums.CLOSE);
+            dispatch(setActiveDrawer(null));
             setTimeout(()=> setInputFieldInFocus(null), 800);
           }}
           onBackdropClick={()=> {
             dispatch(setActiveDrawer(null));
           }}
           onAbort={reset}
-          onOpen={() => setPanelState(DrawerEnums.PROFILE)}
+          onOpen={() => dispatch(setActiveDrawer(DrawerEnums.PROFILE)) }
         >
           <>
             <>
@@ -238,7 +234,7 @@ export const ProfilePanel = () => {
                               setZoom={setZoom}
                 />) : (<>
                 <div className="profile-panel ">
-                  <PanelHeader title="Profile" />
+                  <DrawerHeader title="Profile" />
                   <div className="p-5 profile-form">
                     <div
                       ref={ref => setRef(ref, "Images")}

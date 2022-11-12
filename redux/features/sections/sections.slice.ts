@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../..";
-import { Views } from "../../../pages/dashboard/side-panels/section-panels";
+import { Views } from "../../../pages/editor/side-panels/section-panels";
 
 
 export const enum SectionEnums {
@@ -23,11 +23,12 @@ export type Sections = {
   items: Array<any>; pageMeta: {
     title: string, description: string
   }
+  published?:boolean
 };
 const initialState: Sections = {
   items: [], pageMeta: {
     title: "default title", description: "default description"
-  }
+  },
 };
 
 export const DEFAULT_SOCIAL_LINKS = [{
@@ -55,6 +56,7 @@ export const DEFAULT_TEXT_AREA_PAYLOAD: TextArea = {
 export const DEFAULT_CUSTOM_LINK: LinkItem = {
   description: "", url: ""
 };
+
 
 /**todo:
  *
@@ -93,7 +95,6 @@ export const SectionSLice = createSlice({
       }
     }, saveCustomLinks: (state, { payload }) => {
       const i = state.items.findIndex((item, index) => item.type == Views.LINKS);
-      let linksObj = state.items[i];
       if (i !== -1) {
         let linksObj = state.items[i];
         // @ts-ignore

@@ -1,7 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { Auth, getAuth, GoogleAuthProvider, User } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import {
+  collection, doc, getDoc, getFirestore, setDoc, writeBatch
+} from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 const firebaseConfig = {
   apiKey: "AIzaSyCkdSXgFTlLqob-D2xV-2Taz5oxJ9OrkT4",
@@ -26,10 +28,12 @@ export const db = getFirestore(app) || null;
 export { firebaseConfig as firebase };
 export const auth = getAuth(app);
 
-export const createUserProfileDocument = async (userAuth: User) => {
+export const createUserProfileDocument = async (userAuth: User, handle:string|null) => {
   if (!userAuth) return;
 
   const userRef = doc(db, "users", userAuth.uid);
+  const pageDocRef = doc(collection(db, "pages"));
+
   try {
     const userSnapshot = await getDoc(userRef);
 
@@ -39,7 +43,11 @@ export const createUserProfileDocument = async (userAuth: User) => {
       const createdAt = new Date();
 
       //store user in Firestore
-      setDoc(userRef, { displayName, createdAt, email });
+      let batch = writeBatch(db);
+
+      batch.set(userRef, { displayName, createdAt, email, handle:handle });
+      batch.set(pageDocRef, { handle: handle, createdAt: new Date(), id:pageDocRef.id });
+      await batch.commit();
     }
   } catch (error) {
     console.log(error);
