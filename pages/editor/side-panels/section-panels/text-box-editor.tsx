@@ -1,8 +1,7 @@
 import React, { useEffect, useId, useState } from "react";
-import { useDashboardContextValue } from "../../context/dashboard-context";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  SectionEnums, selectSections, setPageItemByIndex, TextArea
+   selectSections, setPageItemByIndex, TextArea
 } from "../../../../redux/features/sections/sections.slice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -10,9 +9,7 @@ import useDetectKeyboardOpen from "use-detect-keyboard-open";
 import {
   selectUiState
 } from "../../../../redux/features/ui-state/ui-state.slice";
-import {
-  setPageMeta
-} from "../../../../redux/features/page-data/page-data.slice";
+
 
 export const TextBoxEditor = () => {
   const dispatch = useDispatch();

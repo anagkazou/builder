@@ -68,7 +68,7 @@ export const UserSlice = createSlice({
       state.status = "LOADING";
     });
     builder.addCase(authWithGoogle.fulfilled, (state, action) => {
-      state.user = action.payload;
+     // state.user = action.payload;
       state.status = "FINISHED";
     });
   },
@@ -80,10 +80,13 @@ export const UserSlice = createSlice({
     setUserHandle: (state, action) => {
       state.handle = action.payload;
     },
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
 
-export const { signinWithEmail, logout, setUserHandle } = UserSlice.actions;
+export const { signinWithEmail, logout, setUserHandle, setUser } = UserSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
 

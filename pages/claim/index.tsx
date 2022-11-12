@@ -6,10 +6,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../firebase";
 import { AppDispatch } from "../../redux";
-import { selectUser } from "../../redux/features/auth/authSlice";
+import { selectUser, setUserHandle } from "../../redux/features/auth/authSlice";
 import {
-  createNewPageFOrNewUser,
-  selectpage as selectPage,
+  createNewPageFOrNewUser, selectpage as selectPage, setPageHandle
 } from "../../redux/features/page-data/page-data.slice";
 const ClaimPage: NextPage = () => {
   const [isAvailable, setIsAvailable] = useState<Boolean | null>(null);
@@ -76,10 +75,14 @@ const ClaimPage: NextPage = () => {
             maxLength={30}
           />
           <button
-            onClick={() =>
-              dispatch(createNewPageFOrNewUser(handle)).then(() =>
-                router.push("/dashboard")
-              )
+            onClick={() => {
+              // dispatch(createNewPageFOrNewUser(handle)).then(() =>
+              //   router.push("/dashboard")
+              // )
+              dispatch(setUserHandle(handle));
+              dispatch(setPageHandle(handle));
+              router.push('/auth/login')
+            }
             }
           >
             Check

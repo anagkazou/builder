@@ -11,12 +11,16 @@ export const LoginPage: NextPage = () => {
   return (
     <div>
       <main>
-        THe name is `{JSON.stringify(user?.email)}`
+        THe name is `{JSON.stringify(user?.user?.email)}`
         <button
           onClick={() => {
-            console.log("touched!");
-            //  dispatch(signInGoogle()).payload
-            dispatch(authWithGoogle()).then(() => router.push("/claim"));
+            dispatch(authWithGoogle()).then((value) => {
+             console.log("valueee", value)
+             console.log("valueee", value.payload instanceof Error)
+             if( value.payload instanceof Error)  return;
+
+               router.push("/dashboard");
+            });
           }}
         >
           Authenticate!!

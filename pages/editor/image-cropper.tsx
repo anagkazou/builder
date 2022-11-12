@@ -2,7 +2,7 @@ import Cropper from "react-easy-crop";
 import { Slider } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { AnyAction } from "@reduxjs/toolkit";
-import { getCroppedImg, getRotatedImage } from "../dashboard/utils/canvas-utils";
+import { getCroppedImg, getRotatedImage } from "./utils/canvas-utils";
 import { getOrientation } from "get-orientation/browser";
 
 import React from "react";

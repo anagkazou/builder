@@ -22,7 +22,7 @@ const Home: NextPage = () => {
         </Head>
 
         <h1>HOMEPAGE</h1>
-        <button onClick={() => router.push("/auth/login")}>Button</button>
+        <button onClick={() => router.push("/claim")}>Button</button>
         <Link href={"auth/login"}> AUTHH</Link>
         <footer>
           <a

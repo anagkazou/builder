@@ -3,10 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addNewTextAreaItem, DEFAULT_TEXT_AREA_PAYLOAD, selectSections
 } from "../../../../redux/features/sections/sections.slice";
-import {
-  DrawerEnums, useDashboardContextValue
-} from "../../context/dashboard-context";
-import { PanelHeader } from "../../panel-header";
+import { DrawerEnums } from "../../../../enums";
+import { DrawerHeader } from "../../drawer-header";
 import TextBoxEditor from "./text-box-editor";
 import { CustomLinks } from "./customLinks";
 import { SocialsView } from "./socials-view";
@@ -46,8 +44,8 @@ export const SectionPanel: React.FC<SectionPanelPropType> = ({}) => {
         setTimeout(()=> dispatch(setActiveSectionView(Views.MAIN)),800);      }}
     >
       <div className="section-panel  ">
-        <PanelHeader title={"Sections"} setViewState={setViewState}
-                     viewState={sectionsView.activeSectionView} />
+        <DrawerHeader title={"Sections"} setViewState={setViewState}
+                      viewState={sectionsView.activeSectionView} />
 
 
         <div className="flex flex-row sections-body">
