@@ -11,8 +11,8 @@ import {
   createNewPageFOrNewUser, selectpage as selectPage, setPageHandle
 } from "../../redux/features/page-data/page-data.slice";
 const ClaimPage: NextPage = () => {
-  const [isAvailable, setIsAvailable] = useState<Boolean | null>(null);
-  const [handle, setHandle] = useState<string>("");
+  const [isAvailable, setIsAvailable] = useState<boolean | undefined>();
+  const [handle, setHandle] = useState<string>('');
 
   const dispatch = useDispatch<AppDispatch>();
   const page = useSelector(selectPage);
@@ -42,7 +42,7 @@ const ClaimPage: NextPage = () => {
 
   useEffect(() => {
     if (handle.length > 0) setTimeout(checkHandleAvailability, 500);
-    if (handle == "") setIsAvailable(null);
+    if (handle == "") setIsAvailable(undefined);
 
     // console.log("HANDLEE",`-${handle}-` , isAvailable)
   }, [handle]);
@@ -62,10 +62,10 @@ const ClaimPage: NextPage = () => {
     <div className="flex items-center justify-center claim">
       <div className="">
         <div className="form-group">
-          {isAvailable !== null && (
+          {isAvailable  && (
             <div
               className={`status-color ${
-                isAvailable === true ? "bg-green-400" : "bg-red-500"
+                isAvailable ? "bg-green-400" : "bg-red-500"
               }`}
             ></div>
           )}
@@ -75,12 +75,13 @@ const ClaimPage: NextPage = () => {
             maxLength={30}
           />
           <button
+            disabled={!isAvailable }
             onClick={() => {
               // dispatch(createNewPageFOrNewUser(handle)).then(() =>
               //   router.push("/dashboard")
               // )
               dispatch(setUserHandle(handle));
-              dispatch(setPageHandle(handle));
+             // dispatch(setPageHandle(handle));
               router.push('/auth/login')
             }
             }

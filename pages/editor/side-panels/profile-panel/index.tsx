@@ -7,7 +7,7 @@ import { DrawerHeader } from "../../drawer-header";
 import { getCroppedImg, getRotatedImage } from "../../utils/canvas-utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Page, selectpage, setPageCoverImage, setPageImage,
+  Editor, selectpage, setPageCoverImage, setPageImage,
 } from "../../../../redux/features/page-data/page-data.slice";
 import {
   selectSections,
@@ -116,7 +116,7 @@ export const ProfilePanel = () => {
   const sections = useSelector(selectSections);
 
 
-  const [temp, setTemp] = useState<Page>();
+  const [temp, setTemp] = useState<Editor>();
   //Todo: Explore using refs to store this value
   const [pageInfoState, setPageInfoState] = useState<typeof sections.pageMeta>(sections.pageMeta);
   const [saved, setSaved] = useState<boolean>(false);

@@ -12,29 +12,19 @@ import { setUserHandle as setUserHandle } from "../auth/authSlice";
 // }
 
 //Todo: Fix this thing
-export class Page {
-  handle:string|null;
-  // pageId: string | undefined;
-  profileImage?: string;
-  coverImage?: string;
-  sections?: Array<socialsType | EmbedsType>;
-  status?: string;
-  createdAt?: Date;
-  constructor(
-    handle: string | null,
-    pageId: string,
-    profileImage?: string,
-    coverImage?: any,
-    sections?: Array<socialsType | EmbedsType>,
-    status?: string,
-    createdAt?: Date
-  ) {
-    this.handle = handle;
-    this.profileImage = profileImage;
-    this.coverImage = coverImage;
-    this.sections = sections;
-    this.status = status;
-    this.createdAt = createdAt;
+
+
+export interface  Editor {
+  activePage?:Array<{handle?:string, pageId?:string}>,
+  page:{
+    sections?:Array<socialsType|EmbedsType>,
+    profileImage?: string;
+    coverImage?: string;
+    createdAt?: Date;
+    handle?: string;
+    id?:string;
+    published?:boolean;
+    url?:string;
   }
 }
 export type socialsType = {
@@ -46,8 +36,8 @@ export type EmbedsType = {
   url: string;
 };
 
-const initialState: Page = {
-  handle: null,
+const initialState:Editor = {
+  page:{}
 };
 
 export const createNewPageFOrNewUser = createAsyncThunk(
@@ -72,45 +62,41 @@ export const createNewPageFOrNewUser = createAsyncThunk(
   }
 );
 
-export const PageSlice = createSlice({
-  name: "page",
+export const EditorSlice = createSlice({
+  name: "editor",
   initialState,
-  extraReducers: (builder) => {
-    builder.addCase(createNewPageFOrNewUser.fulfilled, (state, action) => {
-      state.status = "FULFILLED";
-      console.log("FULFILLED", action.payload);
-    }),
-      builder.addCase(createNewPageFOrNewUser.pending, (state, action) => {
-        state.status = "PENDING";
-      }),
-      builder.addCase(createNewPageFOrNewUser.rejected, (state, action) => {
-        state.status = "REJECTED";
-        console.log(action);
-      });
-  },
+  // extraReducers: (builder) => {
+  //   builder.addCase(createNewPageFOrNewUser.fulfilled, (state, action) => {
+  //     state.status = "FULFILLED";
+  //     console.log("FULFILLED", action.payload);
+  //   }),
+  //     builder.addCase(createNewPageFOrNewUser.pending, (state, action) => {
+  //       state.status = "PENDING";
+  //     }),
+  //     builder.addCase(createNewPageFOrNewUser.rejected, (state, action) => {
+  //       state.status = "REJECTED";
+  //       console.log(action);
+  //     });
+  // },
   reducers: {
-    setPageHandle: (state, action) => {
-      console.log("AAAAA", state, action);
-      // state.pageId = action.payload.pageId;
-      state.handle = action.payload?.handle;
-    },
+    // setPageHandle: (state, action) => {
+    //   console.log("AAAAA", state, action);
+    //   // state.pageId = action.payload.pageId;
+    //   state.handle = action.payload?.handle;
+    // },
 
-    setPageFromFirestore: (state, { payload }) => {
-      state.handle = payload.handle;
-     // state.pageId = payload.pageId;
-      state.createdAt = payload.createdAt;
-
-      console.log("SETPAGE", state);
+    setActivePage:(state,{payload})=> {
+      state.activePage=payload;
     },
     setPageImage: (state, { payload }) => {
-      state.profileImage = payload;
+      state.page.profileImage = payload;
 
     },
     setPageCoverImage: (state, { payload }) => {
-      state.coverImage = payload;
+      state.page.coverImage = payload;
     },
   },
 });
 export const selectpage = (state: RootState) => state.page;
-export const { setPageFromFirestore,  setPageCoverImage, setPageImage,setPageHandle } = PageSlice.actions;
-export default PageSlice.reducer;
+export const {  setPageCoverImage, setPageImage, setActivePage } = EditorSlice.actions;
+export default EditorSlice.reducer;
