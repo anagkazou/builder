@@ -11,17 +11,33 @@ import {
 import { auth, provider } from "../../../firebase";
 
 import type { RootState } from "../..";
-export interface UserState {
-  user?: User | null;
-  status: "LOADING" | "FINISHED" | "ERROR";
-  error?: string;
-  handle: string | null;
+
+
+const enum USER_LOADING_STATUS {
+  LOADING="LOADING",
+  FINISHED="FINISHED",
+  ERROR="ERROR"
 }
-const initialState: UserState = {
-  user: null,
-  status: "FINISHED",
-  handle: null,
+ interface UserState {
+  pages?:Array<{handle:string, pageId:string}>,
+  displayName?:string,
+  createdAt?:Date,
+  email?:string,
+}
+
+export interface UserStore{
+  currentUser: UserState ;
+}
+
+const initialState: UserStore = {
+  currentUser:{
+    pages:[],
+    displayName:undefined,
+    createdAt:undefined,
+    email:undefined
+  }
 };
+
 export const loginWithEmail = createAsyncThunk(
   "auth/loginWithEmail",
   async ({ auth, password, email }: any) => {
@@ -43,8 +59,7 @@ export const authWithGoogle = createAsyncThunk("auth/signInGoogle", async () => 
     .then((res: UserCredential) => res.user)
     .catch((error) => error);
 
-  const data = await promise;
-  return data;
+ return await promise;
 });
 
 export const logOut = createAsyncThunk("auth/logout", async () => {
@@ -57,31 +72,32 @@ export const logOut = createAsyncThunk("auth/logout", async () => {
 export const UserSlice = createSlice({
   name: "user",
   initialState,
-  extraReducers: (builder) => {
-    builder.addCase(loginWithEmail.fulfilled, (state, action) => {
-      state.user = action.payload;
-    });
-    builder.addCase(loginWithEmail.rejected, (state, action) => {
-      state.error = action.error.name;
-    });
-    builder.addCase(authWithGoogle.pending, (state, action) => {
-      state.status = "LOADING";
-    });
-    builder.addCase(authWithGoogle.fulfilled, (state, action) => {
-     // state.user = action.payload;
-      state.status = "FINISHED";
-    });
-  },
+  // extraReducers: (builder) => {
+  //   builder.addCase(loginWithEmail.fulfilled, (state, action) => {
+  //     state = action.payload;
+  //   });
+  //   builder.addCase(loginWithEmail.rejected, (state, action) => {
+  //     state.error = action.error.name;
+  //   });
+  //   builder.addCase(authWithGoogle.pending, (state, action) => {
+  //     state.status = "LOADING";
+  //   });
+  //   builder.addCase(authWithGoogle.fulfilled, (state, action) => {
+  //    // state.user = action.payload;
+  //     state.status = "FINISHED";
+  //   });
+  // },
   reducers: {
     signinWithEmail: () => {},
     signUpWithEmail: () => {},
     logout: () => {},
     signInEmailAndPassword: () => {},
-    setUserHandle: (state, action) => {
-      state.handle = action.payload;
+    setUserHandle: (state, { payload }) => {
+      state.currentUser.pages =[payload];
     },
     setUser: (state, action) => {
-      state.user = action.payload;
+      console.log("SEEETTTTTT", action.payload)
+      state.currentUser = action.payload;
     },
   },
 });
