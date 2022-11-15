@@ -1,8 +1,10 @@
 import React, {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import { DEFAULT_TEXT_AREA_PAYLOAD } from "../../../../app.consts";
 import {
-  addNewTextAreaItem, DEFAULT_TEXT_AREA_PAYLOAD, selectSections
-} from "../../../../redux/features/sections/sections.slice";
+  addNewSectionItem,addNewTextAreaItem,selectPage
+} from "../../../../redux/features/editor/editor.slice";
 import { DrawerEnums } from "../../../../enums";
 import { DrawerHeader } from "../../drawer-header";
 import TextBoxEditor from "./text-box-editor";
@@ -22,7 +24,7 @@ type SectionPanelPropType = {
 };
 
 export const SectionPanel: React.FC<SectionPanelPropType> = ({}) => {
-  const sectionState = useSelector((selectSections));
+  const sectionState = useSelector((selectPage));
   const dispatch = useDispatch()
   const [viewState, setViewState] = useState<Views>(Views.MAIN);
   const { sectionsView, drawerState } = useSelector(selectUiState)

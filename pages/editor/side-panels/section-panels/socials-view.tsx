@@ -21,11 +21,16 @@ import {
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faBox, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Simulate } from "react-dom/test-utils";
+// import {
+//   DEFAULT_SOCIAL_LINKS, saveSocialLinks, selectSections, selectSocialLinks
+// } from "../../../../redux/features/sections/sections.slice";
+import { DEFAULT_SOCIAL_LINKS } from "../../../../app.consts";
 import {
-  DEFAULT_SOCIAL_LINKS, saveSocialLinks, selectSections, selectSocialLinks
-} from "../../../../redux/features/sections/sections.slice";
+  selectSocialLinks, saveSocialLinks
+} from "../../../../redux/features/editor/editor.slice";
 import input = Simulate.input;
 import { useDispatch, useSelector } from "react-redux";
+import { selectPage } from "../../../../redux/features/editor/editor.slice";
 
 type SocialsView = {}
 type SocialItem = {
@@ -37,7 +42,7 @@ type SocialItem = {
 type SocialView = {
 }
 export const SocialsView: React.FC<SocialView> = ( ) => {
-  const sectionState = useSelector(selectSections);
+  const sectionState = useSelector(selectPage);
   const dispatch = useDispatch();
   const socialLinksIndexInStore = useSelector(selectSocialLinks);
   const socialLinksFromStore = sectionState.items[socialLinksIndexInStore];

@@ -1,56 +1,52 @@
 import { NextPage } from "next";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/auth/authSlice";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection, doc, getDoc, getDocs, query, where
+} from "firebase/firestore";
 import { db } from "../../firebase";
 import {
-  setPageFromFirestore
-} from "../../redux/features/page-data/page-data.slice";
+  selectEditor, setActivePageInfo
+} from "../../redux/features/editor/editor.slice";
 import { useEffect } from "react";
-import { DrawerHeader } from "./editor-header";
+import { EditorHeader } from "./editor-header";
 import { EditorPreview } from "./editor-preview";
 import { EditorDrawers } from "./drawers";
 import { EditorActions } from "./editor-actions";
 
 
 const Editor: NextPage = () => {
-  const userState: any = useSelector(selectUser); //Todo: Type this properly
-
+  const userState = useSelector(selectUser); //Todo: Type this properly
+  const activePageId = useSelector(selectEditor)?.activePage?.pageId;
   const dispatch = useDispatch();
+
+
   const getPageInfo = async () => {
-    const handle = userState?.user?.handle ;
-    console.log("HANDLEE", handle);
+    // @ts-ignore
+    if (userState && activePageId) {
+      try {
+        const pageRef = doc(db, "pages", activePageId);
+        const docSnap = await getDoc(pageRef);
 
-    if(userState.user && handle) {
-      //console.log("TOUCHEDD", handle);
-
-      const pageRef = query(collection(db, "pages"),
-        where("handle", "==", handle));
-      const pageSnap = await getDocs(pageRef);
-      pageSnap.forEach((doc) => {
-        console.log("TOUCHEDD", handle);
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-        dispatch(setPageFromFirestore(doc.data()));
-      });
+        dispatch(setActivePageInfo(docSnap.data()));
+      } catch (error) {
+        console.log("[ERROR GETTING PAGE INFO::::", error);
+      }
     }
   };
 
   useEffect(() => {
-    console.log("CALLEDDD");
     getPageInfo();
-  }, );
+  },[]);
 
-  return (
-    <>
+  return (<>
       <div className="flex items-center justify-center editor ">
-        <DrawerHeader/>
+        <EditorHeader/>
         <EditorPreview />
         <EditorDrawers />
         <EditorActions />
       </div>
-    </>
-  );
+    </>);
 };
 
 export default Editor;

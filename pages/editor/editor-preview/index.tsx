@@ -1,25 +1,21 @@
-import { NextPage } from "next";
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectpage } from "../../../redux/features/page-data/page-data.slice";
-import {
-  selectSections
-} from "../../../redux/features/sections/sections.slice";
+import { selectEditor } from "../../../redux/features/editor/editor.slice";
+
 
 export const EditorPreview: React.FC = () => {
-  const pageState = useSelector(selectpage);
-  const sectionState = useSelector((selectSections));
+  const editorState = useSelector(selectEditor);
 
-  return (<>
-      <p className="text-black">{pageState?.handle}</p>
+  return (<div className="flex flex-col">
+
+      <p className="text-white">{editorState.page.handle}</p>
 
       <div className=" bg-slate-300 editor-preview text-black">
         <div className=" text-xs w-96 text-red-600 "
              style={{ width: "100px" }}>
-          {/*{JSON.stringify(sectionState)}*/}
         </div>
       </div>
-    </>
+    </div>
 
   );
 };
