@@ -1,7 +1,9 @@
 import React, { useEffect, useId, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+//Todo: Move this type Alias to page slice
 import {
-   selectSections, setPageItemByIndex, TextArea
+    TextArea
 } from "../../../../redux/features/sections/sections.slice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -9,11 +11,12 @@ import useDetectKeyboardOpen from "use-detect-keyboard-open";
 import {
   selectUiState
 } from "../../../../redux/features/ui-state/ui-state.slice";
+import { selectPage, setPageItemByIndex } from "../../../../redux/features/editor/editor.slice";
 
 
 export const TextBoxEditor = () => {
   const dispatch = useDispatch();
-  const sectionState = useSelector((selectSections));
+  const sectionState = useSelector((selectPage));
   const {sectionsView} = useSelector(selectUiState)
   // const [state, setState] = useState({
   //   type: "TEXTBOX", title: "", content: ""

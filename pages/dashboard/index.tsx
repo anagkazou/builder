@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useEffect } from "react";
-import { setActivePage } from "../../redux/features/page-data/page-data.slice";
+import { setActivePage } from "../../redux/features/editor/editor.slice";
 import "react-sliding-side-panel/src/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/auth/authSlice";
@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 const Dashboard: NextPage = () => {
 
     const dispatch = useDispatch();
-    const pages = useSelector(selectUser)?.currentUser.pages
+    const pages = useSelector(selectUser)?.pages
     const route = useRouter();
   useEffect(() => {
     console.log( 'USER PAGE',pages)

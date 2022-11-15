@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  DEFAULT_CUSTOM_LINK,
-  LinkItem,
-  saveCustomLinks,
-  selectCustomLinks,
-  selectCustomLinksInStore,
-  selectSections
-
+  LinkItem
 } from "../../../../redux/features/sections/sections.slice";
+import { DEFAULT_CUSTOM_LINK } from "../../../../app.consts";
+import {
+  saveCustomLinks, selectCustomLinksInStore
+} from "../../../../redux/features/editor/editor.slice";
 import { useDispatch, useSelector } from "react-redux";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -124,7 +122,7 @@ const LinkEditor: React.FC<LinkEditorType> = ({
   const removeAllInputFromFocus = () => {
     inputRefs.current.forEach((el: any) => {
       Object.values(el).forEach((ref: any) => {
-       ref && ref?.blur();
+        ref && ref?.blur();
       });
 
     });

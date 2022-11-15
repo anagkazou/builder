@@ -7,15 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../firebase";
 import { AppDispatch } from "../../redux";
 import { selectUser, setUserHandle } from "../../redux/features/auth/authSlice";
-import {
-  createNewPageFOrNewUser, selectpage as selectPage, setPageHandle
-} from "../../redux/features/page-data/page-data.slice";
+
 const ClaimPage: NextPage = () => {
   const [isAvailable, setIsAvailable] = useState<boolean | undefined>();
   const [handle, setHandle] = useState<string>('');
 
   const dispatch = useDispatch<AppDispatch>();
-  const page = useSelector(selectPage);
   const currentUser = useSelector(selectUser);
   const router = useRouter();
 

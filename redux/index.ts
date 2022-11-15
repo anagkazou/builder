@@ -7,8 +7,7 @@ import {
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userReducer, { setUser } from "./features/auth/authSlice";
-import editorReducer from "./features/page-data/page-data.slice";
-import sectionsReducer from './features/sections/sections.slice';
+import editorReducer from "./features/editor/editor.slice";
 import UIStateReducer from "./features/ui-state/ui-state.slice";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, createUserProfileDocument } from "../firebase";
@@ -18,13 +17,12 @@ import { DocumentSnapshot } from "@firebase/firestore-types";
 const rootReducer = combineReducers({
   user: userReducer,
   editor: editorReducer,
-  sections: sectionsReducer,
   uiState: UIStateReducer
 });
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["user", "sections"],
+  whitelist: ["user", "editor"],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
