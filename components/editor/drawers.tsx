@@ -1,8 +1,9 @@
 import React from "react";
+import { ProfilePanel } from "./drawers/profile-panel";
+import { SectionPanel } from "./drawers/section-panels";
+import { StylePanel } from "./drawers/style-panel";
 
-import { ProfilePanel } from "./side-panels/profile-panel";
-import { SectionPanel } from "./side-panels/section-panels";
-import { StylePanel } from "./side-panels/style-panel";
+
 
 type PanelsProps = {
   setOpenPanel: any; // Todo: Type this properly
