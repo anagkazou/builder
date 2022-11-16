@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { collection, doc, writeBatch } from "firebase/firestore";
 import { RootState } from "../..";
+import { Views } from "../../../components/editor/drawers/section-panels";
 import { db } from "../../../firebase";
 import { setUserHandle as setUserHandle } from "../auth/authSlice";
-import { Views } from "../../../pages/editor/side-panels/section-panels";
 
 export interface Sections {
   items: Array<any>,

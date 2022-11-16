@@ -9,10 +9,10 @@ import {
   selectEditor, setActivePageInfo
 } from "../../redux/features/editor/editor.slice";
 import { useEffect } from "react";
-import { EditorHeader } from "./editor-header";
-import { EditorPreview } from "./editor-preview";
-import { EditorDrawers } from "./drawers";
-import { EditorActions } from "./editor-actions";
+import { EditorHeader } from "../../components/editor/editor-header";
+import { EditorPreview } from "../../components/editor/editor-preview";
+import { EditorDrawers } from "../../components/editor/drawers";
+import { EditorActions } from "../../components/editor/editor-actions";
 
 
 const Editor: NextPage = () => {

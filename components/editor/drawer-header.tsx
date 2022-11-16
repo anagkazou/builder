@@ -1,7 +1,7 @@
 import Image from "next/image";
 import cancelIcon from "../../assets/cancel.svg";
-import { Views } from "./side-panels/section-panels";
 import React from "react";
+import { Views } from "./drawers/section-panels";
 
 type PanelHeaderType = {
   title: string;

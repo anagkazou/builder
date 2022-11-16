@@ -14,7 +14,7 @@ import { ProfileImage } from "./profile-image";
 import { CoverImage } from "./cover-image";
 import { ImageCropper } from "./image-cropper";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
-import InputComponent from "../../../../components/input.component";
+import InputComponent from "../../../input.component";
 import {
   selectUiState, setActiveDrawer
 } from "../../../../redux/features/ui-state/ui-state.slice";
