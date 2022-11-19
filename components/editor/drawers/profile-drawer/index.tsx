@@ -28,7 +28,7 @@ export const enum ActiveUpload {
   PROFILE_IMAGE = "PROFILE-IMAGE", COVER_IMAGE = "COVER-IMAGE"
 }
 
-export const ProfilePanel = () => {
+export const ProfileDrawer = () => {
   const [imageSrc, setImageSrc] = useState(null);
   const [activeUpload, setActiveUpload] = useState<string | null>(null);
   const [profileImageSrc, setProfileImageSrc] = useState(null);

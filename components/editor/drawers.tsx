@@ -1,8 +1,9 @@
 import React from "react";
-import { ProfilePanel } from "./drawers/profile-panel";
-import { SectionPanel } from "./drawers/section-panels";
-import { StylePanel } from "./drawers/style-panel";
-
+import { ProfileDrawer } from "./drawers/profile-drawer";
+import { SectionDrawer } from "./drawers/section-drawer";
+import { StyleDrawer } from "./drawers/style-drawer";
+import { TemplatesDrawer } from "./drawers/templates-drawer";
+import { BackgroundDrawer } from "./drawers/background-drawer";
 
 
 type PanelsProps = {
@@ -13,8 +14,10 @@ type PanelsProps = {
 export const EditorDrawers: React.FC = () => {
 
   return (<div className="dashboard-panels">
-      <SectionPanel setOpenPanel={false} openPanel={"openPanel"} />
-      <StylePanel />
-      <ProfilePanel />
-    </div>);
+    <SectionDrawer setOpenPanel={false} openPanel={"openPanel"} />
+    <StyleDrawer />
+    <ProfileDrawer />
+    <TemplatesDrawer />
+    <BackgroundDrawer />
+  </div>);
 };

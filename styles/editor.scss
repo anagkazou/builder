@@ -163,10 +163,11 @@ STYLE PANEL STYLES
   &-container {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    width: calc(100vw - 40px);
+    //grid-template-rows: 20px;
     height: auto;
     column-gap: 8px;
     row-gap: 0px;
+    width: 100%;
   }
 
   &-option__wrapper {
@@ -179,6 +180,7 @@ STYLE PANEL STYLES
   &-option {
     height: 100%;
     border-radius: 50%;
+
   }
 }
 
