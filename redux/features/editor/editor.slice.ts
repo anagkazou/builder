@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { collection, doc, writeBatch } from "firebase/firestore";
 import { RootState } from "../..";
-import { Views } from "../../../components/editor/drawers/section-panels";
+import { Views } from "../../../components/editor/drawers/section-drawer";
 import { db } from "../../../firebase";
 import { setUserHandle as setUserHandle } from "../auth/authSlice";
 
@@ -19,7 +19,9 @@ export interface Editor {
     items: Array<any>; pageMeta?: {
       title: string, description: string
     }
-    profileImage?: string; coverImage?: string; createdAt?: Date; handle?: string; id?: string; published?: boolean; url?: string;
+    background?: { color: string, hex: string, id: number }, template?: {
+      id: string, name: string,
+    }, profileImage?: string; coverImage?: string; createdAt?: Date; handle?: string; id?: string; published?: boolean; url?: string;
   }
 }
 
@@ -119,6 +121,8 @@ export const EditorSlice = createSlice({
       }
     }, setPageMeta: (state, action) => {
       state.page.pageMeta = action.payload;
+    }, setBackground: (state, { payload }) => {
+      state.page.background = payload;
     }
   }
 });
@@ -148,6 +152,7 @@ export const {
   setActivePageInfo,
   setPageMeta,
   setPageItemByIndex,
-  saveCustomLinks
+  saveCustomLinks,
+  setBackground
 } = EditorSlice.actions;
 export default EditorSlice.reducer;

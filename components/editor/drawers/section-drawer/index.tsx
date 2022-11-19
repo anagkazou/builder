@@ -23,7 +23,7 @@ type SectionPanelPropType = {
   openPanel: string; setOpenPanel: any;
 };
 
-export const SectionPanel: React.FC<SectionPanelPropType> = ({}) => {
+export const SectionDrawer: React.FC<SectionPanelPropType> = ({}) => {
   const sectionState = useSelector((selectPage));
   const dispatch = useDispatch()
   const [viewState, setViewState] = useState<Views>(Views.MAIN);
