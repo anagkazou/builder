@@ -1,34 +1,32 @@
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSections } from "../../redux/features/sections/sections.slice";
 import {
-  collection,
-  getDocs,
-  query, updateDoc,
-  where
+  collection, doc, getDocs, query, updateDoc, where
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { selectUser } from "../../redux/features/auth/authSlice";
+import {
+  selectEditor, selectPage
+} from "../../redux/features/editor/editor.slice";
 
 //Check if the page has been published before and render 'publish' or 'update'
 // as appropriate.
 
-export const DrawerHeader = () => {
+export const EditorHeader = () => {
   const dispatch = useDispatch();
-  const userState = useSelector(selectUser);
-  const sectionState = useSelector(selectSections);
-  const handle = userState.handle;
+  const activePageId = useSelector(selectEditor)?.activePage?.pageId;
+  const sectionState = useSelector(selectPage);
+
   const publishOrUpdatePage = async ()=>{
-    const pageQuery = await query(collection(db, "pages"), where("handle", "==", handle));
-    const pageDocs = await getDocs(pageQuery);
-    console.log(pageDocs);
+
+
+    // @ts-ignore
+    const pageRef = doc(db, "pages", activePageId);
     try {
-    await  pageDocs.forEach( (pageDoc) => {
-         updateDoc(pageDoc.ref, { ...sectionState,published:true });
-      });
+       await updateDoc(pageRef, { ...sectionState, published:true });
     }
-   catch (e) {
-     console.log(e);
+   catch (error) {
+     console.log("[ERROR PUBLISHING::::", error);
    }
   }
 

@@ -5,6 +5,7 @@ import {
   collection, doc, getDoc, getFirestore, setDoc, writeBatch
 } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCkdSXgFTlLqob-D2xV-2Taz5oxJ9OrkT4",
   authDomain: "builder-d308b.firebaseapp.com",
@@ -12,7 +13,7 @@ const firebaseConfig = {
   storageBucket: "builder-d308b.appspot.com",
   messagingSenderId: "416962586828",
   appId: "1:416962586828:web:a8da2cd076ff06f38cba69",
-  measurementId: "G-YW0PM1V7JW",
+  measurementId: "G-YW0PM1V7JW"
 };
 
 // Initialize Firebase
@@ -28,7 +29,9 @@ export const db = getFirestore(app) || null;
 export { firebaseConfig as firebase };
 export const auth = getAuth(app);
 
-export const createUserProfileDocument = async (userAuth: User, handle:string|null) => {
+export const createUserProfileDocument = async (userAuth: User, handle: string[]) => {
+  console.log("HANDLE", handle)
+
   if (!userAuth) return;
 
   const userRef = doc(db, "users", userAuth.uid);
@@ -44,13 +47,27 @@ export const createUserProfileDocument = async (userAuth: User, handle:string|nu
 
       //store user in Firestore
       let batch = writeBatch(db);
+      console.log("HANDLE", handle, handle[0])
 
-      batch.set(userRef, { displayName, createdAt, email, handle:handle });
-      batch.set(pageDocRef, { handle: handle, createdAt: new Date(), id:pageDocRef.id });
+      const pageHandle =handle[0];
+      const newUser = {
+        displayName,
+        createdAt,
+        email,
+        pages: [{ handle:pageHandle , pageId: pageDocRef.id }]
+      };
+      const newPage = {
+        handle: handle[0],
+        createdAt: new Date(),
+        id: pageDocRef.id
+      };
+
+      batch.set(userRef, newUser);
+      batch.set(pageDocRef, newPage);
       await batch.commit();
     }
   } catch (error) {
-    console.log(error);
+    console.log("ERRORRR",error);
   }
 
   return userRef;

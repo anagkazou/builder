@@ -7,17 +7,14 @@ import { DrawerHeader } from "../../drawer-header";
 import { getCroppedImg, getRotatedImage } from "../../utils/canvas-utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Page, selectpage, setPageCoverImage, setPageImage,
-} from "../../../../redux/features/page-data/page-data.slice";
-import {
-  selectSections,
-  setPageMeta
-} from "../../../../redux/features/sections/sections.slice";
+  Editor, selectEditor, selectPage, setPageCoverImage, setPageImage, setPageMeta
+} from "../../../../redux/features/editor/editor.slice";
+
 import { ProfileImage } from "./profile-image";
 import { CoverImage } from "./cover-image";
 import { ImageCropper } from "./image-cropper";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
-import InputComponent from "../../../../components/input.component";
+import InputComponent from "../../../input.component";
 import {
   selectUiState, setActiveDrawer
 } from "../../../../redux/features/ui-state/ui-state.slice";
@@ -31,7 +28,7 @@ export const enum ActiveUpload {
   PROFILE_IMAGE = "PROFILE-IMAGE", COVER_IMAGE = "COVER-IMAGE"
 }
 
-export const ProfilePanel = () => {
+export const ProfileDrawer = () => {
   const [imageSrc, setImageSrc] = useState(null);
   const [activeUpload, setActiveUpload] = useState<string | null>(null);
   const [profileImageSrc, setProfileImageSrc] = useState(null);
@@ -56,7 +53,7 @@ export const ProfilePanel = () => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
   const dispatch = useDispatch();
-  const pageState = useSelector(selectpage);
+  const pageState = useSelector(selectEditor).page;
   const initialHeight = 60;
   const activeCropHeight = 100;
   const [panelHeight, setPanelHeight] = useState<number>(initialHeight);
@@ -112,13 +109,13 @@ export const ProfilePanel = () => {
   };
 
   const [inputFieldInFocus, setInputFieldInFocus] = useState<any>(null);
-  const pageInfo = useSelector(selectpage);
-  const sections = useSelector(selectSections);
+  const pageInfo = useSelector(selectEditor);
+  const page = useSelector(selectPage);
 
 
-  const [temp, setTemp] = useState<Page>();
+  const [temp, setTemp] = useState<Editor>();
   //Todo: Explore using refs to store this value
-  const [pageInfoState, setPageInfoState] = useState<typeof sections.pageMeta>(sections.pageMeta);
+  const [pageInfoState, setPageInfoState] = useState<typeof page.pageMeta>(page.pageMeta);
   const [saved, setSaved] = useState<boolean>(false);
   const isKeyboardOpen = useDetectKeyboardOpen();
   const inputRefs: any = {};
@@ -160,7 +157,7 @@ export const ProfilePanel = () => {
   };
   const handleChange = (event: any) => {
     setSaved(false);
-    const value = event.target.value.replace(/\s/g, "");
+    const value = event.target.value;
 
     //TOdo: this is very wrong...
     setPageInfoState((prevState: any) => ({
