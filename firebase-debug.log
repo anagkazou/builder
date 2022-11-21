@@ -1,0 +1,18 @@
+[debug] [2022-11-21T15:52:41.492Z] ----------------------------------------------------------------------
+[debug] [2022-11-21T15:52:41.495Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2022-11-21T15:52:41.496Z] CLI Version:   11.16.1
+[debug] [2022-11-21T15:52:41.496Z] Platform:      win32
+[debug] [2022-11-21T15:52:41.496Z] Node Version:  v18.7.0
+[debug] [2022-11-21T15:52:41.498Z] Time:          Mon Nov 21 2022 16:52:41 GMT+0100 (GMT+02:00)
+[debug] [2022-11-21T15:52:41.498Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-11-21T15:52:41.598Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-11-21T15:52:41.598Z] > authorizing via signed-in user (thedavidomole@gmail.com)
+[debug] [2022-11-21T15:52:41.598Z] [iam] checking project builder-d308b for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-11-21T15:52:41.602Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/builder-d308b:testIamPermissions [none]
+[debug] [2022-11-21T15:52:41.602Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/builder-d308b:testIamPermissions x-goog-quota-user=projects/builder-d308b
+[debug] [2022-11-21T15:52:41.602Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/builder-d308b:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-21T15:52:42.735Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/builder-d308b:testIamPermissions 200
+[debug] [2022-11-21T15:52:42.735Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/builder-d308b:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-21T15:52:42.736Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/builder-d308b [none]
+[debug] [2022-11-21T15:52:43.371Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/builder-d308b 200
