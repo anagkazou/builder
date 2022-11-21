@@ -16,3 +16,39 @@
 [debug] [2022-11-21T15:52:42.735Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/builder-d308b:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
 [debug] [2022-11-21T15:52:42.736Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/builder-d308b [none]
 [debug] [2022-11-21T15:52:43.371Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/builder-d308b 200
+[debug] [2022-11-21T15:57:06.978Z] ----------------------------------------------------------------------
+[debug] [2022-11-21T15:57:06.980Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2022-11-21T15:57:06.981Z] CLI Version:   11.16.1
+[debug] [2022-11-21T15:57:06.981Z] Platform:      win32
+[debug] [2022-11-21T15:57:06.981Z] Node Version:  v18.7.0
+[debug] [2022-11-21T15:57:06.983Z] Time:          Mon Nov 21 2022 16:57:06 GMT+0100 (GMT+02:00)
+[debug] [2022-11-21T15:57:06.983Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-11-21T15:57:07.083Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-11-21T15:57:07.084Z] > authorizing via signed-in user (thedavidomole@gmail.com)
+[debug] [2022-11-21T15:57:07.084Z] [iam] checking project builder-d308b for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-11-21T15:57:07.088Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/builder-d308b:testIamPermissions [none]
+[debug] [2022-11-21T15:57:07.088Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/builder-d308b:testIamPermissions x-goog-quota-user=projects/builder-d308b
+[debug] [2022-11-21T15:57:07.089Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/builder-d308b:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-21T15:57:08.327Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/builder-d308b:testIamPermissions 200
+[debug] [2022-11-21T15:57:08.328Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/builder-d308b:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-21T15:57:08.328Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/builder-d308b [none]
+[debug] [2022-11-21T15:57:08.954Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/builder-d308b 200
+[debug] [2022-11-21T15:57:08.954Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/builder-d308b {"projectId":"builder-d308b","projectNumber":"416962586828","displayName":"builder","name":"projects/builder-d308b","resources":{"hostingSite":"builder-d308b","storageBucket":"builder-d308b.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_79e668c8-51ea-42fa-9dc3-11c00688a349"}
+[debug] [2022-11-21T15:57:18.519Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/builder-d308b/sites pageToken=&pageSize=10
+[debug] [2022-11-21T15:57:19.984Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/builder-d308b/sites 200
+[debug] [2022-11-21T15:57:19.984Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/builder-d308b/sites {"sites":[{"name":"projects/builder-d308b/sites/builder-d308b","defaultUrl":"https://builder-d308b.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2022-11-21T15:57:19.985Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/builder-d308b/sites 
+[debug] [2022-11-21T15:57:21.309Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/builder-d308b/sites 200
+[debug] [2022-11-21T15:57:21.309Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/builder-d308b/sites {"sites":[{"name":"projects/builder-d308b/sites/builder-d308b","defaultUrl":"https://builder-d308b.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2022-11-21T15:57:21.310Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/builder-d308b/webApps/-/config [none]
+[debug] [2022-11-21T15:57:22.402Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/builder-d308b/webApps/-/config 200
+[debug] [2022-11-21T15:57:22.402Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/builder-d308b/webApps/-/config {"projectId":"builder-d308b","appId":"1:416962586828:web:a8da2cd076ff06f38cba69","storageBucket":"builder-d308b.appspot.com","locationId":"us-central","apiKey":"AIzaSyCkdSXgFTlLqob-D2xV-2Taz5oxJ9OrkT4","authDomain":"builder-d308b.firebaseapp.com","messagingSenderId":"416962586828","measurementId":"G-YW0PM1V7JW"}
+[debug] [2022-11-21T15:57:51.267Z] Error: Call retries were exceeded
+    at ChildProcessWorker.initialize (C:\Users\DAVID-OMOLE\WebstormProjects\builder\node_modules\next\dist\compiled\jest-worker\index.js:1:11661)
+    at ChildProcessWorker._onExit (C:\Users\DAVID-OMOLE\WebstormProjects\builder\node_modules\next\dist\compiled\jest-worker\index.js:1:12599)
+    at ChildProcess.emit (node:events:513:28)
+    at ChildProcess.emit (node:domain:489:12)
+    at ChildProcess._handle.onexit (node:internal/child_process:291:12)
+[error] 
+[error] Error: An unexpected error has occurred.
