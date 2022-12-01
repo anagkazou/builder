@@ -4,7 +4,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { db } from "../../firebase";
+import { db } from "../../firebase/index";
 import { AppDispatch } from "../../redux";
 import { selectUser, setUserHandle } from "../../redux/features/auth/authSlice";
 

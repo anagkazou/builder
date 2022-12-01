@@ -46,7 +46,7 @@ export const SectionDrawer: React.FC<SectionPanelPropType> = ({}) => {
         setTimeout(()=> dispatch(setActiveSectionView(Views.MAIN)),800);      }}
     >
       <div className="section-panel  ">
-        <DrawerHeader title={"Sections"} setViewState={setViewState}
+        <DrawerHeader setViewState={setViewState}
                       viewState={sectionsView.activeSectionView} />
 
 

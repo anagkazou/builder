@@ -1,10 +1,7 @@
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  collection, doc, getDocs, query, updateDoc, where
-} from "firebase/firestore";
-import { db } from "../../firebase";
-import { selectUser } from "../../redux/features/auth/authSlice";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase/index";
 import {
   selectEditor, selectPage
 } from "../../redux/features/editor/editor.slice";

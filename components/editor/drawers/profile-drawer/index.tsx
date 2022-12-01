@@ -231,7 +231,7 @@ export const ProfileDrawer = () => {
                               setZoom={setZoom}
                 />) : (<>
                 <div className="profile-panel ">
-                  <DrawerHeader title="Profile" />
+                  <DrawerHeader  />
                   <div className="p-5 profile-form">
                     <div
                       ref={ref => setRef(ref, "Images")}

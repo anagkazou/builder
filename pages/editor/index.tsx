@@ -1,10 +1,8 @@
 import { NextPage } from "next";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/auth/authSlice";
-import {
-  collection, doc, getDoc, getDocs, query, where
-} from "firebase/firestore";
-import { db } from "../../firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/index";
 import {
   selectEditor, setActivePageInfo
 } from "../../redux/features/editor/editor.slice";
