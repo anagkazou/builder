@@ -1,0 +1,49 @@
+import { useDispatch } from "react-redux";
+import {
+  setActiveDrawer
+} from "../../../redux/features/ui-state/ui-state.slice";
+import { DrawerEnums } from "../../../enums";
+import { Icons } from "../../../assets/icons";
+import "./editor-navbar.module.css";
+
+export const EditorNavbar = () => {
+  const dispatch = useDispatch();
+  return (<div
+    className="fixed bottom-0 flex w-full items-baseline justify-between bg-white px-12 py-2 editor__navbar">
+    <div className="flex flex-col items-center editor-navbar__item"
+         onClick={() => dispatch(setActiveDrawer(DrawerEnums.PROFILE))}>
+      <div className="mb-1"><Icons.navProfile /></div>
+      <div
+        className="editor-navbar__item--text font-semibold text-sm  text-dark">Profile
+      </div>
+    </div>
+    <div className="flex flex-col items-center editor-navbar__item"
+         onClick={() => dispatch(setActiveDrawer(DrawerEnums.SECTIONS))}>
+      <div className="mb-1"><Icons.navSections /></div>
+      <div
+        className="editor-navbar__item--text font-semibold text-sm  text-dark">Sections
+      </div>
+    </div>
+    <div
+      className="flex flex-col items-center editor-navbar__item"
+      onClick={() => {
+        window.scrollTo(0, 1);
+        dispatch(setActiveDrawer(DrawerEnums.STYLE));
+      }}
+    >
+      <div className="mb-1"><Icons.navStyle /></div>
+      <div
+        className="editor-navbar__item--text font-semibold text-sm  text-dark">Style
+      </div>
+
+    </div>
+    <div className="flex flex-col items-center editor-navbar__item"
+         onClick={() => dispatch(setActiveDrawer(DrawerEnums.PREVIEW))}>
+      <div className="mb-1"><Icons.navPreview /></div>
+
+      <div
+        className="editor-navbar__item--text font-semibold text-sm  text-dark">Preview
+      </div>
+    </div>
+  </div>);
+};

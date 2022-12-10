@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useRef } from "react";
 
 type ProfileImageType = {
@@ -10,18 +9,12 @@ export const ProfileImage:React.FC<ProfileImageType> = ({image, onChange}) => {
 
   const hiddenFileInput = useRef<any>(null);
 
-  const handleClick = (event: any) => {
+  const handleClick = () => {
     hiddenFileInput.current.click();
   };
   // Call a function (passed as a prop from the parent component)
   // to handle the user-selected file
-  const readFile = (file: Blob) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => resolve(reader.result), false);
-      reader.readAsDataURL(file);
-    });
-  };
+
   return(
       <>
         {image ?

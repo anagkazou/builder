@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { EditorHeader } from "../../components/editor/editor-header";
 import { EditorPreview } from "../../components/editor/editor-preview";
 import { EditorDrawers } from "../../components/editor/drawers";
-import { EditorActions } from "../../components/editor/editor-actions";
+import { EditorNavbar } from "../../components/editor/editor-navbar";
 
 
 const Editor: NextPage = () => {
@@ -42,7 +42,7 @@ const Editor: NextPage = () => {
         <EditorHeader/>
         <EditorPreview />
         <EditorDrawers />
-        <EditorActions />
+        <EditorNavbar />
       </div>
     </>);
 };

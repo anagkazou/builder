@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/index";
 import {
@@ -10,7 +10,6 @@ import {
 // as appropriate.
 
 export const EditorHeader = () => {
-  const dispatch = useDispatch();
   const activePageId = useSelector(selectEditor)?.activePage?.pageId;
   const sectionState = useSelector(selectPage);
 
