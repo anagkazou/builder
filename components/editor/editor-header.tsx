@@ -13,26 +13,27 @@ export const EditorHeader = () => {
   const activePageId = useSelector(selectEditor)?.activePage?.pageId;
   const sectionState = useSelector(selectPage);
 
-  const publishOrUpdatePage = async ()=>{
+  const publishOrUpdatePage = async () => {
 
 
     // @ts-ignore
     const pageRef = doc(db, "pages", activePageId);
     try {
-       await updateDoc(pageRef, { ...sectionState, published:true });
+      await updateDoc(pageRef, { ...sectionState, published: true });
+    } catch (error) {
+      console.log("[ERROR PUBLISHING::::", error);
     }
-   catch (error) {
-     console.log("[ERROR PUBLISHING::::", error);
-   }
-  }
+  };
 
-  return(
+  return (
 
-    <div className="dashboard-header top-0 flex fixed justify-end w-full px-4 py-2">
-        <div className="">
-          <Button variant="contained" style={{borderRadius:0}} onClick={publishOrUpdatePage} >Publish</Button>
-        </div>
-    </div>
-  )
+    <div
+      className="dashboard-header top-0 flex fixed justify-end w-full px-4 py-2">
+      <div className="">
+        <Button variant="contained" color="primary"
+                style={{ backgroundColor: "#000000" }}
+                onClick={publishOrUpdatePage}>Publish</Button>
+      </div>
+    </div>);
 
-}
+};

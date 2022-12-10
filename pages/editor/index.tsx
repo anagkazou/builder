@@ -38,7 +38,7 @@ const Editor: NextPage = () => {
   },[]);
 
   return (<>
-      <div className="flex items-center justify-center editor ">
+      <div className="flex pt-16 justify-center editor ">
         <EditorHeader/>
         <EditorPreview />
         <EditorDrawers />

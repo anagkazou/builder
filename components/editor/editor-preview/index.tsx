@@ -1,20 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { selectEditor } from "../../../redux/features/editor/editor.slice";
-
+import { EditorUrlView } from "./editor-url-view";
+import { QuickPreview } from "./preview";
 
 export const EditorPreview: React.FC = () => {
-  const editorState = useSelector(selectEditor);
 
-  return (<div className="flex flex-col">
+  return (<div className="flex flex-col px-10 w-full">
 
-      <p className="text-black">{editorState.page.handle}</p>
-
-      <div className=" bg-slate-300 editor-preview text-black">
-        <div className=" text-xs w-96 text-red-600 "
-             style={{ width: "100px" }}>
-        </div>
-      </div>
+      <EditorUrlView />
+      <QuickPreview />
     </div>
 
   );

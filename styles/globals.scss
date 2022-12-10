@@ -1,8 +1,15 @@
-@tailwind 'base';
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 @import './styles/utilities.scss';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Raleway:wght@300;400&display=swap');
 
+@layer base {
+  :root {
+    --gray-light: #9C9C9C;
+
+  }
+}
 
 html,
 body {
@@ -25,15 +32,17 @@ a {
 p {
   margin: unset
 }
+
 input {
   &:focus {
     outline: none;
   }
 }
+
 #__next {
   height: 100vh;
 }
 
-.text-dark{
+.text-dark {
   color: #545454;
 }

@@ -12,16 +12,16 @@ export const EditorNavbar = () => {
     className="fixed bottom-0 flex w-full items-baseline justify-between bg-white px-12 py-2 editor__navbar">
     <div className="flex flex-col items-center editor-navbar__item"
          onClick={() => dispatch(setActiveDrawer(DrawerEnums.PROFILE))}>
-      <div className="mb-1"><Icons.navProfile width={28} height={28} /></div>
+      <div className="mb-0.5"><Icons.navProfile width={28} height={28} /></div>
       <div
-        className="editor-navbar__item--text font-semibold text-sm  text-dark">Profile
+        className="editor-navbar__item--text font-medium text-xs  text-dark">Profile
       </div>
     </div>
     <div className="flex flex-col items-center editor-navbar__item"
          onClick={() => dispatch(setActiveDrawer(DrawerEnums.SECTIONS))}>
-      <div className="mb-1"><Icons.navSections width={28} height={28}/></div>
+      <div className="mb-0.5"><Icons.navSections width={28} height={28} /></div>
       <div
-        className="editor-navbar__item--text font-medium text-sm  text-dark">Sections
+        className="editor-navbar__item--text font-medium text-xs  text-dark">Sections
       </div>
     </div>
     <div
@@ -31,18 +31,18 @@ export const EditorNavbar = () => {
         dispatch(setActiveDrawer(DrawerEnums.STYLE));
       }}
     >
-      <div className="mb-1"><Icons.navStyle width={28} height={28} /></div>
+      <div className="mb-0.5"><Icons.navStyle width={28} height={28} /></div>
       <div
-        className="editor-navbar__item--text font-medium text-sm  text-dark">Style
+        className="editor-navbar__item--text font-medium text-xs  text-dark">Style
       </div>
 
     </div>
     <div className="flex flex-col items-center editor-navbar__item"
          onClick={() => dispatch(setActiveDrawer(DrawerEnums.PREVIEW))}>
-      <div className="mb-1"><Icons.navPreview width={28} height={28}/></div>
+      <div className="mb-0.5"><Icons.navPreview width={28} height={28} /></div>
 
       <div
-        className="editor-navbar__item--text font-medium text-sm  text-dark">Preview
+        className="editor-navbar__item--text font-medium text-xs  text-dark">Preview
       </div>
     </div>
   </div>);
