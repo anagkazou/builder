@@ -5,14 +5,16 @@ import { db } from "../../firebase/index";
 import {
   selectEditor, selectPage
 } from "../../redux/features/editor/editor.slice";
-
+import { useRouter } from "next/router";
+import KeyboardBackspaceRoundedIcon
+  from "@mui/icons-material/KeyboardBackspaceRounded";
 //Check if the page has been published before and render 'publish' or 'update'
 // as appropriate.
 
 export const EditorHeader = () => {
   const activePageId = useSelector(selectEditor)?.activePage?.pageId;
   const sectionState = useSelector(selectPage);
-
+  const router = useRouter();
   const publishOrUpdatePage = async () => {
 
 
@@ -29,9 +31,13 @@ export const EditorHeader = () => {
 
     <div
       className="dashboard-header top-0 flex fixed justify-end w-full px-4 py-2">
-      <div className="">
+      <div className=" flex justify-between w-full">
+        <div className="flex items-center"
+             onClick={() => router.push("/dashboard")}>
+          <KeyboardBackspaceRoundedIcon color="#545454"/></div>
         <Button variant="contained" color="primary"
                 style={{ backgroundColor: "#000000" }}
+                size="small"
                 onClick={publishOrUpdatePage}>Publish</Button>
       </div>
     </div>);
