@@ -34,7 +34,7 @@ export const EditorHeader = () => {
       <div className=" flex justify-between w-full">
         <div className="flex items-center"
              onClick={() => router.push("/dashboard")}>
-          <KeyboardBackspaceRoundedIcon color="#545454"/></div>
+          <KeyboardBackspaceRoundedIcon color="primary"/></div>
         <Button variant="contained" color="primary"
                 style={{ backgroundColor: "#000000" }}
                 size="small"
