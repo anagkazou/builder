@@ -9,27 +9,29 @@ import { ReactNode } from "react";
 import { DrawerHeader } from "../drawer-header";
 
 
-export const BaseDrawer = ( {children}: {children : ReactNode}) => {
+export const BaseDrawer = ({
+                             children, drawerName
+                           }: { children: ReactNode, drawerName: DrawerEnums }) => {
   const dispatch = useDispatch();
-  const {  drawerState } = useSelector(selectUiState);
+  const { drawerState } = useSelector(selectUiState);
 
   return (<SwipeableDrawer
-      anchor={"bottom"}
-      open={drawerState.activeDrawer === DrawerEnums.SECTIONS}
-      onOpen={() => null}
-      onClose={() => {
-        // setPanelState(DrawerEnums.CLOSE);
-        dispatch(setActiveDrawer(null));
-        setTimeout(() => dispatch(setActiveSectionView(Views.MAIN)), 800);
-      }}
-      onBackdropClick={() => {
-        dispatch(setActiveDrawer(Views.MAIN));
-        setTimeout(() => dispatch(setActiveSectionView(Views.MAIN)), 800);
-      }}
-    >
+    anchor={"bottom"}
+    open={drawerState.activeDrawer === drawerName}
+    onOpen={() => null}
+    onClose={() => {
+
+      dispatch(setActiveDrawer(null));
+      if (drawerName == DrawerEnums.SECTIONS) setTimeout(() => dispatch(setActiveSectionView(Views.MAIN)), 800);
+    }}
+    onBackdropClick={() => {
+      dispatch(setActiveDrawer(DrawerEnums.CLOSE));
+      if (drawerName == DrawerEnums.SECTIONS) setTimeout(() => dispatch(setActiveSectionView(Views.MAIN)), 800);
+    }}
+  >
     <div className="base-drawer">
       {children}
-      <DrawerHeader/>
+      <DrawerHeader />
     </div>
-    </SwipeableDrawer>);
+  </SwipeableDrawer>);
 };

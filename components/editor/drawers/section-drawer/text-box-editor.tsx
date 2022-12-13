@@ -1,17 +1,16 @@
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 //Todo: Move this type Alias to page slice
-import {
-    TextArea
-} from "../../../../redux/features/sections/sections.slice";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { TextArea } from "../../../../redux/features/sections/sections.slice";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
 import {
   selectUiState
 } from "../../../../redux/features/ui-state/ui-state.slice";
-import { selectPage, setPageItemByIndex } from "../../../../redux/features/editor/editor.slice";
+import {
+  selectPage, setPageItemByIndex
+} from "../../../../redux/features/editor/editor.slice";
+import { Icons } from "../../../../assets/icons";
 
 
 export const TextBoxEditor = () => {
@@ -95,7 +94,6 @@ export const TextBoxEditor = () => {
   };
   const handleChange = (activeInput: any, event:any) => {
     event.preventDefault();
-    console.log(event)
     const value = event.target.value;
     setSaved(false);
     setTextAreaState( (prevState:any) =>( {...prevState,[activeInput]:value}))
@@ -103,7 +101,6 @@ export const TextBoxEditor = () => {
 
 
   const handleFocus = (inputInFocus: any) => {
-    console.log(inputRefs, temp, "TEXTAREASTATE");
     setTemp(inputRefs[inputInFocus].value);
     setInputFieldInFocus(inputInFocus);
     console.log("TEMP", temp);
@@ -111,8 +108,6 @@ export const TextBoxEditor = () => {
   const handleOnBlur = (id: string) => {
 
     if (!saved && inputFieldInFocus) {
-      console.log("0000", inputRefs[inputFieldInFocus].value);
-      console.log("1111", temp);
 
       setTextAreaState((prev: any) => ({
         ...prev, [inputFieldInFocus]: temp
@@ -126,25 +121,25 @@ export const TextBoxEditor = () => {
 
 
   return (<div className={`w-screen mb-6 px-4 fadeInLeft text-box-editor `}>
-    <div className={`my-4 ${inputFieldInFocus && inputFieldInFocus !== 'title' ? "hidden" : ""}`}
+    <div className={`my-6 ${inputFieldInFocus && inputFieldInFocus !== 'title' ? "hidden" : ""}`}
     >
 
       <label
         htmlFor="email"
-        className="block text-sm font-semibold text-white-800"
+        className="block text-sm font-semibold text-white-800 mb-2"
       >
-        Title
+        TITLE
       </label>
-      <div className="flex">
+      <div className="flex items-center">
 
         <div
-          className="input-container w-full flex place-items-center border-gray-500 border-solid shadow  ">
+          className=" w-full flex place-items-center ">
           <input
             ref={ref => setRef(ref, "title")}
             onChange={(event) => handleChange("title", event)}
             type="text"
             name="title"
-            className="text-base text-zinc-900 text-gr border-0  w-full leading-tight text-white border-none py-3 px-3 w-
+            className="input-container text-base text-zinc-900 text-gr border-0  w-full leading-tight text-white border-none py-3 px-3 w-
                          appearance-none"
             placeholder="Title"
             value={textAreaState?.title}
@@ -161,30 +156,28 @@ export const TextBoxEditor = () => {
             // submitHandler();
             saveTextAreaData()
           }}
-        ><FontAwesomeIcon icon={faCheck}
-                          size={"2x"}
-                          color={"#000"} />
+        > <Icons.Save/>
         </button>
       </div>
 
     </div>
 
-    <div className={`my-4 ${inputFieldInFocus && inputFieldInFocus !== 'content' ? "hidden" : ""}`} >
+    <div className={`my-6 ${inputFieldInFocus && inputFieldInFocus !== 'content' ? "hidden" : ""}`} >
       <label
         htmlFor="password"
-        className="block text-sm font-semibold text-white-800"
+        className="block text-sm font-semibold text-white-800 mb-2"
       >
-        Description
+        DESCRIPTION
       </label>
-      <div className="flex ">
+      <div className="flex items-center">
 
         <div
-          className="text-area w-full flex place-items-center border-gray-500 border-solid shadow ">
+          className=" w-full flex place-items-center ">
              <textarea  rows={4}
                        ref={ref => setRef(ref, "content")}
                        name="content"
                        onChange={(event) => handleChange("content", event)}
-                       className="text-base text-zinc-900 text-gr border-0  w-full leading-tight text-white border-none py-3 px-3 w-
+                        className="input-container text-base text-zinc-900 text-gr border-0  w-full leading-tight text-white border-none py-3 px-3 w-
                          appearance-none"
                        value={textAreaState?.content}
                        placeholder="Write a detailed content"
@@ -200,9 +193,7 @@ export const TextBoxEditor = () => {
             // submitHandler();
             saveTextAreaData();
           }}
-        ><FontAwesomeIcon icon={faCheck}
-                          size={"2x"}
-                          color={"#000"} />
+        ><Icons.Save/>
         </button>
       </div>
 

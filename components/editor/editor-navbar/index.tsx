@@ -6,6 +6,7 @@ import { DrawerEnums } from "../../../enums";
 import { Icons } from "../../../assets/icons";
 import "./editor-navbar.module.css";
 
+
 export const EditorNavbar = () => {
   const dispatch = useDispatch();
   return (<div

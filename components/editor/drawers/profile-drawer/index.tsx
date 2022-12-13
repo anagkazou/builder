@@ -1,7 +1,5 @@
 import { SwipeableDrawer } from "@mui/material";
-import React, {
-   useCallback, useEffect, useState
-} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { DrawerHeader } from "../../drawer-header";
 import { getCroppedImg, getRotatedImage } from "../../utils/canvas-utils";
@@ -29,7 +27,7 @@ export const enum ActiveUpload {
 }
 
 export const ProfileDrawer = () => {
-  const [imageSrc, setImageSrc] = useState(null);
+  const [, setImageSrc] = useState(null);
   const [activeUpload, setActiveUpload] = useState<string | null>(null);
   const [profileImageSrc, setProfileImageSrc] = useState(null);
   const [coverImageSrc, setCoverImageSrc] = useState(null);
@@ -38,7 +36,7 @@ export const ProfileDrawer = () => {
   const [rotation, setRotation] = useState<any>(0);
   const [zoom, setZoom] = useState<any>(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
-  const [croppedImage, setCroppedImage] = useState<any>();
+  const [, setCroppedImage] = useState<any>();
 
 
   function readFile(file: any) {
@@ -56,7 +54,7 @@ export const ProfileDrawer = () => {
   const pageState = useSelector(selectEditor).page;
   const initialHeight = 60;
   const activeCropHeight = 100;
-  const [panelHeight, setPanelHeight] = useState<number>(initialHeight);
+  const [, setPanelHeight] = useState<number>(initialHeight);
 
   const onFileChange = async (e: any) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -109,7 +107,6 @@ export const ProfileDrawer = () => {
   };
 
   const [inputFieldInFocus, setInputFieldInFocus] = useState<any>(null);
-  const pageInfo = useSelector(selectEditor);
   const page = useSelector(selectPage);
 
 
@@ -119,13 +116,13 @@ export const ProfileDrawer = () => {
   const [saved, setSaved] = useState<boolean>(false);
   const isKeyboardOpen = useDetectKeyboardOpen();
   const inputRefs: any = {};
-  const {drawerState} = useSelector(selectUiState);
+  const { drawerState } = useSelector(selectUiState);
 
   useEffect(() => {
     if (saved) {
       console.log("touched");
       dispatch(setPageMeta(pageInfoState));
-      Object.values(inputRefs).forEach((el:any)=> el.blur())
+      Object.values(inputRefs).forEach((el: any) => el.blur());
 
     }
   }, [saved]);
@@ -166,13 +163,13 @@ export const ProfileDrawer = () => {
     console.log(value);
   };
   const clearInputField = () => {
-   // event.preventDefault();
+    // event.preventDefault();
     console.log(inputFieldInFocus, "touched!!!!! Clear");
     setPageInfoState((prevState: any) => ({
       ...prevState, [inputFieldInFocus]: ""
     }));
   };
-  const handleOnBlur = (id: string) => {
+  const handleOnBlur = () => {
     if (!saved && inputFieldInFocus) {
       console.log("0000", inputRefs[inputFieldInFocus].value);
       console.log("1111", temp);
@@ -191,7 +188,7 @@ export const ProfileDrawer = () => {
 
     setInputFieldInFocus(null);
 
-   if(saved) Object.values(inputRefs).forEach((el:any)=> el.blur())
+    if (saved) Object.values(inputRefs).forEach((el: any) => el.blur());
 
   };
   const setRef = (ref: any, property: string) => {
@@ -208,13 +205,13 @@ export const ProfileDrawer = () => {
           open={drawerState.activeDrawer === DrawerEnums.PROFILE}
           onClose={() => {
             dispatch(setActiveDrawer(null));
-            setTimeout(()=> setInputFieldInFocus(null), 800);
+            setTimeout(() => setInputFieldInFocus(null), 800);
           }}
-          onBackdropClick={()=> {
+          onBackdropClick={() => {
             dispatch(setActiveDrawer(null));
           }}
           onAbort={reset}
-          onOpen={() => dispatch(setActiveDrawer(DrawerEnums.PROFILE)) }
+          onOpen={() => dispatch(setActiveDrawer(DrawerEnums.PROFILE))}
         >
           <>
             <>
@@ -231,7 +228,7 @@ export const ProfileDrawer = () => {
                               setZoom={setZoom}
                 />) : (<>
                 <div className="profile-panel ">
-                  <DrawerHeader  />
+                  <DrawerHeader />
                   <div className="p-5 profile-form">
                     <div
                       ref={ref => setRef(ref, "Images")}

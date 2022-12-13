@@ -1,16 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  LinkItem
-} from "../../../../redux/features/sections/sections.slice";
+import { LinkItem } from "../../../../redux/features/sections/sections.slice";
 import { DEFAULT_CUSTOM_LINK } from "../../../../app.consts";
 import {
   saveCustomLinks, selectCustomLinksInStore
 } from "../../../../redux/features/editor/editor.slice";
 import { useDispatch, useSelector } from "react-redux";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
-
+import { Icons } from "../../../../assets/icons";
 
 export const CustomLinks: React.FC = (props) => {
   const [inputFieldInFocus, setInputFieldInFocus] = useState<any>(null);
@@ -57,12 +53,8 @@ const LinkEditor: React.FC<LinkEditorType> = ({
                                                 index,
                                                 inputFieldInFocus,
                                                 setInputFieldInFocus,
-                                                setSaved,
-                                                setCustomLinksState,
-                                                customLinksState,
                                                 isDefault,
-                                                inputRefs,
-                                                saved
+                                                inputRefs
                                               }) => {
 
 
@@ -164,9 +156,9 @@ const LinkEditor: React.FC<LinkEditorType> = ({
   const handleOnBlur = (event?: any) => {
     event?.preventDefault();
     event?.stopPropagation();
-    if (!commited) {
-
-    }
+    // if (!commited) {
+    //
+    // }
     if (inputFieldInFocus != null) setInputFieldInFocus(null);
 
   };
@@ -177,13 +169,12 @@ const LinkEditor: React.FC<LinkEditorType> = ({
     setLinkItemState(linkItem);
   };
   return (<div
-    className={` px-4 fadeInLeft ${inputFieldInFocus !== null && (inputFieldInFocus != index) ? "hidden" : ""}`}>
-    <div
-    >
+    className={` px-4 mb-4 fadeInLeft ${inputFieldInFocus !== null && (inputFieldInFocus != index) ? "hidden" : ""}`}>
+
       <div
-        className="flex">
+        className="flex items-center rounded-md">
         <div
-          className="input-container w-full  place-items-center border-gray-500 border-b-0  border-solid shadow  "
+          className=" w-full  place-items-center rounded-md  "
 
           onBlur={handleOnBlur} onMouseLeave={handleMouseLeave}>
 
@@ -191,8 +182,7 @@ const LinkEditor: React.FC<LinkEditorType> = ({
             ref={ref => setRef(ref, "description")}
             type="text"
             name="description"
-            className="text-base text-zinc-900 text-gr border-0  w-full leading-tight grey border-none py-3 px-3 w-
-                         appearance-none"
+            className="link-border border border-solid border-gray-600/20 rounded-tl-md rounded-tr-md text-base text-zinc-900  text-gr w-full leading-tight grey py-3 px-3 w-appearance-none"
             placeholder="Enter description"
             autoComplete="off"
             value={linkItemState?.description}
@@ -202,7 +192,7 @@ const LinkEditor: React.FC<LinkEditorType> = ({
           <input
             ref={ref => setRef(ref, "url")}
             name="url"
-            className="text-base text-zinc-900 text-gr border-gray-500   w-full leading-tight grey border-none py-3 px-3 w-
+            className="border border-t-0 border-solid border-gray-600/20 rounded-bl-md rounded-br-md  text-base text-zinc-900 text-gr w-full leading-tight grey  py-3 px-3 w-
                          appearance-none"
             value={linkItemState?.url}
             placeholder="Write a detailed url"
@@ -218,11 +208,8 @@ const LinkEditor: React.FC<LinkEditorType> = ({
             event.preventDefault();
             saveCustomLinksData();
           }}
-        ><FontAwesomeIcon icon={faCheck}
-                          size={"2x"}
-                          color={"#000"} />
+        ><Icons.Save />
         </button>
-      </div>
 
     </div>
 
