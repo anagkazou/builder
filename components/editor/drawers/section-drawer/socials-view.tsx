@@ -1,36 +1,33 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 // @ts-ignore
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
 // @ts-ignore
 // @ts-ignore
-import {
-  faTwitter,
-  faFacebook,
-  faInstagram,
-  faTwitch,
-  faTiktok,
-  faSoundcloud,
-  faSpotify,
-  faPinterest,
-  faSnapchat,
-  faYoutube,
-  faLinkedin,
-  IconDefinition
-} from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
-import { faBox, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { Simulate } from "react-dom/test-utils";
+// import {
+//   faTwitter,
+//   faFacebook,
+//   faInstagram,
+//   faTwitch,
+//   faTiktok,
+//   faSoundcloud,
+//   faSpotify,
+//   faPinterest,
+//   faSnapchat,
+//   faYoutube,
+//   faLinkedin,
+//   IconDefinition
+// } from "@fortawesome/free-brands-svg-icons";
+import { Icons } from "../../../../assets/icons";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 // import {
 //   DEFAULT_SOCIAL_LINKS, saveSocialLinks, selectSections, selectSocialLinks
 // } from "../../../../redux/features/sections/sections.slice";
 import { DEFAULT_SOCIAL_LINKS } from "../../../../app.consts";
 import {
-  selectSocialLinks, saveSocialLinks
+  saveSocialLinks, selectPage, selectSocialLinks
 } from "../../../../redux/features/editor/editor.slice";
-import input = Simulate.input;
 import { useDispatch, useSelector } from "react-redux";
-import { selectPage } from "../../../../redux/features/editor/editor.slice";
 
 type SocialsView = {}
 type SocialItem = {
@@ -38,10 +35,8 @@ type SocialItem = {
 }
 
 
-
-type SocialView = {
-}
-export const SocialsView: React.FC<SocialView> = ( ) => {
+type SocialView = {}
+export const SocialsView: React.FC<SocialView> = () => {
   const sectionState = useSelector(selectPage);
   const dispatch = useDispatch();
   const socialLinksIndexInStore = useSelector(selectSocialLinks);
@@ -55,8 +50,8 @@ export const SocialsView: React.FC<SocialView> = ( ) => {
     // @ts-ignore
     //  console.log("USERSOCIALLINKSINSTORE::", socialLinksIndexInStore?.links);
     console.log(socialLinksIndexInStore, "UINS");
-    if (socialLinksIndexInStore === -1) return DEFAULT_SOCIAL_LINKS; else {
-      console.log("PPPPP", socialLinksFromStore);
+    if (socialLinksIndexInStore === -1) return DEFAULT_SOCIAL_LINKS;
+    else {
       // @ts-ignore
       return socialLinksFromStore.links;
     }
@@ -111,15 +106,23 @@ export const SocialsView: React.FC<SocialView> = ( ) => {
 
   };
   const getSocialIcon = (network: string) => {
-    if (network == "Envelope") return faEnvelope; else if (network == "Spotify") return faSpotify; else if (network == "Twitch") return faTwitch; else if (network == "Linkedin") return faLinkedin; else if (network == "Snapchat") return faSnapchat; else if (network == "Youtube") return faYoutube; else if (network == "Facebook") return faFacebook; else if (network == "Twitter") return faTwitter; else return faBox;
+    if (network == "Envelope") return <Icons.Envelope />; else if (network == "Spotify") return <Icons.Spotify />;
+    else if (network == "Twitch") return <Icons.Twitch />; else if (network == "Linkedin") return <Icons.LinkedIn />;
+    else if (network == "Snapchat") return <Icons.SnapChat/>; else if (network == "Youtube") return <Icons.Youtube />;
+    else if (network == "Facebook") return <Icons.Facebook />; else if (network == "Twitter") return <Icons.Twitter />;
+    else if (network == "Pinterest") return <Icons.Pinterest />;
+    else if (network == "Soundcloud") return <Icons.Soundcloud />;
+    else if (network == "Tiktok") return <Icons.Tiktok />;
+    else if (network == "Instagram") return <Icons.Instagram />;
+    else if (network == "Patreon") return <Icons.Patreon />;
+    else if (network == "Medium") return <Icons.Medium />;
   };
 
   const inputRefs: any = [];
   const setRef = (ref: any) => inputRefs.push(ref);
 
   const handleClick = (index: number) => {
-    console.log("INDEXXX", index);
-    console.log("REFFF", inputRefs[index]);
+
     setInputFieldInFocus(index);
     inputRefs[index]?.focus();
   };
@@ -152,18 +155,19 @@ export const SocialsView: React.FC<SocialView> = ( ) => {
     console.log("NEW STATE:::", socialLinks[index]);
   };
 
-  return (<div className="w-screen px-4 pt-4 pb-14 socials-view fadeInLeft">
-    <div className="socials-view__links">
-      {socialLinks.map((item, index) => (<form key={index}
+  return (<div className="w-screen px-4 pt-6 pb-14 socials-view fadeInLeft">
+    <div className="socials-view__links mb-4">
+      {socialLinks?.map((item, index) => (<form key={index}
                                                className={`flex flex-row mb-2 
                                                ${!item?.enabled && inputFieldInFocus !== index ? "absolute -left-full" : ""}
                                                `}>
         <div
-          className={`input-wrapper flex w-96  rounded-lg border-b-neutral-300 ${inputFieldInFocus !== index && inputFieldInFocus ? "hidden" : ""}`}>
+          className={`input-container input-wrapper flex w-96  text-base text-zinc-900 text-gr border-0 leading-tight px-3 w-
+                         appearance-none px-2 ${inputFieldInFocus !== index && inputFieldInFocus ? "hidden" : ""}`}>
 
           <div className={`social flex items-center  `}>
-            <FontAwesomeIcon icon={getSocialIcon(item.network)} size={"1x"}
-                             color={"#fff"} />
+            {getSocialIcon(item.network)}
+
 
           </div>
           <input key={index} id="Youtube"
@@ -204,7 +208,7 @@ export const SocialsView: React.FC<SocialView> = ( ) => {
                                                 disabled={item?.enabled}
                                                 onClick={() => handleClick(index)}
                                                 className="flex content-center justify-center socials-view__grid--item">
-        {<FontAwesomeIcon icon={getSocialIcon(item?.network)} />}
+        {getSocialIcon(item?.network)}
       </button>)}
     </div>
   </div>);

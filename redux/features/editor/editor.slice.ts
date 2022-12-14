@@ -83,7 +83,7 @@ export const EditorSlice = createSlice({
         state.page.items[payload.index] = payload.data;
       }
     }, addNewLinkItem: (state, action) => {
-      const i = state.page.items.findIndex((item, index) => item.type == Views.LINKS);
+      const i = state.page.items.findIndex((item, ) => item.type == Views.LINKS);
       if (i !== -1) {
         let linksObj = state.page.items[i];
         linksObj.links = [...linksObj.links, action.payload];
@@ -93,7 +93,7 @@ export const EditorSlice = createSlice({
         });
       }
     }, saveCustomLinks: (state, { payload }) => {
-      const i = state.page.items.findIndex((item, index) => item.type == Views.LINKS);
+      const i = state.page.items.findIndex((item, ) => item.type == Views.LINKS);
       if (i !== -1) {
         let linksObj = state.page.items[i];
         // @ts-ignore
@@ -107,7 +107,7 @@ export const EditorSlice = createSlice({
 
 
     saveSocialLinks: (state, action) => {
-      const i = state.page.items.findIndex((item, index) => item.type == Views.SOCIALS);
+      const i = state.page.items.findIndex((item) => item.type == Views.SOCIALS);
       if (i !== -1) {
         let linksObj = state.page.items[i];
         linksObj.links = action.payload;
