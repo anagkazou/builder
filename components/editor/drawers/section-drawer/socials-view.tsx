@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 // @ts-ignore
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
@@ -53,8 +53,7 @@ export const SocialsView: React.FC<SocialView> = () => {
     // @ts-ignore
     //  console.log("USERSOCIALLINKSINSTORE::", socialLinksIndexInStore?.links);
     console.log(socialLinksIndexInStore, "UINS");
-    if (socialLinksIndexInStore === -1) return DEFAULT_SOCIAL_LINKS;
-    else {
+    if (socialLinksIndexInStore === -1) return DEFAULT_SOCIAL_LINKS; else {
       // @ts-ignore
       return socialLinksFromStore.links;
     }
@@ -92,7 +91,7 @@ export const SocialsView: React.FC<SocialView> = () => {
   const handleFocus = (i: number) => {
     setTemp(socialLinks[i].value);
     setInputFieldInFocus(i);
-    dispatch(setInputElementInFocus(true))
+    dispatch(setInputElementInFocus(true));
 
     // tempState();
   };
@@ -107,21 +106,12 @@ export const SocialsView: React.FC<SocialView> = () => {
     } : el));
 
     setInputFieldInFocus(null);
-    dispatch(setInputElementInFocus(false))
+    dispatch(setInputElementInFocus(false));
 
 
   };
   const getSocialIcon = (network: string) => {
-    if (network == "Envelope") return <Icons.Envelope />; else if (network == "Spotify") return <Icons.Spotify />;
-    else if (network == "Twitch") return <Icons.Twitch />; else if (network == "Linkedin") return <Icons.LinkedIn />;
-    else if (network == "Snapchat") return <Icons.SnapChat/>; else if (network == "Youtube") return <Icons.Youtube />;
-    else if (network == "Facebook") return <Icons.Facebook />; else if (network == "Twitter") return <Icons.Twitter />;
-    else if (network == "Pinterest") return <Icons.Pinterest />;
-    else if (network == "Soundcloud") return <Icons.Soundcloud />;
-    else if (network == "Tiktok") return <Icons.Tiktok />;
-    else if (network == "Instagram") return <Icons.Instagram />;
-    else if (network == "Patreon") return <Icons.Patreon />;
-    else if (network == "Medium") return <Icons.Medium />;
+    if (network == "Envelope") return <Icons.Envelope />; else if (network == "Spotify") return <Icons.Spotify />; else if (network == "Twitch") return <Icons.Twitch />; else if (network == "Linkedin") return <Icons.LinkedIn />; else if (network == "Snapchat") return <Icons.SnapChat />; else if (network == "Youtube") return <Icons.Youtube />; else if (network == "Facebook") return <Icons.Facebook />; else if (network == "Twitter") return <Icons.Twitter />; else if (network == "Pinterest") return <Icons.Pinterest />; else if (network == "Soundcloud") return <Icons.Soundcloud />; else if (network == "Tiktok") return <Icons.Tiktok />; else if (network == "Instagram") return <Icons.Instagram />; else if (network == "Patreon") return <Icons.Patreon />; else if (network == "Medium") return <Icons.Medium />;
   };
 
   const inputRefs: any = [];
@@ -152,7 +142,7 @@ export const SocialsView: React.FC<SocialView> = () => {
     // setSocialLinks(prevState => [...prevState, prevState[index].value = value]);
 
     setSocialLinks(prev => prev.map((el, i) => i === index ? {
-      ...el, value: value
+      ...el, value: value, enabled: !!value.length
     } : el));
 
 
@@ -161,10 +151,12 @@ export const SocialsView: React.FC<SocialView> = () => {
     console.log("NEW STATE:::", socialLinks[index]);
   };
 
+  const enabledSocialsCount = useMemo(() => socialLinks.filter((item) => item.enabled).length, [socialLinks]);
+
   return (<div className="w-screen px-4 pt-6 pb-6 socials-view fadeInLeft">
     <div className="socials-view__links mb-4">
       {socialLinks?.map((item, index) => (<form key={index}
-                                               className={`flex flex-row mb-2 
+                                                className={`flex flex-row mb-2 
                                                ${!item?.enabled && inputFieldInFocus !== index ? "absolute -left-full" : ""}
                                                `}>
         <div
@@ -179,7 +171,7 @@ export const SocialsView: React.FC<SocialView> = () => {
           <input key={index} id="Youtube"
                  onFocus={() => handleFocus(index)}
                  value={item?.value}
-                 onBlur={()=>handleOnBlur()}
+                 onBlur={() => handleOnBlur()}
                  onChange={(event) => handleChange(index, event)}
                  autoComplete={"off"}
                  name={item?.network}
@@ -203,19 +195,32 @@ export const SocialsView: React.FC<SocialView> = () => {
             saveUrl(index, event);
           }}
         >
-         <Icons.Save/> </button>
+          <Icons.Save /></button>
       </form>))}
     </div>
-
     <div
-      className={` socials-view__grid ${!inputInFocus && "mb-6"} ${inputFieldInFocus == null ? "grid" : "hidden"}`}>
-      {socialLinks.map((item, index) => <button key={index}
-                                                disabled={item?.enabled}
-                                                onClick={() => handleClick(index)}
-                                                className="flex content-center justify-center socials-view__grid--item">
-        {getSocialIcon(item?.network)}
-      </button>)}
+      className={`${!inputInFocus && "mb-12"} ${inputFieldInFocus == null ? "grid" : "hidden"}`}>
+      <div
+        className="socials-view__count flex items-center justify-between mb-2">
+        <p className=" font-medium text-xs uppercase"> Add new</p>
+
+        <div className="count">
+          {`${enabledSocialsCount}/${socialLinks.length}`}
+        </div>
+      </div>
+      <div
+        className={` socials-view__grid grid`}>
+
+
+        {socialLinks.map((item, index) => <button key={index}
+                                                  disabled={item?.enabled}
+                                                  onClick={() => handleClick(index)}
+                                                  className="flex content-center justify-center socials-view__grid--item">
+          {getSocialIcon(item?.network)}
+        </button>)}
+      </div>
     </div>
+    
   </div>);
 };
 
