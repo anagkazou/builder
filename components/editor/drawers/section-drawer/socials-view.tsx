@@ -28,7 +28,7 @@ import {
 } from "../../../../redux/features/editor/editor.slice";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setInputElementInFocus
+  selectUiState, setInputElementInFocus
 } from "../../../../redux/features/ui-state/ui-state.slice";
 
 type SocialsView = {}
@@ -43,6 +43,7 @@ export const SocialsView: React.FC<SocialView> = () => {
   const dispatch = useDispatch();
   const socialLinksIndexInStore = useSelector(selectSocialLinks);
   const socialLinksFromStore = sectionState.items[socialLinksIndexInStore];
+  const { inputInFocus } = useSelector(selectUiState);
 
   const [inputFieldInFocus, setInputFieldInFocus] = useState<number | null>(null);
   // @ts-ignore
@@ -207,7 +208,7 @@ export const SocialsView: React.FC<SocialView> = () => {
     </div>
 
     <div
-      className={`socials-view__grid ${inputFieldInFocus == null ? "grid" : "hidden"}`}>
+      className={` socials-view__grid ${!inputInFocus && "mb-6"} ${inputFieldInFocus == null ? "grid" : "hidden"}`}>
       {socialLinks.map((item, index) => <button key={index}
                                                 disabled={item?.enabled}
                                                 onClick={() => handleClick(index)}
