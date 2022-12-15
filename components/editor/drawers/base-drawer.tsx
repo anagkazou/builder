@@ -13,7 +13,7 @@ export const BaseDrawer = ({
                              children, drawerName
                            }: { children: ReactNode, drawerName: DrawerEnums }) => {
   const dispatch = useDispatch();
-  const { drawerState } = useSelector(selectUiState);
+  const { drawerState, inputInFocus } = useSelector(selectUiState);
 
   return (<SwipeableDrawer
     anchor={"bottom"}
@@ -31,7 +31,7 @@ export const BaseDrawer = ({
   >
     <div className="base-drawer">
       {children}
-      <DrawerHeader />
+      {!inputInFocus && <DrawerHeader />}
     </div>
   </SwipeableDrawer>);
 };

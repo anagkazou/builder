@@ -1,7 +1,4 @@
-import { SwipeableDrawer } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
-
-import { DrawerHeader } from "../../drawer-header";
 import { getCroppedImg, getRotatedImage } from "../../utils/canvas-utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,9 +11,10 @@ import { ImageCropper } from "./image-cropper";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
 import InputComponent from "../../../input.component";
 import {
-  selectUiState, setActiveDrawer
+  selectUiState, setInputElementInFocus
 } from "../../../../redux/features/ui-state/ui-state.slice";
 import { DrawerEnums } from "../../../../enums";
+import { BaseDrawer } from "../base-drawer";
 
 const ORIENTATION_TO_ANGLE: any = {
   "3": 180, "6": 90, "8": -90
@@ -150,7 +148,8 @@ export const ProfileDrawer = () => {
   const handleFocus = (inputInFocus: any) => {
     setTemp(inputRefs[inputInFocus].value);
     setInputFieldInFocus(inputInFocus);
-    console.log("TEMP", inputRefs[inputInFocus]);
+    dispatch(setInputElementInFocus(true))
+
   };
   const handleChange = (event: any) => {
     setSaved(false);
@@ -178,6 +177,7 @@ export const ProfileDrawer = () => {
         ...prev, [inputFieldInFocus]: temp
       }));
       setInputFieldInFocus(null);
+      dispatch(setInputElementInFocus(false))
 
     }
 
@@ -199,20 +199,7 @@ export const ProfileDrawer = () => {
 
     <div className="relative z-50">
       <div className="fixed bottom-0 ">
-        <SwipeableDrawer
-          // panelClassName="dashboard-panel"
-          anchor="bottom"
-          open={drawerState.activeDrawer === DrawerEnums.PROFILE}
-          onClose={() => {
-            dispatch(setActiveDrawer(null));
-            setTimeout(() => setInputFieldInFocus(null), 800);
-          }}
-          onBackdropClick={() => {
-            dispatch(setActiveDrawer(null));
-          }}
-          onAbort={reset}
-          onOpen={() => dispatch(setActiveDrawer(DrawerEnums.PROFILE))}
-        >
+        <BaseDrawer drawerName={DrawerEnums.PROFILE}>
           <>
             <>
               {activeUpload ? (
@@ -228,7 +215,6 @@ export const ProfileDrawer = () => {
                               setZoom={setZoom}
                 />) : (<>
                 <div className="profile-panel ">
-                  <DrawerHeader />
                   <div className="p-5 profile-form">
                     <div
                       ref={ref => setRef(ref, "Images")}
@@ -260,8 +246,8 @@ export const ProfileDrawer = () => {
                                     clearInputField={clearInputField}
                                     inputFieldInFocus={inputFieldInFocus}
                                     submitHandler={savePageMeta}
-                                    placeHolderText={"Page description"}
-                                    label={"Enter page description"}
+                                    placeHolderText={"Enter page description"}
+                                    label={"Page description"}
                                     saved={saved}
 
                     />
@@ -272,7 +258,7 @@ export const ProfileDrawer = () => {
             </>
 
           </>
-        </SwipeableDrawer>
+        </BaseDrawer>
       </div>
     </div>
   </div>);

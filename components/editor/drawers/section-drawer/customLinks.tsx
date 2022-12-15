@@ -7,6 +7,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
 import { Icons } from "../../../../assets/icons";
+import {
+  setInputElementInFocus
+} from "../../../../redux/features/ui-state/ui-state.slice";
 
 export const CustomLinks: React.FC = (props) => {
   const [inputFieldInFocus, setInputFieldInFocus] = useState<any>(null);
@@ -150,6 +153,7 @@ const LinkEditor: React.FC<LinkEditorType> = ({
     setTemp(linkItemState);
 
     setInputFieldInFocus(index);
+    dispatch(setInputElementInFocus(true))
 
   };
 
@@ -167,9 +171,11 @@ const LinkEditor: React.FC<LinkEditorType> = ({
     event?.preventDefault();
 
     setLinkItemState(linkItem);
+    dispatch(setInputElementInFocus(false))
+
   };
   return (<div
-    className={` px-4 mb-4 fadeInLeft ${inputFieldInFocus !== null && (inputFieldInFocus != index) ? "hidden" : ""}`}>
+    className={`mb-4 fadeInLeft ${inputFieldInFocus !== null && (inputFieldInFocus != index) ? "hidden" : ""}`}>
 
       <div
         className="flex items-center rounded-md">
@@ -188,6 +194,8 @@ const LinkEditor: React.FC<LinkEditorType> = ({
             value={linkItemState?.description}
             onFocus={handleFocus}
             onChange={event => handleChange("description", event)}
+            onMouseDown={()=>     dispatch(setInputElementInFocus(true))
+            }
           />
           <input
             ref={ref => setRef(ref, "url")}
@@ -199,7 +207,8 @@ const LinkEditor: React.FC<LinkEditorType> = ({
             autoComplete="off"
             onFocus={handleFocus}
             onChange={event => handleChange("url", event)}
-
+            onMouseDown={()=>     dispatch(setInputElementInFocus(true))
+            }
           />
         </div>
         <button

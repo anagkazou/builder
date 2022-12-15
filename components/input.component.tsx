@@ -1,6 +1,5 @@
 import React, { ChangeEventHandler } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { Icons } from "../assets/icons";
 
 type InputComponentProps = {
   // eslint-disable-next-line no-unused-vars
@@ -24,8 +23,9 @@ export const InputComponent = ({
     <div
       className={`mb-6 w-full  ${inputFieldInFocus && inputFieldInFocus !== name ? "hidden" : ""}`}
     >
-      <label className="block text-sm font-semibold text-white-800 mb-2 uppercase"
-             htmlFor="name">
+      <label
+        className="block text-sm font-semibold text-white-800 mb-2 uppercase"
+        htmlFor="name">
         {label && label}
       </label>
       <form onSubmit={(event) => {
@@ -47,11 +47,7 @@ export const InputComponent = ({
           onBlur={() => handleOnBlur(name)}
           onChange={handleChange}
         />
-        {/*<button onMouseDown={() => clearInputField()}*/}
-        {/*        className={`border-0 bg-transparent  ${inputFieldInFocus == name ? "block" : "hidden"}`}>*/}
-        {/*  <FontAwesomeIcon*/}
-        {/*    icon={faXmark} width={20} size={"2x"}*/}
-        {/*    color={"#000"} /></button>*/}
+
 
         <button
           className={`text-sm flex place-items-center hover:cursor-pointer bg-transparent px-2 h-fit border-none ${inputFieldInFocus == name ? "block" : "hidden"}`}
@@ -59,16 +55,13 @@ export const InputComponent = ({
             event.preventDefault();
             submitHandler();
           }}
-        ><FontAwesomeIcon icon={faCheck}
-                          size={"2x"}
-                          color={"#000"} />
+        ><Icons.Save />
         </button>
       </form>
       <span>
 
                       </span>
     </div>
-  {/*  Button was here*/}
   </div>);
 };
 

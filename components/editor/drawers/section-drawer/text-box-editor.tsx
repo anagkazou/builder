@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { TextArea } from "../../../../redux/features/sections/sections.slice";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
 import {
-  selectUiState
+  selectUiState, setInputElementInFocus
 } from "../../../../redux/features/ui-state/ui-state.slice";
 import {
   selectPage, setPageItemByIndex
@@ -103,7 +103,8 @@ export const TextBoxEditor = () => {
   const handleFocus = (inputInFocus: any) => {
     setTemp(inputRefs[inputInFocus].value);
     setInputFieldInFocus(inputInFocus);
-    console.log("TEMP", temp);
+
+    dispatch(setInputElementInFocus(true))
   };
   const handleOnBlur = (id: string) => {
 
@@ -114,13 +115,14 @@ export const TextBoxEditor = () => {
       }));
 
       setInputFieldInFocus(null);
+      dispatch(setInputElementInFocus(false))
 
     }
 
   };
 
 
-  return (<div className={`w-screen mb-6 px-4 fadeInLeft text-box-editor `}>
+  return (<div className={`w-screen  px-4 fadeInLeft text-box-editor `}>
     <div className={`my-6 ${inputFieldInFocus && inputFieldInFocus !== 'title' ? "hidden" : ""}`}
     >
 

@@ -19,7 +19,6 @@ import useDetectKeyboardOpen from "use-detect-keyboard-open";
 //   IconDefinition
 // } from "@fortawesome/free-brands-svg-icons";
 import { Icons } from "../../../../assets/icons";
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 // import {
 //   DEFAULT_SOCIAL_LINKS, saveSocialLinks, selectSections, selectSocialLinks
 // } from "../../../../redux/features/sections/sections.slice";
@@ -28,6 +27,9 @@ import {
   saveSocialLinks, selectPage, selectSocialLinks
 } from "../../../../redux/features/editor/editor.slice";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  setInputElementInFocus
+} from "../../../../redux/features/ui-state/ui-state.slice";
 
 type SocialsView = {}
 type SocialItem = {
@@ -89,6 +91,8 @@ export const SocialsView: React.FC<SocialView> = () => {
   const handleFocus = (i: number) => {
     setTemp(socialLinks[i].value);
     setInputFieldInFocus(i);
+    dispatch(setInputElementInFocus(true))
+
     // tempState();
   };
 
@@ -102,6 +106,7 @@ export const SocialsView: React.FC<SocialView> = () => {
     } : el));
 
     setInputFieldInFocus(null);
+    dispatch(setInputElementInFocus(false))
 
 
   };
@@ -155,7 +160,7 @@ export const SocialsView: React.FC<SocialView> = () => {
     console.log("NEW STATE:::", socialLinks[index]);
   };
 
-  return (<div className="w-screen px-4 pt-6 pb-14 socials-view fadeInLeft">
+  return (<div className="w-screen px-4 pt-6 pb-6 socials-view fadeInLeft">
     <div className="socials-view__links mb-4">
       {socialLinks?.map((item, index) => (<form key={index}
                                                className={`flex flex-row mb-2 
@@ -173,7 +178,7 @@ export const SocialsView: React.FC<SocialView> = () => {
           <input key={index} id="Youtube"
                  onFocus={() => handleFocus(index)}
                  value={item?.value}
-            // onBlur={handleOnBlur}
+                 onBlur={()=>handleOnBlur()}
                  onChange={(event) => handleChange(index, event)}
                  autoComplete={"off"}
                  name={item?.network}
@@ -181,14 +186,13 @@ export const SocialsView: React.FC<SocialView> = () => {
                  ref={setRef}
                  className={`  p-2.5 w-full text-sm text-gray-900   border-none bg-transparent`}
                  placeholder={item?.network}
-
                  type="text" />
 
-          <button
-            className={`text-sm  bg-transparent  border-none ${inputFieldInFocus == index ? "block" : "hidden"} `}
-            onClick={(event) => event.preventDefault()}
-          ><FontAwesomeIcon icon={faXmark} size={"2x"} color={"#000"} />
-          </button>
+          {/*<button*/}
+          {/*  className={`text-sm  bg-transparent  border-none ${inputFieldInFocus == index ? "block" : "hidden"} `}*/}
+          {/*  onClick={(event) => event.preventDefault()}*/}
+          {/*><FontAwesomeIcon icon={faXmark} size={"2x"} color={"#000"} />*/}
+          {/*</button>*/}
         </div>
 
         <button
@@ -198,7 +202,7 @@ export const SocialsView: React.FC<SocialView> = () => {
             saveUrl(index, event);
           }}
         >
-          <FontAwesomeIcon icon={faCheck} color={"#000"} /></button>
+         <Icons.Save/> </button>
       </form>))}
     </div>
 
