@@ -11,7 +11,7 @@ import {
   selectUiState, setInputElementInFocus
 } from "../../../../redux/features/ui-state/ui-state.slice";
 
-export const CustomLinks: React.FC = (props) => {
+export const CustomLinks: React.FC = () => {
   const [inputFieldInFocus, setInputFieldInFocus] = useState<any>(null);
   const customLinks = useSelector((selectCustomLinksInStore));
   const [customLinksState, setCustomLinksState] = useState<any>();
