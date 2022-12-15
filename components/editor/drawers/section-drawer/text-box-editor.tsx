@@ -16,7 +16,7 @@ import { Icons } from "../../../../assets/icons";
 export const TextBoxEditor = () => {
   const dispatch = useDispatch();
   const sectionState = useSelector((selectPage));
-  const {sectionsView} = useSelector(selectUiState)
+  const {sectionsView, inputInFocus: inputElementInFocus} = useSelector(selectUiState)
   // const [state, setState] = useState({
   //   type: "TEXTBOX", title: "", content: ""
   // });
@@ -103,7 +103,6 @@ export const TextBoxEditor = () => {
   const handleFocus = (inputInFocus: any) => {
     setTemp(inputRefs[inputInFocus].value);
     setInputFieldInFocus(inputInFocus);
-
     dispatch(setInputElementInFocus(true))
   };
   const handleOnBlur = (id: string) => {
@@ -122,7 +121,7 @@ export const TextBoxEditor = () => {
   };
 
 
-  return (<div className={`w-screen  px-4 fadeInLeft text-box-editor `}>
+  return (<div className={`${ !inputElementInFocus && 'mb-6'} w-screen  px-4 fadeInLeft text-box-editor `}>
     <div className={`my-6 ${inputFieldInFocus && inputFieldInFocus !== 'title' ? "hidden" : ""}`}
     >
 
