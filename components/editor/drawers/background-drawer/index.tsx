@@ -32,7 +32,7 @@ export const BackgroundDrawer = () => {
             return (<div key={index}
                          className={` background-option__wrapper `}
                           onClick={()=> dispatch(setBackground(el))}>
-              <div className={`${background?.id === el.id ? "border-orange-50 border-4 border-solid" : ""} background-option`}
+              <div className={`${background?.id === el.id ? "outline-orange-50 outline-2 outline-solid" : ""} background-option`}
                    style={{ background: el.hex }}>
                 {" "}
               </div>
