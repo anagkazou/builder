@@ -1,10 +1,8 @@
 import { NextPage } from "next";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/auth/authSlice";
-import {
-  collection, doc, getDoc, getDocs, query, where
-} from "firebase/firestore";
-import { db } from "../../firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/index";
 import {
   selectEditor, setActivePageInfo
 } from "../../redux/features/editor/editor.slice";
@@ -12,7 +10,7 @@ import { useEffect } from "react";
 import { EditorHeader } from "../../components/editor/editor-header";
 import { EditorPreview } from "../../components/editor/editor-preview";
 import { EditorDrawers } from "../../components/editor/drawers";
-import { EditorActions } from "../../components/editor/editor-actions";
+import { EditorNavbar } from "../../components/editor/editor-navbar";
 
 
 const Editor: NextPage = () => {
@@ -40,11 +38,11 @@ const Editor: NextPage = () => {
   },[]);
 
   return (<>
-      <div className="flex items-center justify-center editor ">
+      <div className="flex pt-16 justify-center editor ">
         <EditorHeader/>
         <EditorPreview />
         <EditorDrawers />
-        <EditorActions />
+        <EditorNavbar />
       </div>
     </>);
 };

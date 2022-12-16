@@ -1,8 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { Auth, getAuth, GoogleAuthProvider, User } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, User } from "firebase/auth";
 import {
-  collection, doc, getDoc, getFirestore, setDoc, writeBatch
+  collection, doc, getDoc, getFirestore, writeBatch
 } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
@@ -20,7 +20,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
 const analytics = typeof window !== "undefined" ? getAnalytics(app) : null;
-
 export const provider = new GoogleAuthProvider();
 if (typeof window !== "undefined") {
   // browser code

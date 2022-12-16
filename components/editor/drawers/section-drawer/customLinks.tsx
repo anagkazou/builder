@@ -1,26 +1,34 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  LinkItem
-} from "../../../../redux/features/sections/sections.slice";
+import { LinkItem } from "../../../../redux/features/sections/sections.slice";
 import { DEFAULT_CUSTOM_LINK } from "../../../../app.consts";
 import {
   saveCustomLinks, selectCustomLinksInStore
 } from "../../../../redux/features/editor/editor.slice";
 import { useDispatch, useSelector } from "react-redux";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { Icons } from "../../../../assets/icons";
+import {
+  selectUiState, setInputElementInFocus
+} from "../../../../redux/features/ui-state/ui-state.slice";
 
-
-export const CustomLinks: React.FC = (props) => {
+export const CustomLinks: React.FC = () => {
   const [inputFieldInFocus, setInputFieldInFocus] = useState<any>(null);
   const customLinks = useSelector((selectCustomLinksInStore));
   const [customLinksState, setCustomLinksState] = useState<any>();
   const [saved, setSaved] = useState<boolean>(false);
   const inputRefs = useRef([]);
+  const { inputInFocus } = useSelector(selectUiState);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
 
-  return (<div className="section_links w-screen py-12 px-4 fadeInLeft">
+    if (inputFieldInFocus !== null) dispatch(setInputElementInFocus(true))
+    else dispatch(setInputElementInFocus(false))
+
+  }, [inputFieldInFocus, inputInFocus]);
+
+  return (<div
+    className={`section_links w-screen py-6 px-4 fadeInLeft ${!inputInFocus && "mb-6"}`}>
     {/*{JSON.stringify(customLinks)}*/}
     {customLinks?.links && customLinks.links.map((linkItem: LinkItem, index: number) =>
       <div key={index}
@@ -57,12 +65,8 @@ const LinkEditor: React.FC<LinkEditorType> = ({
                                                 index,
                                                 inputFieldInFocus,
                                                 setInputFieldInFocus,
-                                                setSaved,
-                                                setCustomLinksState,
-                                                customLinksState,
                                                 isDefault,
-                                                inputRefs,
-                                                saved
+                                                inputRefs
                                               }) => {
 
 
@@ -158,15 +162,15 @@ const LinkEditor: React.FC<LinkEditorType> = ({
     setTemp(linkItemState);
 
     setInputFieldInFocus(index);
-
+    dispatch(setInputElementInFocus(true));
   };
 
   const handleOnBlur = (event?: any) => {
     event?.preventDefault();
     event?.stopPropagation();
-    if (!commited) {
-
-    }
+    // if (!commited) {
+    //
+    // }
     if (inputFieldInFocus != null) setInputFieldInFocus(null);
 
   };
@@ -175,54 +179,50 @@ const LinkEditor: React.FC<LinkEditorType> = ({
     event?.preventDefault();
 
     setLinkItemState(linkItem);
+    dispatch(setInputElementInFocus(false));
   };
   return (<div
-    className={` px-4 fadeInLeft ${inputFieldInFocus !== null && (inputFieldInFocus != index) ? "hidden" : ""}`}>
+    className={`mb-4 fadeInLeft ${inputFieldInFocus !== null && (inputFieldInFocus != index) ? "hidden" : ""}`}>
+
     <div
-    >
+      className="flex items-center rounded-md">
       <div
-        className="flex">
-        <div
-          className="input-container w-full  place-items-center border-gray-500 border-b-0  border-solid shadow  "
+        className=" w-full  place-items-center rounded-md  "
+        onBlur={handleOnBlur} onMouseLeave={handleMouseLeave}
+      >
 
-          onBlur={handleOnBlur} onMouseLeave={handleMouseLeave}>
+        <input
+          ref={ref => setRef(ref, "description")}
+          type="text"
+          name="description"
+          className="link-border border border-solid border-gray-600/20 rounded-tl-md rounded-tr-md text-base text-zinc-900  text-gr w-full leading-tight grey py-3 px-3 w-appearance-none"
+          placeholder="Enter description"
+          autoComplete="off"
+          value={linkItemState?.description}
+          onFocus={handleFocus}
+          onChange={event => handleChange("description", event)}
 
-          <input
-            ref={ref => setRef(ref, "description")}
-            type="text"
-            name="description"
-            className="text-base text-zinc-900 text-gr border-0  w-full leading-tight grey border-none py-3 px-3 w-
+        />
+        <input
+          ref={ref => setRef(ref, "url")}
+          name="url"
+          className="border border-t-0 border-solid border-gray-600/20 rounded-bl-md rounded-br-md  text-base text-zinc-900 text-gr w-full leading-tight grey  py-3 px-3 w-
                          appearance-none"
-            placeholder="Enter description"
-            autoComplete="off"
-            value={linkItemState?.description}
-            onFocus={handleFocus}
-            onChange={event => handleChange("description", event)}
-          />
-          <input
-            ref={ref => setRef(ref, "url")}
-            name="url"
-            className="text-base text-zinc-900 text-gr border-gray-500   w-full leading-tight grey border-none py-3 px-3 w-
-                         appearance-none"
-            value={linkItemState?.url}
-            placeholder="Write a detailed url"
-            autoComplete="off"
-            onFocus={handleFocus}
-            onChange={event => handleChange("url", event)}
-
-          />
-        </div>
-        <button
-          className={`text-sm flex place-items-center hover:cursor-pointer bg-transparent px-2 h-fit border-none ${!isNaN(inputFieldInFocus) && inputFieldInFocus === index ? "" : "hidden"}`}
-          onMouseDown={(event) => {
-            event.preventDefault();
-            saveCustomLinksData();
-          }}
-        ><FontAwesomeIcon icon={faCheck}
-                          size={"2x"}
-                          color={"#000"} />
-        </button>
+          value={linkItemState?.url}
+          placeholder="Write a detailed url"
+          autoComplete="off"
+          onFocus={handleFocus}
+          onChange={event => handleChange("url", event)}
+        />
       </div>
+      <button
+        className={`text-sm flex place-items-center hover:cursor-pointer bg-transparent px-2 h-fit border-none ${!isNaN(inputFieldInFocus) && inputFieldInFocus === index ? "" : "hidden"}`}
+        onMouseDown={(event) => {
+          event.preventDefault();
+          saveCustomLinksData();
+        }}
+      ><Icons.Save />
+      </button>
 
     </div>
 

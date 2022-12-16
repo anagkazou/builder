@@ -1,7 +1,5 @@
 import {
-  Action,
-  combineReducers,
-  configureStore, ThunkAction
+  Action, combineReducers, configureStore, ThunkAction
 } from "@reduxjs/toolkit";
 
 import { persistReducer, persistStore } from "redux-persist";
@@ -9,10 +7,9 @@ import storage from "redux-persist/lib/storage";
 import userReducer, { setUser } from "./features/auth/authSlice";
 import editorReducer from "./features/editor/editor.slice";
 import UIStateReducer from "./features/ui-state/ui-state.slice";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, createUserProfileDocument } from "../firebase";
+import { onAuthStateChanged } from "@firebase/auth";
 import { onSnapshot } from "@firebase/firestore";
-import { DocumentSnapshot } from "@firebase/firestore-types";
+import { auth, createUserProfileDocument } from "../firebase/index";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -35,29 +32,23 @@ export const store = configureStore({
   },
 });
 
-  onAuthStateChanged(auth, async (userAuth) => {
-    if (userAuth) {
-      
-      // @ts-ignore
-      const userPage:string[] = store.getState().user?.currentUser?.pages;
+export const authListener= onAuthStateChanged(auth, async (userAuth) => {
+  if (userAuth) {
 
-      const userRef = await createUserProfileDocument(userAuth,userPage);
-      // @ts-ignore
-      onSnapshot(userRef, (snapshot: DocumentSnapshot) => {
-        store.dispatch(setUser({ ...snapshot.data() }));
-      });
-    }
-  });
+    // @ts-ignore
+    const userPage:string[] = store.getState().user?.currentUser?.pages;
 
+    const userRef = await createUserProfileDocument(userAuth,userPage);
+    // @ts-ignore
+    onSnapshot(userRef, (snapshot: DocumentSnapshot) => {
+      store.dispatch(setUser({ ...snapshot.data() }));
+    });
+  }
+});
 
 export const persistor = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;

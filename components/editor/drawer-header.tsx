@@ -1,36 +1,93 @@
-import Image from "next/image";
-import cancelIcon from "../../assets/cancel.svg";
 import React from "react";
-import { Views } from "./drawers/section-drawer";
 import {
-  selectUiState,
-  setActiveDrawer
+  selectUiState, setActiveDrawer, setActiveSectionView
 } from "../../redux/features/ui-state/ui-state.slice";
 import { DrawerEnums } from "../../enums";
 import { useDispatch, useSelector } from "react-redux";
+import { Icons } from "../../assets/icons";
+import { Views } from "./drawers/section-drawer";
 
-type PanelHeaderType = {
-  setViewState?: any;
-  viewState?: any;
-};
-export const DrawerHeader: React.FC<PanelHeaderType> = ({ setViewState, viewState }) => {
-    const dispatch = useDispatch();
-  const {drawerState} = useSelector(selectUiState);
+// const LeftDrawerNavAction = () => {
+//   const { drawerState } = useSelector(selectUiState);
+//
+//   return (<>
+//     {drawerState.activeDrawer === (DrawerEnums.SECTIONS || DrawerEnums.PROFILE || DrawerEnums.STYLE) &&
+//       <div className="style-panel__header--icon"
+//            onClick={() => dispatch(setActiveDrawer(DrawerEnums.CLOSE))}>
+//
+//         {<Icons.BottomChevron />}
+//       </div>}
+//   </>);
+//
+//
+// };
 
-  return (
-    <div className="style-panel__header px-5 w-screen">
-      <div className="style-panel__header--icon" onClick={() => setViewState(Views.MAIN)}><Image alt={"cancel icon"}
-                                                                                                 src={cancelIcon} />
+// const RightDrawerNavAction = () => {
+//   const { drawerState, sectionsView } = useSelector(selectUiState);
+//
+//   const { activeDrawer } = drawerState;
+//   const { activeSectionView } = sectionsView;
+//   return (<>
+//     {activeDrawer === (DrawerEnums.SECTIONS || activeSectionView === Views.MAIN) &&
+//       <div>
+//         fff
+//       </div>}
+//
+//     {activeSectionView === Views.SOCIALS && <div
+//       className="style-panel__header--icon"
+//       onClick={() => {
+//       }}
+//     ><Icons.OutlinePencil />
+//     </div>}
+//   </>);
+//
+//
+// };
+
+
+export const DrawerHeader = () => {
+  const { drawerState, sectionsView } = useSelector(selectUiState);
+  const { activeDrawer } = drawerState;
+  const { activeSectionView } = sectionsView;
+  const dispatch = useDispatch();
+
+  return (<div className="style-panel__header px-5 w-screen">
+    {(activeDrawer && activeSectionView === Views.MAIN) && (<>
+      <div className="style-panel__header--icon"
+           onClick={() => dispatch(setActiveDrawer(DrawerEnums.CLOSE))}>
+
+        {<Icons.BottomChevron />}
       </div>
-      <p className="style-panel__header--text"> {drawerState.activeDrawer}</p>
-
       <div
+        className="style-panel__header--text font-medium text-xs"> {(activeSectionView !== Views.MAIN) ? activeSectionView : activeDrawer }</div>
+
+
+      {!activeSectionView  ? <div
+        className="style-panel__header--icon "
+        onClick={() => {
+        }}
+      ><Icons.OutlinePencil />
+      </div> : <div></div>}
+    </>)}
+
+    {(activeDrawer && activeSectionView !== Views.MAIN) && (<>
+      <div className="style-panel__header--icon"
+           onClick={() => dispatch(setActiveSectionView(Views.MAIN))}>
+
+        {<Icons.LeftArrow width={20} height={20} />}
+      </div>
+      <div
+        className="style-panel__header--text font-medium text-xs"> {activeSectionView}</div>
+
+
+      {activeSectionView == Views.SOCIALS || activeSectionView == Views.LINKS ? <div
         className="style-panel__header--icon"
         onClick={() => {
-          dispatch(setActiveDrawer(DrawerEnums.CLOSE))}}
-      >
-        <Image alt={"cancel icon"} src={cancelIcon} />
-      </div>
-    </div>
-  );
+        }}
+      ><Icons.OutlinePencil />
+      </div> : <div></div>}
+
+
+    </>)}
+  </div>);
 };

@@ -1,14 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../index";
+import { DrawerEnums } from "../../../enums";
 
-const initialState = {
+interface DrawerState {
   drawerState: {
-    activeDrawer: null
-  }, sectionsView: {
-    activeSectionIndex: null,
-    //Todo: try using enums here
-    activeSectionView:'MAIN',
+    activeDrawer?: DrawerEnums
+  },
+  sectionsView: {
+    activeSectionIndex?: number, activeSectionView: string
   }
+  inputInFocus: boolean
+}
+
+const initialState: DrawerState = {
+  drawerState: {
+    activeDrawer: undefined
+  }, sectionsView: {
+    activeSectionIndex: undefined, //Todo: try using enums here
+    activeSectionView: "MAIN"
+  }, inputInFocus: false
 };
 export const UIStateSlice = createSlice({
 
@@ -19,10 +29,17 @@ export const UIStateSlice = createSlice({
       state.sectionsView.activeSectionIndex = payload;
     }, setActiveSectionView: (state, { payload }) => {
       state.sectionsView.activeSectionView = payload;
+    }, setInputElementInFocus: (state, { payload }) => {
+      state.inputInFocus = payload;
     }
   }
 });
 
 export const selectUiState = (state: RootState) => state.uiState;
-export const {setActiveDrawer, setActiveSectionIndex, setActiveSectionView} = UIStateSlice.actions
+export const {
+  setActiveDrawer,
+  setActiveSectionIndex,
+  setActiveSectionView,
+  setInputElementInFocus
+} = UIStateSlice.actions;
 export default UIStateSlice.reducer;

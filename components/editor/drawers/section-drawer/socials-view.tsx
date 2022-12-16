@@ -1,36 +1,35 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 // @ts-ignore
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
 // @ts-ignore
 // @ts-ignore
-import {
-  faTwitter,
-  faFacebook,
-  faInstagram,
-  faTwitch,
-  faTiktok,
-  faSoundcloud,
-  faSpotify,
-  faPinterest,
-  faSnapchat,
-  faYoutube,
-  faLinkedin,
-  IconDefinition
-} from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
-import { faBox, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { Simulate } from "react-dom/test-utils";
+// import {
+//   faTwitter,
+//   faFacebook,
+//   faInstagram,
+//   faTwitch,
+//   faTiktok,
+//   faSoundcloud,
+//   faSpotify,
+//   faPinterest,
+//   faSnapchat,
+//   faYoutube,
+//   faLinkedin,
+//   IconDefinition
+// } from "@fortawesome/free-brands-svg-icons";
+import { Icons } from "../../../../assets/icons";
 // import {
 //   DEFAULT_SOCIAL_LINKS, saveSocialLinks, selectSections, selectSocialLinks
 // } from "../../../../redux/features/sections/sections.slice";
 import { DEFAULT_SOCIAL_LINKS } from "../../../../app.consts";
 import {
-  selectSocialLinks, saveSocialLinks
+  saveSocialLinks, selectPage, selectSocialLinks
 } from "../../../../redux/features/editor/editor.slice";
-import input = Simulate.input;
 import { useDispatch, useSelector } from "react-redux";
-import { selectPage } from "../../../../redux/features/editor/editor.slice";
+import {
+  selectUiState, setInputElementInFocus
+} from "../../../../redux/features/ui-state/ui-state.slice";
 
 type SocialsView = {}
 type SocialItem = {
@@ -38,14 +37,13 @@ type SocialItem = {
 }
 
 
-
-type SocialView = {
-}
-export const SocialsView: React.FC<SocialView> = ( ) => {
+type SocialView = {}
+export const SocialsView: React.FC<SocialView> = () => {
   const sectionState = useSelector(selectPage);
   const dispatch = useDispatch();
   const socialLinksIndexInStore = useSelector(selectSocialLinks);
   const socialLinksFromStore = sectionState.items[socialLinksIndexInStore];
+  const { inputInFocus } = useSelector(selectUiState);
 
   const [inputFieldInFocus, setInputFieldInFocus] = useState<number | null>(null);
   // @ts-ignore
@@ -56,7 +54,6 @@ export const SocialsView: React.FC<SocialView> = ( ) => {
     //  console.log("USERSOCIALLINKSINSTORE::", socialLinksIndexInStore?.links);
     console.log(socialLinksIndexInStore, "UINS");
     if (socialLinksIndexInStore === -1) return DEFAULT_SOCIAL_LINKS; else {
-      console.log("PPPPP", socialLinksFromStore);
       // @ts-ignore
       return socialLinksFromStore.links;
     }
@@ -94,6 +91,8 @@ export const SocialsView: React.FC<SocialView> = ( ) => {
   const handleFocus = (i: number) => {
     setTemp(socialLinks[i].value);
     setInputFieldInFocus(i);
+    dispatch(setInputElementInFocus(true));
+
     // tempState();
   };
 
@@ -107,19 +106,19 @@ export const SocialsView: React.FC<SocialView> = ( ) => {
     } : el));
 
     setInputFieldInFocus(null);
+    dispatch(setInputElementInFocus(false));
 
 
   };
   const getSocialIcon = (network: string) => {
-    if (network == "Envelope") return faEnvelope; else if (network == "Spotify") return faSpotify; else if (network == "Twitch") return faTwitch; else if (network == "Linkedin") return faLinkedin; else if (network == "Snapchat") return faSnapchat; else if (network == "Youtube") return faYoutube; else if (network == "Facebook") return faFacebook; else if (network == "Twitter") return faTwitter; else return faBox;
+    if (network == "Envelope") return <Icons.Envelope />; else if (network == "Spotify") return <Icons.Spotify />; else if (network == "Twitch") return <Icons.Twitch />; else if (network == "Linkedin") return <Icons.LinkedIn />; else if (network == "Snapchat") return <Icons.SnapChat />; else if (network == "Youtube") return <Icons.Youtube />; else if (network == "Facebook") return <Icons.Facebook />; else if (network == "Twitter") return <Icons.Twitter />; else if (network == "Pinterest") return <Icons.Pinterest />; else if (network == "Soundcloud") return <Icons.Soundcloud />; else if (network == "Tiktok") return <Icons.Tiktok />; else if (network == "Instagram") return <Icons.Instagram />; else if (network == "Patreon") return <Icons.Patreon />; else if (network == "Medium") return <Icons.Medium />;
   };
 
   const inputRefs: any = [];
   const setRef = (ref: any) => inputRefs.push(ref);
 
   const handleClick = (index: number) => {
-    console.log("INDEXXX", index);
-    console.log("REFFF", inputRefs[index]);
+
     setInputFieldInFocus(index);
     inputRefs[index]?.focus();
   };
@@ -143,7 +142,7 @@ export const SocialsView: React.FC<SocialView> = ( ) => {
     // setSocialLinks(prevState => [...prevState, prevState[index].value = value]);
 
     setSocialLinks(prev => prev.map((el, i) => i === index ? {
-      ...el, value: value
+      ...el, value: value, enabled: !!value.length
     } : el));
 
 
@@ -152,24 +151,27 @@ export const SocialsView: React.FC<SocialView> = ( ) => {
     console.log("NEW STATE:::", socialLinks[index]);
   };
 
-  return (<div className="w-screen px-4 pt-4 pb-14 socials-view fadeInLeft">
-    <div className="socials-view__links">
-      {socialLinks.map((item, index) => (<form key={index}
-                                               className={`flex flex-row mb-2 
+  const enabledSocialsCount = useMemo(() => socialLinks.filter((item) => item.enabled).length, [socialLinks]);
+
+  return (<div className="w-screen px-4 pt-6 pb-6 socials-view fadeInLeft">
+    <div className="socials-view__links mb-4">
+      {socialLinks?.map((item, index) => (<form key={index}
+                                                className={`flex flex-row mb-2 
                                                ${!item?.enabled && inputFieldInFocus !== index ? "absolute -left-full" : ""}
                                                `}>
         <div
-          className={`input-wrapper flex w-96  rounded-lg border-b-neutral-300 ${inputFieldInFocus !== index && inputFieldInFocus ? "hidden" : ""}`}>
+          className={`input-container input-wrapper flex w-96  text-base text-zinc-900 text-gr border-0 leading-tight px-3 w-
+                         appearance-none px-2 ${inputFieldInFocus !== index && inputFieldInFocus ? "hidden" : ""}`}>
 
           <div className={`social flex items-center  `}>
-            <FontAwesomeIcon icon={getSocialIcon(item.network)} size={"1x"}
-                             color={"#fff"} />
+            {getSocialIcon(item.network)}
+
 
           </div>
           <input key={index} id="Youtube"
                  onFocus={() => handleFocus(index)}
                  value={item?.value}
-            // onBlur={handleOnBlur}
+                 onBlur={() => handleOnBlur()}
                  onChange={(event) => handleChange(index, event)}
                  autoComplete={"off"}
                  name={item?.network}
@@ -177,14 +179,13 @@ export const SocialsView: React.FC<SocialView> = ( ) => {
                  ref={setRef}
                  className={`  p-2.5 w-full text-sm text-gray-900   border-none bg-transparent`}
                  placeholder={item?.network}
-
                  type="text" />
 
-          <button
-            className={`text-sm  bg-transparent  border-none ${inputFieldInFocus == index ? "block" : "hidden"} `}
-            onClick={(event) => event.preventDefault()}
-          ><FontAwesomeIcon icon={faXmark} size={"2x"} color={"#000"} />
-          </button>
+          {/*<button*/}
+          {/*  className={`text-sm  bg-transparent  border-none ${inputFieldInFocus == index ? "block" : "hidden"} `}*/}
+          {/*  onClick={(event) => event.preventDefault()}*/}
+          {/*><FontAwesomeIcon icon={faXmark} size={"2x"} color={"#000"} />*/}
+          {/*</button>*/}
         </div>
 
         <button
@@ -194,19 +195,32 @@ export const SocialsView: React.FC<SocialView> = ( ) => {
             saveUrl(index, event);
           }}
         >
-          <FontAwesomeIcon icon={faCheck} color={"#000"} /></button>
+          <Icons.Save /></button>
       </form>))}
     </div>
-
     <div
-      className={`socials-view__grid ${inputFieldInFocus == null ? "grid" : "hidden"}`}>
-      {socialLinks.map((item, index) => <button key={index}
-                                                disabled={item?.enabled}
-                                                onClick={() => handleClick(index)}
-                                                className="flex content-center justify-center socials-view__grid--item">
-        {<FontAwesomeIcon icon={getSocialIcon(item?.network)} />}
-      </button>)}
+      className={`${!inputInFocus && "mb-12"} ${inputFieldInFocus == null ? "grid" : "hidden"}`}>
+      <div
+        className="socials-view__count flex items-center justify-between mb-2">
+        <p className=" font-medium text-xs uppercase"> Add new</p>
+
+        <div className="count">
+          {`${enabledSocialsCount}/${socialLinks.length}`}
+        </div>
+      </div>
+      <div
+        className={` socials-view__grid grid`}>
+
+
+        {socialLinks.map((item, index) => <button key={index}
+                                                  disabled={item?.enabled}
+                                                  onClick={() => handleClick(index)}
+                                                  className="flex content-center justify-center socials-view__grid--item">
+          {getSocialIcon(item?.network)}
+        </button>)}
+      </div>
     </div>
+    
   </div>);
 };
 

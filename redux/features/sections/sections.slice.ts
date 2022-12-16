@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../..";
-import { Views } from "../../../pages/editor/side-panels/section-panels";
 
 
 export const enum SectionEnums {

@@ -1,14 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  User,
-  UserCredential,
-} from "firebase/auth";
-import { auth, provider } from "../../../firebase";
+import { signInWithPopup, UserCredential } from "firebase/auth";
+import { auth, provider } from "../../../firebase/index";
 
 import type { RootState } from "../..";
 
@@ -38,22 +30,22 @@ const initialState: UserStore = {
   }
 };
 
-export const loginWithEmail = createAsyncThunk(
-  "auth/loginWithEmail",
-  async ({ auth, password, email }: any) => {
-    return signInWithEmailAndPassword(auth, email, password).then((cred) => cred.user);
-  }
-);
-
-export const registerWithEmail = createAsyncThunk(
-  "auth/registerWithEmail",
-  async ({ email, password, name }: any) => {
-    return createUserWithEmailAndPassword(auth, email, password).then(
-      (cred: UserCredential) => cred.user
-    );
-  }
-);
-
+// export const loginWithEmail = createAsyncThunk(
+//   "auth/loginWithEmail",
+//   async ({ auth, password, email }: any) => {
+//     return signInWithEmailAndPassword(auth, email, password).then((cred) => cred.user);
+//   }
+// );
+//
+// export const registerWithEmail = createAsyncThunk(
+//   "auth/registerWithEmail",
+//   async ({ email, password, name }: any) => {
+//     return createUserWithEmailAndPassword(auth, email, password).then(
+//       (cred: UserCredential) => cred.user
+//     );
+//   }
+// );
+//
 export const authWithGoogle = createAsyncThunk("auth/signInGoogle", async () => {
   const promise = signInWithPopup(auth, provider)
     .then((res: UserCredential) => res.user)
@@ -61,13 +53,13 @@ export const authWithGoogle = createAsyncThunk("auth/signInGoogle", async () => 
 
  return await promise;
 });
-
-export const logOut = createAsyncThunk("auth/logout", async () => {
-  const userAuth = getAuth();
-  return signOut(userAuth).then(() => {
-    //navigate to home page!
-  });
-});
+//
+// export const logOut = createAsyncThunk("auth/logout", async () => {
+//   const userAuth = getAuth();
+//   return signOut(userAuth).then(() => {
+//     //navigate to home page!
+//   });
+// });
 
 export const UserSlice = createSlice({
   name: "user",
@@ -96,7 +88,6 @@ export const UserSlice = createSlice({
       state.currentUser.pages =[payload];
     },
     setUser: (state, action) => {
-      console.log("SEEETTTTTT", action.payload)
       state.currentUser = action.payload;
     },
   },

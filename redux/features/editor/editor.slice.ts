@@ -1,9 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { collection, doc, writeBatch } from "firebase/firestore";
+import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../..";
 import { Views } from "../../../components/editor/drawers/section-drawer";
-import { db } from "../../../firebase";
-import { setUserHandle as setUserHandle } from "../auth/authSlice";
 
 export interface Sections {
   items: Array<any>,
@@ -38,23 +35,23 @@ const initialState: Editor = {
   }
 };
 
-export const createNewPageFOrNewUser = createAsyncThunk("page/create-new-page", async (handle: string, {
-  getState, dispatch
-}) => {
-  const state: any = getState();
-
-  //TOdo: improve this batch write, try to use a class or object
-  let batch = writeBatch(db);
-  const newPageRef = doc(collection(db, "pages"));
-  batch.set(newPageRef, { handle: handle, createdAt: new Date() });
-  batch.set(doc(db, "users", `${state?.user?.user?.uid}`), {
-    ...state?.user.user, handle: handle, //pageId: newPageId,
-    createdAt: new Date()
-  });
-  const promise = batch.commit().then(() => dispatch(setUserHandle(handle)));
-  console.log("PROMISE", promise);
-  return promise;
-});
+// export const createNewPageFOrNewUser = createAsyncThunk("page/create-new-page", async (handle: string, {
+//   getState, dispatch
+// }) => {
+//   const state: any = getState();
+//
+//   //TOdo: improve this batch write, try to use a class or object
+//   let batch = writeBatch(db);
+//   const newPageRef = doc(collection(db, "pages"));
+//   batch.set(newPageRef, { handle: handle, createdAt: new Date() });
+//   batch.set(doc(db, "users", `${state?.user?.user?.uid}`), {
+//     ...state?.user.user, handle: handle, //pageId: newPageId,
+//     createdAt: new Date()
+//   });
+//   const promise = batch.commit().then(() => dispatch(setUserHandle(handle)));
+//   console.log("PROMISE", promise);
+//   return promise;
+// });
 
 export const EditorSlice = createSlice({
   name: "editor", initialState,
@@ -86,7 +83,7 @@ export const EditorSlice = createSlice({
         state.page.items[payload.index] = payload.data;
       }
     }, addNewLinkItem: (state, action) => {
-      const i = state.page.items.findIndex((item, index) => item.type == Views.LINKS);
+      const i = state.page.items.findIndex((item, ) => item.type == Views.LINKS);
       if (i !== -1) {
         let linksObj = state.page.items[i];
         linksObj.links = [...linksObj.links, action.payload];
@@ -96,7 +93,7 @@ export const EditorSlice = createSlice({
         });
       }
     }, saveCustomLinks: (state, { payload }) => {
-      const i = state.page.items.findIndex((item, index) => item.type == Views.LINKS);
+      const i = state.page.items.findIndex((item, ) => item.type == Views.LINKS);
       if (i !== -1) {
         let linksObj = state.page.items[i];
         // @ts-ignore
@@ -110,7 +107,7 @@ export const EditorSlice = createSlice({
 
 
     saveSocialLinks: (state, action) => {
-      const i = state.page.items.findIndex((item, index) => item.type == Views.SOCIALS);
+      const i = state.page.items.findIndex((item) => item.type == Views.SOCIALS);
       if (i !== -1) {
         let linksObj = state.page.items[i];
         linksObj.links = action.payload;
