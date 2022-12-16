@@ -35,3 +35,12 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+
+firebase-debug.log
+.prettierrc
+.firebase
+.fleet
+.gitignore
+.firebaserc
+.github
