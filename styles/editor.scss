@@ -291,11 +291,11 @@ STYLE PANEL STYLES
   border: 1px solid #545454;
   font-size: 12px;
   &:first-child {
-    margin: 0 0.5rem;
+    margin: 0 1rem;
   }
 
   &:last-child {
-    margin-right: 0.5rem;
+    margin-right: 1rem;
   }
 
   &.Mui-selected {
@@ -343,4 +343,10 @@ div[role="tabpanel"] {
   top: 8px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.templates-body, .animated-bg-tab{
+  &::-webkit-scrollbar{
+    visibility: hidden;
+  }
 }

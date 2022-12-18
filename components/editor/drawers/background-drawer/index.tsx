@@ -65,7 +65,7 @@ export const BackgroundDrawer = () => {
       </TabPanel>
 
       <TabPanel value={value} index={1}>
-        <div className="animated-bg-tab h-full w-full px-4 pt-4">
+        <div className="animated-bg-tab h-full w-full overflow-x-scroll px-4 pt-4">
 
           <div className="animated-bg__container h-full w-fit  flex ">
             <div className="animated-bg__item">
