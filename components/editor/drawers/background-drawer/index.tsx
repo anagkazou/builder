@@ -30,9 +30,9 @@ function TabPanel(props: TabPanelProps) {
 export const BackgroundDrawer = () => {
   const dispatch = useDispatch();
   const { background } = useSelector(selectPage);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState<any>(0);
 
-  const handleChange = (event: SyntheticEvent<Element, Event>, newValue: number) => {
+  const handleChange = (event: SyntheticEvent<Element, Event>, newValue: number| boolean| string) => {
     setValue(newValue);
   };
   return (<BaseDrawer drawerName={DrawerEnums.BACKGROUND}>
