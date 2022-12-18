@@ -29,7 +29,9 @@ export const BaseDrawer = ({
       if (drawerName == DrawerEnums.SECTIONS) setTimeout(() => dispatch(setActiveSectionView(Views.MAIN)), 800);
     }}
   >
-    <div className="base-drawer">
+    <div className="base-drawer relative">
+      <div className="drawer-knob absolute"/>
+
       {children}
       {!inputInFocus && <DrawerHeader />}
     </div>

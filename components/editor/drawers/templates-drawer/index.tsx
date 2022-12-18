@@ -1,33 +1,32 @@
-import { SwipeableDrawer } from "@mui/material";
-import {
-  selectUiState, setActiveDrawer
-} from "../../../../redux/features/ui-state/ui-state.slice";
-import { useDispatch, useSelector } from "react-redux";
 import { DrawerEnums } from "../../../../enums";
-import { DrawerHeader } from "../../drawer-header";
+import { BaseDrawer } from "../base-drawer";
+import React from "react";
 
-export  const TemplatesDrawer = () => {
-      const dispatch = useDispatch();
-      const {drawerState} = useSelector(selectUiState);
+export const TemplatesDrawer = () => {
 
-
-  return(
-    <SwipeableDrawer
-      anchor={"bottom"}
-    open={drawerState.activeDrawer === DrawerEnums.TEMPLATES}
-    onClose={()=>{
-      dispatch(setActiveDrawer(DrawerEnums.STYLE))
-    }}
-    onOpen={()=> dispatch(setActiveDrawer(DrawerEnums.TEMPLATES))}
+  return (<BaseDrawer drawerName={DrawerEnums.TEMPLATES}
     >
-      <>
-      <DrawerHeader />
-      <div className="templates-body h-[50vh]">
-        Templates body
-      </div>
-      </>
+        <div className="templates-body h-[55vh] pt-6">
+          <div className="animated-bg-tab h-full w-full px-4 pt-4">
 
-    </SwipeableDrawer>
-  )
-}
+            <div className="animated-bg__container h-full w-fit  flex ">
+              <div className="animated-bg__item">
+
+              </div>
+              <div className="animated-bg__item">
+
+              </div>
+              <div className="animated-bg__item">
+              </div>
+              <div className="animated-bg__item">
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+    </BaseDrawer>);
+};
 

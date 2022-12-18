@@ -1,5 +1,5 @@
 export const enum DrawerEnums  {
-  CLOSE= "CLOSE",
+  CLOSE= "",
   PROFILE = "PROFILE",
   PREVIEW = "PREVIEW",
   STYLE = "STYLE",
