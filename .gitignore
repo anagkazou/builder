@@ -41,6 +41,7 @@ firebase-debug.log
 .prettierrc
 .firebase
 .fleet
-.gitignore
 .firebaserc
 .github
+git-filter-repo
+my-mailmap
