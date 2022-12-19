@@ -140,7 +140,7 @@ export const TextBoxEditor = () => {
             onChange={(event) => handleChange("title", event)}
             type="text"
             name="title"
-            className="input-container text-base text-zinc-900 text-gr border-0  w-full leading-tight text-white border-none py-3 px-3 w-
+            className="input-container text-sm text-zinc-900 text-gr border-0  w-full leading-tight text-white border-none py-3 px-3 w-
                          appearance-none"
             placeholder="Title"
             value={textAreaState?.title}
@@ -178,7 +178,7 @@ export const TextBoxEditor = () => {
                        ref={ref => setRef(ref, "content")}
                        name="content"
                        onChange={(event) => handleChange("content", event)}
-                        className="input-container text-base text-zinc-900 text-gr border-0  w-full leading-tight text-white border-none py-3 px-3 w-
+                        className="input-container text-sm text-zinc-900 text-gr border-0  w-full leading-tight text-white border-none py-3 px-3 w-
                          appearance-none"
                        value={textAreaState?.content}
                        placeholder="Write a detailed content"

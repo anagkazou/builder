@@ -195,7 +195,7 @@ const LinkEditor: React.FC<LinkEditorType> = ({
           ref={ref => setRef(ref, "description")}
           type="text"
           name="description"
-          className="link-border border border-solid border-gray-600/20 rounded-tl-md rounded-tr-md text-base text-zinc-900  text-gr w-full leading-tight grey py-3 px-3 w-appearance-none"
+          className="link-border border border-solid border-gray-600/20 rounded-tl-md rounded-tr-md text-sm text-zinc-900  text-gr w-full leading-tight grey py-3 px-3 w-appearance-none"
           placeholder="Enter description"
           autoComplete="off"
           value={linkItemState?.description}
@@ -206,7 +206,7 @@ const LinkEditor: React.FC<LinkEditorType> = ({
         <input
           ref={ref => setRef(ref, "url")}
           name="url"
-          className="border border-t-0 border-solid border-gray-600/20 rounded-bl-md rounded-br-md  text-base text-zinc-900 text-gr w-full leading-tight grey  py-3 px-3 w-
+          className="border border-t-0 border-solid border-gray-600/20 rounded-bl-md rounded-br-md  text-sm text-zinc-900 text-gr w-full leading-tight grey  py-3 px-3 w-
                          appearance-none"
           value={linkItemState?.url}
           placeholder="Write a detailed url"

@@ -160,7 +160,7 @@ export const SocialsView: React.FC<SocialView> = () => {
                                                ${!item?.enabled && inputFieldInFocus !== index ? "absolute -left-full" : ""}
                                                `}>
         <div
-          className={`input-container input-wrapper flex w-96  text-base text-zinc-900 text-gr border-0 leading-tight px-3 w-
+          className={`input-container input-wrapper flex w-96  text-sm text-zinc-900 text-gr border-0 leading-tight px-3 w-
                          appearance-none px-2 ${inputFieldInFocus !== index && inputFieldInFocus ? "hidden" : ""}`}>
 
           <div className={`social flex items-center  `}>
@@ -220,7 +220,7 @@ export const SocialsView: React.FC<SocialView> = () => {
         </button>)}
       </div>
     </div>
-    
+
   </div>);
 };
 
