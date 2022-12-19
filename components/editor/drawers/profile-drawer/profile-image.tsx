@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Icons } from "../../../../assets/icons";
 import { useDispatch } from "react-redux";
 import { setPageImage } from "../../../../redux/features/editor/editor.slice";
+import { UploadSimple } from "phosphor-react";
 
 type ProfileImageType = {
   image: any, onChange: any
@@ -23,7 +24,8 @@ export const ProfileImage: React.FC<ProfileImageType> = ({
     {image ?
       <div className="relative w-1/3 h-auto relative rounded-md " style={{
         backgroundImage: `linear-gradient(45deg,#00000033, #00000033),url(${image})`,
-        backgroundSize: "cover"
+        backgroundSize: "cover",
+        backgroundPosition: "50%"
 
       }}>
 
@@ -37,7 +39,7 @@ export const ProfileImage: React.FC<ProfileImageType> = ({
         onClick={handleClick}
       >
         <div className="upload__empty-state flex flex-col items-center">
-          <Icons.Upload className="mb-1" width={22} height={22}/>
+          <UploadSimple size={22} weight={"regular"} color="#545454"  className="mb-1"/>
           <p className="text-sm">Profile Photo</p>
 
         </div>

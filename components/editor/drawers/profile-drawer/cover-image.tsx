@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import {
   setPageCoverImage
 } from "../../../../redux/features/editor/editor.slice";
+import { UploadSimple } from "phosphor-react";
 
 type CoverImageType = {
   image: any, onChange: any
@@ -30,7 +31,8 @@ export const CoverImage: React.FC<CoverImageType> = ({ image, onChange }) => {
     {image ?
       <div className="relative w-2/3 h-auto relative rounded-md " style={{
         backgroundImage: `linear-gradient(45deg,#00000033, #00000033),url(${image})`,
-        backgroundSize: "cover"
+        backgroundSize: "cover",
+        backgroundPosition: "50%"
 
       }}>
         <button onClick={() => dispatch(setPageCoverImage(""))} role="button"
@@ -42,7 +44,7 @@ export const CoverImage: React.FC<CoverImageType> = ({ image, onChange }) => {
         onClick={handleClick}
       >
         <div className="upload__empty-state flex flex-col items-center">
-          <Icons.Upload className="mb-1" width={22} height={22} />
+          <UploadSimple size={22} weight={"regular"} color="#545454"  className="mb-1"/>
           <p className="text-sm">Cover Photo</p>
 
         </div>

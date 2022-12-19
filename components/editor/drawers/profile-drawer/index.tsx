@@ -145,7 +145,7 @@ export const ProfileDrawer = () => {
   const handleFocus = (inputInFocus: any) => {
     setTemp(inputRefs[inputInFocus].value);
     setInputFieldInFocus(inputInFocus);
-    dispatch(setInputElementInFocus(true))
+    dispatch(setInputElementInFocus(true));
 
   };
   const handleChange = (event: any) => {
@@ -169,7 +169,7 @@ export const ProfileDrawer = () => {
         ...prev, [inputFieldInFocus]: temp
       }));
       setInputFieldInFocus(null);
-      dispatch(setInputElementInFocus(false))
+      dispatch(setInputElementInFocus(false));
 
     }
 
@@ -208,10 +208,13 @@ export const ProfileDrawer = () => {
                 />) : (<>
                 <div className="profile-panel py-6 ">
                   <div className="p-5 profile-form">
+                    <label
+                      className="block text-sm font-semibold text-white-800 mb-2 uppercase">Images</label>
                     <div
                       ref={ref => setRef(ref, "Images")}
                       className={`image-upload flex align-center place-content-between space-x-2 mb-4
-                       h-24 ${inputFieldInFocus ? "hidden" : ""} `}>
+                       h-20 ${inputFieldInFocus ? "hidden" : ""} `}>
+
                       <ProfileImage image={pageState.profileImage}
                                     onChange={onFileChange} />
                       <CoverImage image={pageState.coverImage}

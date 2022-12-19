@@ -856,10 +856,10 @@
   "resolved" "https://registry.npmjs.org/@mui/core-downloads-tracker/-/core-downloads-tracker-5.10.16.tgz"
   "version" "5.10.16"
 
-"@mui/icons-material@^5.0.1":
-  "integrity" "sha512-fXkz7CtYTt4AH4YYT67VFhM/A3YCUqZGGLp/3BlzRPQRNEfFKknw3MgG1S5UYrY5weti8jxMx3mwwfhVP8OMhQ=="
-  "resolved" "https://registry.npmjs.org/@mui/icons-material/-/icons-material-5.10.15.tgz"
-  "version" "5.10.15"
+"@mui/icons-material@^5.0.1", "@mui/icons-material@^5.10.16":
+  "integrity" "sha512-jjCc0IF6iyLiucQCu5igg3fOscSqbbvRCmyRxXgzOcLR56B0sg2L8o+ZfJ0dAg59+wvgtXaxvjze/mJg0B4iWA=="
+  "resolved" "https://registry.npmjs.org/@mui/icons-material/-/icons-material-5.10.16.tgz"
+  "version" "5.10.16"
   dependencies:
     "@babel/runtime" "^7.20.1"
 
@@ -2762,6 +2762,11 @@
   "integrity" "sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw=="
   "resolved" "https://registry.npmjs.org/path-type/-/path-type-4.0.0.tgz"
   "version" "4.0.0"
+
+"phosphor-react@^1.4.1":
+  "integrity" "sha512-gO5j7U0xZrdglTAYDYPACU4xDOFBTJmptrrB/GeR+tHhCZF3nUMyGmV/0hnloKjuTrOmpSFlbfOY78H39rgjUQ=="
+  "resolved" "https://registry.npmjs.org/phosphor-react/-/phosphor-react-1.4.1.tgz"
+  "version" "1.4.1"
 
 "picocolors@^1.0.0":
   "integrity" "sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ=="
