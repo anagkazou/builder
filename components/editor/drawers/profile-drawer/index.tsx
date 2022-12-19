@@ -228,8 +228,8 @@ export const ProfileDrawer = () => {
                                     inputFieldInFocus={inputFieldInFocus}
                                     clearInputField={clearInputField}
                                     submitHandler={savePageMeta}
-                                    placeHolderText={"Title"}
-                                    label={"Page title"}
+                                    placeHolderText={"Your Name"}
+                                    label={"Name"}
                                     saved={saved}
                     />
                     <InputComponent setRef={setRef}
@@ -241,8 +241,8 @@ export const ProfileDrawer = () => {
                                     clearInputField={clearInputField}
                                     inputFieldInFocus={inputFieldInFocus}
                                     submitHandler={savePageMeta}
-                                    placeHolderText={"Enter page description"}
-                                    label={"Page description"}
+                                    placeHolderText={"Bio description"}
+                                    label={"Enter description"}
                                     saved={saved}
 
                     />
