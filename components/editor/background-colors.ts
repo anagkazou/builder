@@ -1,107 +1,142 @@
 export const backgroundColors = [
 
   {
-    color: "lightpink	", hex: "#FFB6C1	", id: 4
+    text: "black", hex: "#ffffff", id: 4
   },
 
   {
-    color: "lightpink 2	 ", hex: "#EEA2AD	", id: 5
+    text: "white", hex: "#D9ADAC", id: 5
   },
 
   {
-    color: "lightpink 3	 ", hex: "#CD8C95	", id: 6
+    text: "black", hex: "#DBBC9D", id: 6
   },
 
   {
-    color: "lightpink 4	 ", hex: "#8B5F65	", id: 7
+    text: "black", hex: "#E5D6AF", id: 7
   },
 
   {
-    color: "pink	", hex: "#FFC0CB	", id: 8
+    text: "black", hex: "#BEC9B8", id: 8
   },
 
   {
-    color: "pink 1", hex: "#FFB5C5	", id: 9
+    text: "black", hex: "#BBC5CF", id: 9
   },
 
   {
-    color: "pink 2", hex: "#EEA9B8	", id: 10
+    text: "black", hex: "#CBC3D2", id: 10
+  }, //////////////////
+  {
+    gradient: true,
+    text: "black",
+    hex: "linear-gradient(180deg, #F4C09B 0%, #E7C2EB 100%)"
+  }, {
+    gradient: true,
+    text: "black",
+    hex: "linear-gradient(186.39deg, #F7C1E5 3.91%, #FFF8C0 94.96%)"
+  }, {
+    gradient: true,
+    text: "black",
+    hex: "linear-gradient(0deg, #F2AEAF 0%, #F9E7B9 50%, #DEF7D7 100%)"
+  }, {
+    gradient: true,
+    text: "black",
+    hex: "linear-gradient(180deg, #F8F0AF 0%, #B2F1DC 100%)"
+  }, {
+    gradient: true,
+    text: "black",
+    hex: "linear-gradient(180deg, #D3F9D0 0%, #86A2EB 100%)"
+  }, {
+    gradient: true,
+    text: "black",
+    hex: "linear-gradient(182.47deg, #C1E6F8 1.89%, #F1BFE5 96.37%)"
+  }, {
+    gradient: true,
+    text: "black",
+    hex: "linear-gradient(182.47deg, #EDB7D1 1.89%, #AD94E8 96.37%)"
+  }, {
+    text: "black", hex: "#F4BAD2", id: 11
   },
 
   {
-    color: "pink 3", hex: "#CD919E	", id: 11
+    text: "white", hex: "#EF8380", id: 12
   },
 
   {
-    color: "pink 4", hex: "#8B636C", id: 12
+    text: "black", hex: "#F3B785", id: 13
   },
 
   {
-    color: "palevioletred	", hex: "#DB7093", id: 13
+    text: "black", hex: "#FCF4A1", id: 14
   },
 
   {
-    color: "palevioletred 1	", hex: "#FF82AB", id: 14
+    text: "black", hex: "#E0FEA8", id: 15
   },
 
   {
-    color: "palevioletred 2	", hex: "#EE799F", id: 15
+    text: "black", hex: "#C1FEF9", id: 16
   },
 
   {
-    color: "palevioletred 3	", hex: "#CD6889", id: 16
+    text: "black", hex: "#E3C0FA", id: 17
   },
 
   {
-    color: "palevioletred 4	", hex: "#8B475D", id: 17
+    text: "white", hex: "#9F6279", id: 18
   },
 
   {
-    color: "lavenderblush 1 (lavenderblush)	", hex: "#FFF0F5", id: 18
+    text: "white", hex: "#A44B47", id: 19
   },
 
   {
-    color: "lavenderblush 2	", hex: "#EEE0E5", id: 19
+    text: "white", hex: "#BA7556", id: 20
   },
 
   {
-    color: "lavenderblush 3	", hex: "#CDC1C5", id: 20
+    text: "white", hex: "#C6A868", id: 21
   },
 
   {
-    color: "lavenderblush 4	", hex: "#8B8386", id: 21
+    text: "white", hex: "#778F6B", id: 22
   },
 
   {
-    color: "violetred 1	", hex: "#FF3E96", id: 22
+    text: "white", hex: "#6576A2", id: 23
   },
 
   {
-    color: "violetred 2	", hex: "#EE3A8C", id: 23
+    text: "white", hex: "#796191", id: 24
   },
 
   {
-    color: "violetred 3	", hex: "#CD3278", id: 24
+    text: "white", hex: "#000", id: 25
   },
 
   {
-    color: "violetred 4	", hex: "#8B2252", id: 25
+    text: "white", hex: "#A5A5A5", id: 26
   },
 
   {
-    color: "hotpink	", hex: "#FF69B4", id: 26
+    text: "black", hex: "#E4E0D5", id: 27
   },
 
   {
-    color: "hotpink 1	", hex: "#FF6EB4", id: 27
+    text: "white", hex: "#C5B79D", id: 28
   },
 
   {
-    color: "hotpink 2	", hex: "#EE6AA7", id: 28
+    text: "white", hex: "#828364", id: 29
   },
 
   {
-    color: "hotpink 3	", hex: "#CD6090", id: 29
+    text: "white", hex: "#444B5D", id: 29
+  },
+
+  {
+    text: "white", hex: "#704647", id: 29
   }];
 
 export default backgroundColors;

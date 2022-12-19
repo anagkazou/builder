@@ -5,7 +5,7 @@ import {
 } from "../../../../redux/features/ui-state/ui-state.slice";
 import { DrawerEnums } from "../../../../enums";
 import { BaseDrawer } from "../base-drawer";
-import { Icons } from "../../../../assets/icons";
+import { Drop, Stack } from "phosphor-react";
 
 export const StyleDrawer = () => {
   const dispatch = useDispatch();
@@ -42,13 +42,13 @@ export const StyleDrawer = () => {
         <div className="style-option flex flex-col bg-gray-200 rounded-md justify-center place-items-center  w-1/2 mr-2 p-2" onClick={() => {
           dispatch(setActiveDrawer(DrawerEnums.BACKGROUND));
         }}>
-          <Icons.Template/>
+          <Drop size={24} className="mb-1" />
           <div className="text-sm text-center">Background</div>
         </div>
         <div className="style-option w-1/2 p-2 flex flex-col bg-gray-200 rounded-md justify-center place-items-center" onClick={() => {
           dispatch(setActiveDrawer(DrawerEnums.TEMPLATES));
         }}>
-          <Icons.Template/>
+          <Stack size={24} className="mb-1" />
           <div className="text-sm text-center" >Templates</div>
 
         </div>

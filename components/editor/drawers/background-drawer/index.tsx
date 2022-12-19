@@ -37,7 +37,7 @@ export const BackgroundDrawer = () => {
   };
   return (<BaseDrawer drawerName={DrawerEnums.BACKGROUND}>
 
-    <div className="h-[55vh] py-6">
+    <div className="h-[45vh] py-6">
 
       <TabsUnstyled onChange={handleChange} value={value} defaultValue={value}
       >

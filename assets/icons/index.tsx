@@ -212,19 +212,19 @@ export const Icons = {
 
   ),
   Template: (props?: SVGProps<SVGSVGElement>) => (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+    <svg width="24" height="24" viewBox="0 0 32 32" fill="none"
          xmlns="http://www.w3.org/2000/svg">
       <path
         d="M21.4761 10H24.0476C24.3632 10 24.619 10.2558 24.619 10.5714V21.4286C24.619 21.7442 24.3632 22 24.0476 22H21.4761"
-        stroke={props?.stroke ?? "#545454"} strokeWidth="2" strokeLinecap="round"
+        stroke={props?.stroke ?? "#545454"} strokeWidth="1.8" strokeLinecap="round"
         strokeLinejoin="round" />
       <path
-        d="M11.1428 22H8.57132C8.25573 22 7.9999 21.7442 7.9999 21.4286V10.5714C7.9999 10.2558 8.25573 10 8.57132 10H11.1428"
-        stroke={props?.stroke ?? "#545454"} strokeWidth="2" strokeLinecap="round"
+        d="M11.1428 22H8.57132C8.25573 22 7.9999 21.8442 7.9999 21.4286V10.5714C7.9999 10.2558 8.25573 10 8.57132 10H11.1428"
+        stroke={props?.stroke ?? "#545454"} strokeWidth="1.8" strokeLinecap="round"
         strokeLinejoin="round" />
       <path
         d="M20.4761 5H12.4761C11.9238 5 11.4761 5.44772 11.4761 6V25C11.4761 25.5523 11.9238 26 12.4761 26H20.4761C21.0284 26 21.4761 25.5523 21.4761 25V6C21.4761 5.44772 21.0284 5 20.4761 5Z"
-        stroke={props?.stroke ?? "#545454"} strokeWidth="2" strokeLinecap="round"
+        stroke={props?.stroke ?? "#545454"} strokeWidth="1.8" strokeLinecap="round"
         strokeLinejoin="round" />
     </svg>
 

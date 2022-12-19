@@ -169,7 +169,7 @@ STYLE PANEL STYLES
   &-option__wrapper {
     border-radius: 50%;
     width: 100%;
-    height: calc(((100vw - 40px) / 7) - 9px);
+    height: calc(((100vw - 40px) / 7) - 7px);
     padding: 7% 8%;
   }
 
@@ -279,13 +279,13 @@ STYLE PANEL STYLES
 
 .MuiTabsList-root {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   width: 100%;
 
 }
 
 .MuiTab-root {
-  width: calc(50% - 1rem);
+  width: 11rem;
   padding: .25rem 0;
   border-radius: 8px;
   border: 1px solid #545454;
@@ -313,7 +313,7 @@ STYLE PANEL STYLES
 
 .animated-bg__item {
   height: 80%;
-  width: 11rem;
+  width: 8rem;
   border-radius: 8px;
   border: 1px solid #545454;
 
