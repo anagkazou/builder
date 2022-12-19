@@ -11,16 +11,14 @@ import { ImageCropper } from "./image-cropper";
 import useDetectKeyboardOpen from "use-detect-keyboard-open";
 import InputComponent from "../../../input.component";
 import {
-  selectUiState, setInputElementInFocus
+  setInputElementInFocus
 } from "../../../../redux/features/ui-state/ui-state.slice";
 import { DrawerEnums } from "../../../../enums";
 import { BaseDrawer } from "../base-drawer";
 
-const ORIENTATION_TO_ANGLE: any = {
-  "3": 180, "6": 90, "8": -90
-};
 
 export const enum ActiveUpload {
+  // eslint-disable-next-line no-unused-vars
   PROFILE_IMAGE = "PROFILE-IMAGE", COVER_IMAGE = "COVER-IMAGE"
 }
 
@@ -114,7 +112,6 @@ export const ProfileDrawer = () => {
   const [saved, setSaved] = useState<boolean>(false);
   const isKeyboardOpen = useDetectKeyboardOpen();
   const inputRefs: any = {};
-  const { drawerState } = useSelector(selectUiState);
 
   useEffect(() => {
     if (saved) {
@@ -159,20 +156,15 @@ export const ProfileDrawer = () => {
     setPageInfoState((prevState: any) => ({
       ...prevState, [inputFieldInFocus]: value
     }));
-    console.log(value);
   };
   const clearInputField = () => {
     // event.preventDefault();
-    console.log(inputFieldInFocus, "touched!!!!! Clear");
     setPageInfoState((prevState: any) => ({
       ...prevState, [inputFieldInFocus]: ""
     }));
   };
   const handleOnBlur = () => {
     if (!saved && inputFieldInFocus) {
-      console.log("0000", inputRefs[inputFieldInFocus].value);
-      console.log("1111", temp);
-
       setPageInfoState((prev: any) => ({
         ...prev, [inputFieldInFocus]: temp
       }));
@@ -214,7 +206,7 @@ export const ProfileDrawer = () => {
                               setRotation={setRotation}
                               setZoom={setZoom}
                 />) : (<>
-                <div className="profile-panel ">
+                <div className="profile-panel py-6 ">
                   <div className="p-5 profile-form">
                     <div
                       ref={ref => setRef(ref, "Images")}
