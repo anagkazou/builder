@@ -3,6 +3,7 @@ import { Icons } from "../../../../assets/icons";
 import { useDispatch } from "react-redux";
 import { setPageImage } from "../../../../redux/features/editor/editor.slice";
 import { UploadSimple } from "phosphor-react";
+import { ActiveUpload } from "./index";
 
 type ProfileImageType = {
   image: any, onChange: any
@@ -17,8 +18,7 @@ export const ProfileImage: React.FC<ProfileImageType> = ({
   const handleClick = () => {
     hiddenFileInput.current.click();
   };
-  // Call a function (passed as a prop from the parent component)
-  // to handle the user-selected file
+ 
 
   return (<>
     {image ?
@@ -32,7 +32,6 @@ export const ProfileImage: React.FC<ProfileImageType> = ({
         <button onClick={()=> dispatch(setPageImage(""))} role="button"
                 className="right-1 bg-neutral-700 p-[2px] rounded-md absolute top-1">
           <Icons.Cancel stroke="#fff" width={12} height={12} /></button>
-        {/*<img src={image} className={"w-full"} onClick={handleClick}/>*/}
       </div> : <div
         className="image-upload__profile input-container  flex place-content-center items-center w-1/3 "
         role={"button"}
@@ -41,7 +40,6 @@ export const ProfileImage: React.FC<ProfileImageType> = ({
         <div className="upload__empty-state flex flex-col items-center">
           <UploadSimple size={22} weight={"regular"} color="#545454"  className="mb-1"/>
           <p className="text-sm">Profile Photo</p>
-
         </div>
       </div>}
     <input
@@ -49,7 +47,7 @@ export const ProfileImage: React.FC<ProfileImageType> = ({
       ref={hiddenFileInput}
       accept="image/*"
       onChange={onChange}
-      name="PROFILE-IMAGE"
+      name={ActiveUpload.PROFILE_IMAGE}
       style={{ display: "none" }}
     />
   </>);

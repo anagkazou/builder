@@ -10,6 +10,10 @@ import { Icons } from "../../../../assets/icons";
 import {
   selectUiState, setInputElementInFocus
 } from "../../../../redux/features/ui-state/ui-state.slice";
+import { LinkThumbnail } from "./link-thumbnail";
+import { ImageCropper } from "../profile-drawer/image-cropper";
+import { getRotatedImage, readFile } from "../../utils/canvas-utils";
+import { ActiveUpload } from "../profile-drawer";
 
 export const CustomLinks: React.FC = () => {
   const [inputFieldInFocus, setInputFieldInFocus] = useState<any>(null);
@@ -19,58 +23,114 @@ export const CustomLinks: React.FC = () => {
   const inputRefs = useRef([]);
   const { inputInFocus } = useSelector(selectUiState);
   const dispatch = useDispatch();
+  const [linkImageSrc, setLinkImageSrc] = useState(null);
+  const [rotation, setRotation] = useState<any>(0);
+  const [activeUpload, setActiveUpload] = useState<ActiveUpload | null>(null);
+  const [imageIndex, setImageIndex] = useState()
 
   useEffect(() => {
 
-    if (inputFieldInFocus !== null) dispatch(setInputElementInFocus(true))
-    else dispatch(setInputElementInFocus(false))
+    if (inputFieldInFocus !== null || activeUpload) dispatch(setInputElementInFocus(true)); else dispatch(setInputElementInFocus(false));
 
   }, [inputFieldInFocus, inputInFocus]);
 
-  return (<div
-    className={`section_links w-screen py-6 px-4 fadeInLeft ${!inputInFocus && "mb-6"}`}>
-    {/*{JSON.stringify(customLinks)}*/}
-    {customLinks?.links && customLinks.links.map((linkItem: LinkItem, index: number) =>
-      <div key={index}
-      >
-        <LinkEditor
-          inputFieldInFocus={inputFieldInFocus}
-          setInputFieldInFocus={setInputFieldInFocus} key={index}
-          setSaved={setSaved}
-          linkItem={linkItem}
-          setCustomLinksState={setCustomLinksState}
-          index={index}
-          customLinksState={customLinksState}
-          inputRefs={inputRefs}
+  const reset = () => {
+    setActiveUpload(null);
+    setRotation(0);
+    dispatch(setInputElementInFocus(false));
+    setLinkImageSrc(null)
+    // setTemp(pageInfo);
+  };
+
+  useEffect(() => {
+    if (linkImageSrc !== null) dispatch(setInputElementInFocus(true));
+  console.log("Activeupload", activeUpload)
+  }, [activeUpload, linkImageSrc]);
+
+  const onFileChange = async (e: any) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      let imageDataUrl: any = await readFile(file);
+
+      if (rotation) {
+        imageDataUrl = await getRotatedImage(imageDataUrl, rotation);
+      }
+
+
+      if (e.target.name === ActiveUpload.LINK_IMAGE) {
+        setActiveUpload(ActiveUpload.LINK_IMAGE);
+        setLinkImageSrc(imageDataUrl);
+      }
+    }
+  };
+
+  return (<>
+    {activeUpload ? <ImageCropper activeUpload={activeUpload}
+                                  rotation={rotation}
+                                  onChange={onFileChange}
+                                  setRotation={setRotation}
+                                  image={linkImageSrc}
+                                  reset={reset}
+                                  index={imageIndex}
+
+    /> : (<div
+      className={`section_links w-screen py-6 px-4 fadeInLeft ${!inputInFocus && "mb-6"}`}>
+      {/*{JSON.stringify(customLinks)}*/}
+      {customLinks?.links && customLinks.links.map((linkItem: LinkItem, index: number) =>
+        <div key={index}
+        >
+          <LinkEditor
+            inputFieldInFocus={inputFieldInFocus}
+            setInputFieldInFocus={setInputFieldInFocus} key={index}
+            setSaved={setSaved}
+            linkItem={linkItem}
+            setCustomLinksState={setCustomLinksState}
+            index={index}
+            customLinksState={customLinksState}
+            inputRefs={inputRefs}
+            setActiveUpload={setActiveUpload}
+            onFileChange={onFileChange}
+            setImageIndex={setImageIndex}
+          />
+        </div>)}
+      <div className="flex w-full mb-4">
+        <LinkEditor isDefault inputRefs={inputRefs}
+                    setInputFieldInFocus={setInputFieldInFocus}
+                    inputFieldInFocus={inputFieldInFocus}
+                    index={customLinks ? customLinks.links.length : 0}
+                    customLinksState={customLinksState}
+                    setSaved={setSaved}
+                    saved={saved}
+                    linkItem={DEFAULT_CUSTOM_LINK}
+                    setActiveUpload={setActiveUpload}
+                    onFileChange={onFileChange}
+                    setImageIndex={setImageIndex}
         />
-      </div>)}
-    <LinkEditor isDefault inputRefs={inputRefs}
-                setInputFieldInFocus={setInputFieldInFocus}
-                inputFieldInFocus={inputFieldInFocus}
-                index={customLinks ? customLinks.links.length : 0}
-                customLinksState={customLinksState}
-                setSaved={setSaved}
-                saved={saved}
-                linkItem={DEFAULT_CUSTOM_LINK}
-    />
-  </div>);
+      </div>
+    </div>)
+
+    }
+  </>);
 };
 
 
 type LinkEditorType = {
-  inputFieldInFocus?: any, setInputFieldInFocus?: any, index: number, linkItem?: LinkItem, setSaved?: any, customLinksState: any, setCustomLinksState?: Function, isDefault?: boolean, inputRefs: any, saved?: boolean
+  inputFieldInFocus?: any, setImageIndex:Function, onFileChange: any, setInputFieldInFocus?: any, index: number, linkItem?: LinkItem, setSaved?: any, customLinksState: any, setCustomLinksState?: Function, isDefault?: boolean, inputRefs: any, saved?: boolean, setActiveUpload: Function
 };
+
 const LinkEditor: React.FC<LinkEditorType> = ({
                                                 linkItem,
                                                 index,
                                                 inputFieldInFocus,
                                                 setInputFieldInFocus,
                                                 isDefault,
-                                                inputRefs
+                                                inputRefs,
+                                                setActiveUpload,
+                                                onFileChange, setImageIndex
                                               }) => {
 
 
-  const [temp, setTemp] = useState();
+  const [, setTemp] = useState();
   //Todo: Explore using refs to store this value
   //Todo: Fix thE typing for this state declaration
   const [linkItemState, setLinkItemState] = useState<LinkItem>();
@@ -108,7 +168,7 @@ const LinkEditor: React.FC<LinkEditorType> = ({
       setLinkItemState(DEFAULT_CUSTOM_LINK);
     }
 
-  }, []);
+  }, [linkItem]);
 
   useEffect(() => {
     if (commited && linkItemState?.url?.length && linkItemState?.description?.length) {
@@ -182,53 +242,57 @@ const LinkEditor: React.FC<LinkEditorType> = ({
     dispatch(setInputElementInFocus(false));
   };
   return (<div
-    className={`mb-4 fadeInLeft ${inputFieldInFocus !== null && (inputFieldInFocus != index) ? "hidden" : ""}`}>
+    className={`w-full fadeInLeft mb-2 ${inputFieldInFocus !== null && (inputFieldInFocus != index) ? "hidden" : ""}`}>
+    <div className="flex">
+      <LinkThumbnail index={index} image={linkItemState?.image}
+                     setActiveUpload={setActiveUpload}
+                     onFileChange={onFileChange}
+                      setImageIndex={setImageIndex}
+      />
 
-    <div
-      className="flex items-center rounded-md">
       <div
-        className=" w-full  place-items-center rounded-md  "
-        onBlur={handleOnBlur} onMouseLeave={handleMouseLeave}
-      >
+        className=" w-5/6 flex items-center rounded-md">
+        <div
+          className=" w-full  place-items-center rounded-md  "
+          onBlur={handleOnBlur} onMouseLeave={handleMouseLeave}
+        >
 
-        <input
-          ref={ref => setRef(ref, "description")}
-          type="text"
-          name="description"
-          className="link-border border border-solid border-gray-600/20 rounded-tl-md rounded-tr-md text-sm text-zinc-900  text-gr w-full leading-tight grey py-3 px-3 w-appearance-none"
-          placeholder="Enter description"
-          autoComplete="off"
-          value={linkItemState?.description}
-          onFocus={handleFocus}
-          onChange={event => handleChange("description", event)}
+          <input
+            ref={ref => setRef(ref, "description")}
+            type="text"
+            name="description"
+            className="link-border border border-solid border-gray-600/20 rounded-tl-md rounded-tr-md text-xs text-zinc-900  text-gr w-full leading-tight grey py-2 px-2 w-appearance-none"
+            placeholder="Link name"
+            autoComplete="off"
+            value={linkItemState?.description}
+            onFocus={handleFocus}
+            onChange={event => handleChange("description", event)}
 
-        />
-        <input
-          ref={ref => setRef(ref, "url")}
-          name="url"
-          className="border border-t-0 border-solid border-gray-600/20 rounded-bl-md rounded-br-md  text-sm text-zinc-900 text-gr w-full leading-tight grey  py-3 px-3 w-
+          />
+          <input
+            ref={ref => setRef(ref, "url")}
+            name="url"
+            className="border border-t-0 border-solid border-gray-600/20 rounded-bl-md rounded-br-md  text-xs text-zinc-900 text-gr w-full leading-tight grey  py-2 px-2 w-
                          appearance-none"
-          value={linkItemState?.url}
-          placeholder="Write a detailed url"
-          autoComplete="off"
-          onFocus={handleFocus}
-          onChange={event => handleChange("url", event)}
-        />
+            value={linkItemState?.url}
+            placeholder="URL"
+            autoComplete="off"
+            onFocus={handleFocus}
+            onChange={event => handleChange("url", event)}
+          />
+        </div>
+        <button
+          className={`text-xs flex place-items-center hover:cursor-pointer bg-transparent px-2 h-fit border-none ${!isNaN(inputFieldInFocus) && inputFieldInFocus === index ? "" : "hidden"}`}
+          onMouseDown={(event) => {
+            event.preventDefault();
+            saveCustomLinksData();
+          }}
+        ><Icons.Save />
+        </button>
+
       </div>
-      <button
-        className={`text-sm flex place-items-center hover:cursor-pointer bg-transparent px-2 h-fit border-none ${!isNaN(inputFieldInFocus) && inputFieldInFocus === index ? "" : "hidden"}`}
-        onMouseDown={(event) => {
-          event.preventDefault();
-          saveCustomLinksData();
-        }}
-      ><Icons.Save />
-      </button>
 
     </div>
-
   </div>);
 
 };
-
-
-

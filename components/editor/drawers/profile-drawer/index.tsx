@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { getCroppedImg, getRotatedImage } from "../../utils/canvas-utils";
+import React, { useEffect, useState } from "react";
+import { getRotatedImage, readFile } from "../../utils/canvas-utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Editor, selectEditor, selectPage, setPageCoverImage, setPageImage, setPageMeta
+  Editor, selectEditor, selectPage, setPageMeta
 } from "../../../../redux/features/editor/editor.slice";
 
 import { ProfileImage } from "./profile-image";
@@ -19,7 +19,7 @@ import { BaseDrawer } from "../base-drawer";
 
 export const enum ActiveUpload {
   // eslint-disable-next-line no-unused-vars
-  PROFILE_IMAGE = "PROFILE-IMAGE", COVER_IMAGE = "COVER-IMAGE"
+  PROFILE_IMAGE = "PROFILE-IMAGE", COVER_IMAGE = "COVER-IMAGE", LINK_IMAGE= "LINK IMAGE"
 }
 
 export const ProfileDrawer = () => {
@@ -28,75 +28,61 @@ export const ProfileDrawer = () => {
   const [profileImageSrc, setProfileImageSrc] = useState(null);
   const [coverImageSrc, setCoverImageSrc] = useState(null);
 
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState<any>(0);
-  const [zoom, setZoom] = useState<any>(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
-  const [, setCroppedImage] = useState<any>();
 
 
-  function readFile(file: any) {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => resolve(reader.result), false);
-      reader.readAsDataURL(file);
-    });
-  }
 
-  const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: any) => {
-    setCroppedAreaPixels(croppedAreaPixels);
-  }, []);
+
+
   const dispatch = useDispatch();
   const pageState = useSelector(selectEditor).page;
-  const initialHeight = 60;
-  const activeCropHeight = 100;
-  const [, setPanelHeight] = useState<number>(initialHeight);
 
   const onFileChange = async (e: any) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       let imageDataUrl: any = await readFile(file);
-      console.log("FILE:::", imageDataUrl);
-      // apply rotation if needed
-      // const orientation = await getOrientation(file);
-      // const rotation = ORIENTATION_TO_ANGLE[orientation];
+
       if (rotation) {
         imageDataUrl = await getRotatedImage(imageDataUrl, rotation);
       }
-      console.log("EVENT::", e.target.name);
-      if (e.target.name == ActiveUpload.COVER_IMAGE) {
+
+      if (e.target.name === ActiveUpload.COVER_IMAGE) {
         setActiveUpload(ActiveUpload.COVER_IMAGE);
-        setPanelHeight(activeCropHeight);
         setCoverImageSrc(imageDataUrl);
-      } else {
+      }
+      if(e.target.name === ActiveUpload.PROFILE_IMAGE)  {
         setActiveUpload(ActiveUpload.PROFILE_IMAGE);
+        setProfileImageSrc(imageDataUrl);
+      }
+      if(e.target.name === ActiveUpload.LINK_IMAGE)  {
+        setActiveUpload(ActiveUpload.LINK_IMAGE);
         setProfileImageSrc(imageDataUrl);
       }
     }
   };
 
 
-  const saveImage = async (event: any) => {
-    event.preventDefault();
-    const img = activeUpload === ActiveUpload.PROFILE_IMAGE ? profileImageSrc : coverImageSrc;
-    try {
-      const croppedImage = await getCroppedImg(img, croppedAreaPixels, rotation);
-      dispatch(activeUpload === ActiveUpload.PROFILE_IMAGE ? setPageImage(croppedImage) : setPageCoverImage(croppedImage));
-      reset();
-    } catch (e) {
-      console.log(e);
-    }
-
-  };
+  // const saveImage = async (event: any) => {
+  //   event.preventDefault();
+  //   const img = activeUpload === ActiveUpload.PROFILE_IMAGE ? profileImageSrc : coverImageSrc;
+  //   try {
+  //     const croppedImage = await getCroppedImg(img, croppedAreaPixels, rotation);
+  //     dispatch(activeUpload === ActiveUpload.PROFILE_IMAGE
+  //       ? setPageImage(croppedImage) :
+  //       setPageCoverImage(croppedImage));
+  //     reset();
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  //
+  // };
 
   const reset = () => {
     setActiveUpload(null);
     setImageSrc(null);
-    setCroppedImage(null);
     setProfileImageSrc(null);
     setCoverImageSrc(null);
     setRotation(0);
-    setPanelHeight(initialHeight);
     setInputFieldInFocus(null);
 
     // setTemp(pageInfo);
@@ -115,10 +101,8 @@ export const ProfileDrawer = () => {
 
   useEffect(() => {
     if (saved) {
-      console.log("touched");
       dispatch(setPageMeta(pageInfoState));
       Object.values(inputRefs).forEach((el: any) => el.blur());
-
     }
   }, [saved]);
 
@@ -146,8 +130,8 @@ export const ProfileDrawer = () => {
     setTemp(inputRefs[inputInFocus].value);
     setInputFieldInFocus(inputInFocus);
     dispatch(setInputElementInFocus(true));
-
   };
+
   const handleChange = (event: any) => {
     setSaved(false);
     const value = event.target.value;
@@ -157,6 +141,7 @@ export const ProfileDrawer = () => {
       ...prevState, [inputFieldInFocus]: value
     }));
   };
+
   const clearInputField = () => {
     // event.preventDefault();
     setPageInfoState((prevState: any) => ({
@@ -195,16 +180,12 @@ export const ProfileDrawer = () => {
           <>
             <>
               {activeUpload ? (
-                <ImageCropper reset={reset} saveImage={saveImage} crop={crop}
-                              setCrop={setCrop}
+                <ImageCropper reset={reset}
                               image={activeUpload === ActiveUpload.PROFILE_IMAGE ? profileImageSrc : coverImageSrc}
                               activeUpload={activeUpload}
-                              onCropComplete={onCropComplete}
                               rotation={rotation}
-                              zoom={zoom}
                               onChange={onFileChange}
                               setRotation={setRotation}
-                              setZoom={setZoom}
                 />) : (<>
                 <div className="profile-panel py-6 ">
                   <div className="p-5 profile-form">

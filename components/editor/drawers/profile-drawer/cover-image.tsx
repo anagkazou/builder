@@ -5,6 +5,7 @@ import {
   setPageCoverImage
 } from "../../../../redux/features/editor/editor.slice";
 import { UploadSimple } from "phosphor-react";
+import { ActiveUpload } from "./index";
 
 type CoverImageType = {
   image: any, onChange: any
@@ -13,18 +14,11 @@ export const CoverImage: React.FC<CoverImageType> = ({ image, onChange }) => {
   const dispatch = useDispatch();
   const hiddenFileInput = useRef<any>(null);
 
-  const handleClick = (event: any) => {
+  const handleClick = () => {
     hiddenFileInput.current.click();
   };
   // Call a function (passed as a prop from the parent component)
   // to handle the user-selected file
-  const readFile = (file: Blob) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => resolve(reader.result), false);
-      reader.readAsDataURL(file);
-    });
-  };
 
 
   return (<>
@@ -54,7 +48,7 @@ export const CoverImage: React.FC<CoverImageType> = ({ image, onChange }) => {
       ref={hiddenFileInput}
       accept="image/*"
       onChange={onChange}
-      name="COVER-IMAGE"
+      name={ActiveUpload.COVER_IMAGE}
       style={{ display: "none" }}
     />
   </>);

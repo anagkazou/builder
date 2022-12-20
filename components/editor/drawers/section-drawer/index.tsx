@@ -32,9 +32,9 @@ export const SectionDrawer: React.FC<SectionPanelPropType> = ({}) => {
   return (<BaseDrawer drawerName={DrawerEnums.SECTIONS}>
 
 
-    <div className="flex flex-row sections-body">
+    <div className=" sections-body">
       {sectionsView.activeSectionView == Views.MAIN && <div
-        className="w-screen height-large px-4 sections-body__main fadeInLeft">
+        className="w-screen flex flex-col  height-large px-4 sections-body__main fadeInLeft">
 
         <h3> My sections</h3>
         <div className="my-sections">

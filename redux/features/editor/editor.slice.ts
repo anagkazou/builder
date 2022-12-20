@@ -83,7 +83,7 @@ export const EditorSlice = createSlice({
         state.page.items[payload.index] = payload.data;
       }
     }, addNewLinkItem: (state, action) => {
-      const i = state.page.items.findIndex((item, ) => item.type == Views.LINKS);
+      const i = state.page.items.findIndex((item) => item.type == Views.LINKS);
       if (i !== -1) {
         let linksObj = state.page.items[i];
         linksObj.links = [...linksObj.links, action.payload];
@@ -93,7 +93,7 @@ export const EditorSlice = createSlice({
         });
       }
     }, saveCustomLinks: (state, { payload }) => {
-      const i = state.page.items.findIndex((item, ) => item.type == Views.LINKS);
+      const i = state.page.items.findIndex((item) => item.type == Views.LINKS);
       if (i !== -1) {
         let linksObj = state.page.items[i];
         // @ts-ignore
@@ -120,13 +120,31 @@ export const EditorSlice = createSlice({
       state.page.pageMeta = action.payload;
     }, setBackground: (state, { payload }) => {
       state.page.background = payload;
-    }
+    },
+
+    setCustomLinkImage:(state, { payload }) => {
+      const i = state.page.items.findIndex((item) => item.type == Views.LINKS);
+      if (i !== -1) {
+        let linksObj = state.page.items[i];
+        // @ts-ignore
+        linksObj.links[payload.index].image = payload.data;
+      }
+      },
+
+    deleteLinkImage:(state, { payload }) => {
+      const i = state.page.items.findIndex((item) => item.type == Views.LINKS);
+      if (i !== -1) {
+        let linksObj = state.page.items[i];
+        // @ts-ignore
+        linksObj.links[payload].image = "";
+      }
+      }
   }
 });
 
 
-export const selectSocialLinks = (state: RootState) => state.editor.page.items?.findIndex((item, index) => item.type == Views.SOCIALS);
-export const selectCustomLinks = (state: RootState) => state.editor.page.items?.findIndex((item, index) => item.type == Views.LINKS);
+export const selectSocialLinks = (state: RootState) => state.editor.page.items?.findIndex((item, ) => item.type == Views.SOCIALS);
+export const selectCustomLinks = (state: RootState) => state.editor.page.items?.findIndex((item, ) => item.type == Views.LINKS);
 export const selectCustomLinksInStore = (state: RootState) => {
   const i = state.editor.page.items?.findIndex((item) => item.type == Views.LINKS);
   if (i !== -1) {
@@ -141,6 +159,8 @@ export const selectEditor = (state: RootState) => state.editor;
 export const selectPage = (state: RootState) => state.editor.page;
 export const {
   addNewSectionItem,
+  setCustomLinkImage,
+  deleteLinkImage,
   addNewTextAreaItem,
   saveSocialLinks,
   setPageCoverImage,

@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../..";
+import { createSlice } from "@reduxjs/toolkit";
 
 
 export const enum SectionEnums {
@@ -14,7 +13,7 @@ export type Links = {
   type: string, links: Array<LinkItem>
 }
 export type LinkItem = {
-  description: string; url: string;
+  description: string; url: string; image?:string;
 }
 
 //Todo: something is wrong here

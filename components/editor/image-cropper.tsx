@@ -1,11 +1,7 @@
 import Cropper from "react-easy-crop";
 import { Slider } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
-import { AnyAction } from "@reduxjs/toolkit";
-import { getCroppedImg, getRotatedImage } from "./utils/canvas-utils";
-import { getOrientation } from "get-orientation/browser";
-
-import React from "react";
+import React, { useCallback, useState } from "react";
+import { getCroppedImg } from "./utils/canvas-utils";
 
 const ORIENTATION_TO_ANGLE: any = {
   "3": 180,
@@ -46,7 +42,7 @@ export const ImageCropper: React.FC<ImageCropperType> = ({ img }) => {
  
  
   return (
-    <div className="App">
+    <div className="App block">
       <div className="crop-container">
         <Cropper
           image={imageSrc}
